@@ -573,9 +573,24 @@ align-items:center
     opacity: 0;
     transform: translateX(100%);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    overflow:auto
 }
 .details .barner-short{
     height:350px
+}
+.detail-content div p:first-child{
+    margin-top:20px;
+    font-style:italic;
+    color:#208052;
+    text-decoration:underline;
+    font-weight:bold;
+    font-family:"poppins",'sans-serif';
+
+}
+.detail-content div p:nth-child(2){
+    margin-top:20px;
+    color:rgb(99, 99, 99);
+    line-height:40px
 }
 .details .barner-short h2{
 padding-top:80px;
@@ -584,6 +599,16 @@ font-family:"poppins"
 .detail-content{
     padding-inline:200px
 }
+.detail-content a{
+    padding: 10px 20px;
+    background:#163568;
+    color:white;
+ 
+    margin-block:30px;
+    text-decoration:none;
+    display:inline-block
+
+}
 
 .details.show {
     display: block;
@@ -591,38 +616,24 @@ font-family:"poppins"
     transform: translateX(0);
 }
 
-#close-details {
-    background-color: #ff4c4c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    float: right;
-    transition: background-color 0.3s ease;
-}
-
-#close-details:hover {
-    background-color: #ff1a1a;
-}
 
 #course-navigation {
-    margin-top: 20px;
+    margin-top: 50px;
     display: flex;
     justify-content: space-between;
 }
 
 #course-navigation button {
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
+    border:none;
+    background:transparent;
+    border-bottom: 1px solid rgb(0, 135, 68);
+    font-weight:bold
 }
 
 #course-navigation button:hover {
-    background-color: #007BFF;
-    color: white;
+    color:#163568;
 }
 
 .logo img{
@@ -1497,10 +1508,12 @@ font-family: "Poppins", sans-serif;
     transition: all;
 }
 .barner-short{
-    background:linear-gradient(#0e203fb6,#0e203fb6),url(/images/ovarlay-slide.jpg);
+    background:linear-gradient(#0d2754ca,#0d2754c6),url(/images/IMG-20250209-WA0013.jpg);
     background-attachment: fixed;
     position: relative;
     height: 35vh;
+    background-repeat:no-repeat;
+    background-size:100%;
 }
 .barner-short>img{
     position: absolute;

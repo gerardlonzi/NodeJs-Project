@@ -32,7 +32,9 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
         let tabCategorie=[]
         const message = req.session.message || ""
     req.session.message =  null
-        users = await User.find({role:'admin'}).limit(6).exec()
+    console.log('Tentative de récupération des utilisateurs...');
+users = await User.find({ role: 'admin' }).limit(6).exec();
+console.log('Utilisateurs récupérés:', users);
         if(req.user){
             isLogin = true
             try{

@@ -44,10 +44,10 @@ let currentCourseId = null;
 const courseDetails = {
     1: {
         title: "Computerised Accounting and Management",
-        description: "Unlock the power of modern accounting systems in this comprehensive course! You will learn how to use computerised accounting software to manage financial records, generate reports, and perform complex calculations. This course will equip you with the essential skills needed to streamline financial management in businesses of all sizes. By the end of this course, you will have a solid understanding of computerized accounting and be able to manage accounts efficiently using industry-standard tools.",
-        duration: "Duration: 4 weeks",
-        certification: "Certification recognized upon course completion.",
-        requirements: "Basic knowledge of mathematics and an interest in business administration or finance."
+        description: "Unlock the power of modern accounting systems in this comprehensive course! You will learn how to use computerised accounting software to manage financial records, generate reports, and perform complex calculations. This course will equip you with the essential skills needed to streamline financial management in businesses of all sizes. By the end of this course, you will have a solid understanding of computerized accounting and be able to manage accounts efficiently using industry-standard tools. The student studying Computerised Accounting will be able at the end of their course will be to use Sage Saari 100 to record, analyse and financial transactions upon completion",
+        duration: "12 Months (including Internship)",
+        certification: "National Exam: VQD / DQP",
+        requirements: "Minimum Entry Level: Upper Sixth / A Level / O Level / Baccaleaureat G2, C, D / Probatoire G2, C, D"
     },
     2: {
         title: "Computer Maintenance",
@@ -59,15 +59,15 @@ const courseDetails = {
     3: {
         title: "Webmaster / Web Developer",
         description: "This course will teach you the foundational skills needed to build and maintain websites, from front-end design to back-end development. You will dive into HTML, CSS, and JavaScript to create interactive and user-friendly websites. You’ll also learn how to integrate websites with databases and manage server-side functionality. Whether you're aiming for a career as a webmaster or a web developer, this course will provide you with the knowledge and skills to create fully functional websites that engage users and meet business needs.",
-        duration: "Duration: 8 weeks",
-        certification: "Get certified after completing the course.",
-        requirements: "Basic knowledge of computers and an interest in web development. No prior coding experience required."
+        duration: "12 Months (including Internship)",
+        certification: "National Exam: VQD / DQP",
+        requirements: "Minimum Entry Level: A Level Science and Mathematic / Baccalaureat C, D"
     },
     4: {
         title: "Professional Hairdresser",
-        description: "Step into the world of professional hairstyling! This course offers a deep dive into advanced hairdressing techniques, including cutting, coloring, styling, and hair treatments. You’ll learn the latest trends in hair care and how to provide personalized services to clients, ensuring their hair looks and feels amazing. This course is ideal for anyone looking to start a career as a hairdresser or refine their skills in the beauty industry. By the end of the course, you will be ready to work confidently in a salon or run your own freelance hairdressing business.",
-        duration: "Duration: 6 weeks",
-        certification: "Certification provided after successful completion.",
+        description: "Step into the world of professional hairstyling! This course offers a deep dive into advanced hairdressing techniques, including cutting, coloring, styling, and hair treatments. You’ll learn the latest trends in hair care and how to provide personalized services to clients, ensuring their hair looks and feels amazing. This course is ideal for anyone looking to start a career as a hairdresser or refine their skills in the beauty industry. By the end of the course, you will be ready to work confidently in a salon or run your own freelance hairdressing business. Professional Hairdresser are responsible styling hair, cutting hair using basic and advanced techniques, consulting customers about styles and colors and applying hair care products, like treatment oils and masks. This course will equip you with skills to work as professional hairdresser or to run and manage a saloon.",
+        duration: "12 Months (including Internship)",
+        certification: "National Exam: VQD / DQP",
         requirements: "No prior experience required, though a passion for beauty and creativity will be helpful."
     },
     5: {
@@ -79,10 +79,10 @@ const courseDetails = {
     },
     6: {
         title: "Office Automation Secretaryship",
-        description: "This course is designed to enhance your office skills and introduce you to the latest office automation tools. You will learn how to use software for scheduling, communication, data management, and document preparation, essential for any administrative position. The course covers everything from word processing to advanced spreadsheet management, as well as office organization and time management strategies. By the end of the course, you will be fully equipped to manage an office environment efficiently and professionally.",
-        duration: "Duration: 5 weeks",
-        certification: "Certification available upon completion.",
-        requirements: "Basic computer literacy and an interest in office management or administration."
+        description: "This course is designed to enhance your office skills and introduce you to the latest office automation tools. You will learn how to use software for scheduling, communication, data management, and document preparation, essential for any administrative position. The course covers everything from word processing to advanced spreadsheet management, as well as office organization and time management strategies. By the end of the course, you will be fully equipped to manage an office environment efficiently and professionally. A Secretary is a professional who provides behind-the-scenes work for an office. Their tasks include organising files, preparing documents, managing office supply inventory and scheduling appointments.",
+        duration: "12 Months (including Internship)",
+        certification: "National Exam: VQD / DQP",
+        requirements: "Minimum Entry Level: Form 4 / CAP / BEPC"
     },
     7: {
         title: "Accounting Secretaryship",
@@ -93,31 +93,31 @@ const courseDetails = {
     },
     8: {
         title: "English Language for IELTS",
-        description: "Prepare for the IELTS exam with this comprehensive course. You will improve your reading, writing, speaking, and listening skills in English, with a focus on the IELTS exam format. This course includes targeted practice sessions, sample tests, and expert strategies to help you achieve a high score. Whether you're planning to study abroad or work in an English-speaking environment, this course will equip you with the language skills and exam techniques you need to succeed.",
+        description: "Prepare for the IELTS exam with this comprehensive course. You will improve your reading, writing, speaking, and listening skills in English, with a focus on the IELTS exam format. This course includes targeted practice sessions, sample tests, and expert strategies to help you achieve a high score. Whether you're planning to study abroad or work in an English-speaking environment, this course will equip you with the language skills and exam techniques you need to succeed. This training will equip the student to be able to sit the IELTS exam for international study / work.",
         duration: "Duration: 8 weeks",
         certification: "IELTS preparation certificate provided.",
         requirements: "Basic knowledge of English. This course is ideal for anyone preparing for the IELTS exam."
     },
     9: {
         title: "Fashion Designing and Sewing",
-        description: "Unleash your creativity in fashion design with this hands-on course. Learn the art of fashion illustration, pattern making, fabric selection, and garment construction. You will also learn how to sew professionally and create your own clothing line. This course is perfect for anyone interested in pursuing a career in fashion design or starting their own brand. By the end of the course, you'll have the practical skills and knowledge needed to bring your fashion ideas to life.",
-        duration: "Duration: 10 weeks",
-        certification: "Certification awarded after completion.",
-        requirements: "No prior experience required, but a passion for fashion and creativity is essential."
+        description: "Unleash your creativity in fashion design with this hands-on course. Learn the art of fashion illustration, pattern making, fabric selection, and garment construction. You will also learn how to sew professionally and create your own clothing line. This course is perfect for anyone interested in pursuing a career in fashion design or starting their own brand. By the end of the course, you'll have the practical skills and knowledge needed to bring your fashion ideas to life. A fashion designer designs and assists with the production of clothing, shoes and accessories, identifies trends, and selects styles, fabrics, colors, prints and trims for a collection. Fashion designers either design haute couture or ready-to-wear clothing.",
+        duration: "6-12 months",
+        certification: "Assessments and practical Evaluations",
+        requirements: "Minimum Entry Level: None"
     },
     10: {
         title: "Hotel Management - Kitchen - Bar - Restaurant",
-        description: "Dive into the world of hospitality with this comprehensive hotel management course. You will learn the ins and outs of hotel operations, focusing on the kitchen, bar, and restaurant management. From kitchen management and food preparation to handling customer service and managing bar operations, this course covers all aspects of hospitality management. By the end of this course, you will be prepared to manage any hospitality establishment, ensuring smooth operations and exceptional guest experiences.",
-        duration: "Duration: 12 weeks",
-        certification: "Complete the course and earn your certification.",
-        requirements: "No prior experience necessary, though a passion for the hospitality industry and customer service is a plus."
+        description: "Dive into the world of hospitality with this comprehensive hotel management course. You will learn the ins and outs of hotel operations, focusing on the kitchen, bar, and restaurant management. From kitchen management and food preparation to handling customer service and managing bar operations, this course covers all aspects of hospitality management. By the end of this course, you will be prepared to manage any hospitality establishment, ensuring smooth operations and exceptional guest experiences. How to do preparation, seasoning, and cooking of salads, soups, fish, meats, vegetables, desserts, or other foods. Plan and price menu items, orders supplies, and keep records and accounts. Supervises and participate in cooking and baking and the preparation of foods. Hotel Managers are responsible for managing employees and for planning, marketing , coordinating and administering hotel services such as catering and accommodation facilities. Hotel managers are responsible for making sure that all areas of a hotel environment run smoothly and work together successfully.Interact with guests to ensure exemplary service in an efficient manner. Take orders, serve food and drinks, answer inquiries about the menu and comply with the wishes of the guest, as well as suggestively sell food and drinks. Work closely with Bussers and Hostess' to ensure guests receive excellent service.",
+        duration: "12 Months (Including Internship) ",
+        certification: "National Exam: VQD / DQP",
+        requirements: "Minimum Ebtry Level: Form 3 / Form 4 / BEPC / CAP"
     },
     11: {
         title: "Digital Marketing",
-        description: "Become an expert in digital marketing with this in-depth course. You will learn how to plan and execute digital marketing campaigns across various channels such as social media, email marketing, SEO, and content marketing. This course covers analytics, paid advertising, and brand management, ensuring you have the tools needed to promote businesses effectively in the digital space. Whether you're looking to boost your career or start your own digital marketing agency, this course will set you on the right path.",
-        duration: "Duration: 8 weeks",
-        certification: "Certification awarded after course completion.",
-        requirements: "No prior experience required. A basic understanding of online platforms and marketing will be helpful."
+        description: "Become an expert in digital marketing with this in-depth course. You will learn how to plan and execute digital marketing campaigns across various channels such as social media, email marketing, SEO, and content marketing. This course covers analytics, paid advertising, and brand management, ensuring you have the tools needed to promote businesses effectively in the digital space. Whether you're looking to boost your career or start your own digital marketing agency, this course will set you on the right path. Plans and executes all web, SEO/SEM, database marketing, email, social media, and display advertising campaigns. Designs, builds, and maintains our social media presence. Measures and reports performance of all digital marketing campaigns and assesses against goals (ROI and KPIs).",
+        duration: "1 - 6 months",
+        certification: "Assesments and practical Evaluations",
+        requirements: "Minimum Entry Level: None"
     }
 };
 
