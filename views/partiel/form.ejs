@@ -16,6 +16,9 @@
                     <%= error_msg_field_email %>
                 <% } %>
             </span>
+            <p><% if (typeof email_exist !== 'undefined' ) { %>
+               <%= email_exist %>
+            <% } %></p>
         </div>
         <div>
             <label for="password">Mot de passe:</label>
@@ -30,7 +33,7 @@
             </span>
         </div>
         <div>
-            <input type="submit" value="Se connecter">
+            <input type="submit" class="submit" value="Se connecter">
         </div>
         <p>
             <a class="btn_cons_reg" href="register">S'inscrire</a>
@@ -39,9 +42,11 @@
    <script>
     const ins_conn = document.querySelector(".ins_conn");
     const btn_cons_reg = document.querySelector(".btn_cons_reg");
+    const submit = document.querySelector(".submit")
 
     if (location.pathname == "/register") {
         ins_conn.textContent = "S'inscrire";
+        submit.setAttribute("value","s'inscrire")
         btn_cons_reg.textContent = "Se connecter";
         btn_cons_reg.setAttribute("href", "login");
     }

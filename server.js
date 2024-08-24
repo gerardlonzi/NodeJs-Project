@@ -11,7 +11,7 @@ const app = express()
 
 dotenv.config()
 
-mongoose.connect(process.env.MONGODB_URL,{useNewUrlParser:true,useUnifiedTopology:true}).then(() => {
+mongoose.connect(process.env.MONGODB_URL).then(() => {
       console.log(`connecter a la base de donnees`);
 })
       .catch(err => {

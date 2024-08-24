@@ -1,9 +1,8 @@
 const User = require("../models/User")
-const bcript = require('bcrypt')
+const bcript = require("bcryptjs")
 const crypto = require('crypto')
 const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
-const { log } = require("console")
 
 dotenv.config()
 
@@ -13,20 +12,20 @@ exports.register = (req, res) => {
 
   if (!email) {
     errors.push({ msg: "l'email est requis" })
-    return res.render('register', { error_msg_field_email: errors[0].msg, error_msg_field_password: typeof password !== 'undefined' ? "" : "le passsword est requis", email: email || "", password: password || "",pageTitle:"Register" })
+    return res.render('register', { error_msg_field_email: errors[0].msg, error_msg_field_password: typeof password !== 'undefined' ? "": "le passsword est requis", email: email || "", password: password || "" })
 
 
   }
   if (!password) {
     errors.push({ msg: "le passsword est requis" })
-    return res.render('register', { error_msg_field_password: "le passsword est requis", password: password, email: email || "",pageTitle:"Register" })
+    return res.render('register', { error_msg_field_password: "le passsword est requis", password: password, email: email || "" })
 
 
   }
 
   if (password.length < 8) {
     errors.push({ msg: "le mot de paase doit comporter 8 caractere" })
-    return res.render('register', { password_length: "le mot de paase doit comporter 8 caractere", password: password, email: email || "",pageTitle:"Register" })
+    return res.render('register', { password_length: "le mot de paase doit comporter 8 caractere", password: password, email: email || ""})
 
   }
   if (errors.length > 0) {
@@ -36,7 +35,7 @@ exports.register = (req, res) => {
   else {
     User.findOne({ email }).then(user => {
       if (user) {
-        res.render("register", { email_exist: " Desoler cette adresse email existe deja" ,pageTitle:"Register"})
+        res.render("register", { email_exist: " Desoler cette adresse email existe deja",email: email || "", password: password || ""})
         return
       }
       else {
@@ -48,9 +47,11 @@ exports.register = (req, res) => {
           bcript.hash(newUser.password, salt, (err, hash) => {
                if(err) throw err;
                newUser.password = hash
+               console.log("hash"+hash);
                newUser.save().then(user=>{
                   const token = jwt.sign({id:user.id,role:user.role},process.env.JWT_SECRET,{expiresIn:'1h'})
-                  console.log(token);
+                  console.log("token"+token);
+                  console.log("user id"+user.id);
                   console.log(user);
                }).catch(err=> console.log(err));
           })
@@ -60,4 +61,33 @@ exports.register = (req, res) => {
     })
   }
 
+}
+
+
+exports.login = (req,res) =>{
+    const {email,password} = req.body
+     User.findOne({email}).then(user=>{
+    if(!user){
+      return res.render('login',{email_notExist:"cet utilisateur n'existe pas veuiller creer un compte", password:password ||"" , email: email|| ""})
+    }
+    bcript.compare(password,user.password,(err,isvalid)=>{
+      if(isvalid){
+        jwt.sign({id:user.id,role:user.role},process.env.JWT_SECRET,{expireIn:'1h'})
+console.log("token injecter avec succes");
+      }
+      else{
+        res.render('login',{incorrect_password:"mot de passe incorrect", password:password ||"" , email: email|| ""})
+      }
+    })
+  })
+}
+
+exports.verifyToken = (req,res,next)=>{
+    const token = req.headers['authorization']
+    if(!token){
+      console.log("vous n'etes pas authentifie");
+      return
+      
+    }
+    next()
 }

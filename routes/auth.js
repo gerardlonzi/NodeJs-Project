@@ -1,11 +1,14 @@
 const express = require("express")
-const { register } = require("../controllers/AuthControllers")
+const { register, login, verifyToken } = require("../controllers/AuthControllers")
 const router = express.Router()
 
-router.post("/register",register)
-
+router.post("/api/auth/register",register)
+router.post("/api/auth/login",login)
 router.get("/", (req, res) => {
     res.render("../views/home")
+})
+router.get('dashboard',verifyToken,(req,res)=>{
+  res.render("dashboard")
 })
 router.get("/login", (req, res) => {
     res.render("../views/login",{pageTitle:"Login"})
