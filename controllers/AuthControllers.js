@@ -50,6 +50,8 @@ exports.register = (req, res) => {
                console.log("hash"+hash);
                newUser.save().then(user=>{
                   const token = jwt.sign({id:user.id,role:user.role},process.env.JWT_SECRET,{expiresIn:'1h'})
+                  res.cookie('token',token,{httpOnly:true,maxAge:3600000})
+                  res.redirect('/dashboard')
                   console.log("token"+token);
                   console.log("user id"+user.id);
                   console.log(user);
@@ -72,8 +74,10 @@ exports.login = (req,res) =>{
     }
     bcript.compare(password,user.password,(err,isvalid)=>{
       if(isvalid){
-        jwt.sign({id:user.id,role:user.role},process.env.JWT_SECRET,{expireIn:'1h'})
-console.log("token injecter avec succes");
+        const token = jwt.sign({id:user.id,role:user.role},process.env.JWT_SECRET,{expiresIn:'1h'})
+        res.cookie('token',token,{httpOnly:true,maxAge:3600000})
+        res.redirect('/')
+        console.log("token injecter avec succes");
       }
       else{
         res.render('login',{incorrect_password:"mot de passe incorrect", password:password ||"" , email: email|| ""})
@@ -83,11 +87,21 @@ console.log("token injecter avec succes");
 }
 
 exports.verifyToken = (req,res,next)=>{
-    const token = req.headers['authorization']
+    const token = req.cookies.token
+    console.log(token);
     if(!token){
-      console.log("vous n'etes pas authentifie");
-      return
+      
+      return res.render('/login')
       
     }
-    next()
+
+    jwt.verify(token,process.env.JWT_SECRET,(err,data)=>{
+      if(err){
+        console.log(location);
+        return res.render(`${location.pathname}`,{eror_token:"Ouff il s'est produit une erreur"})
+      }
+      req.user = data
+      next()
+
+    })
 }

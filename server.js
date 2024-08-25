@@ -5,9 +5,11 @@ const path = require("path")
 const router = require("./routes/auth")
 const passport = require("passport")
 const session = require("express-session")
+const cookie_parser = require("cookie-parser")
 
 
 const app = express()
+app.use(cookie_parser())
 
 dotenv.config()
 
@@ -31,7 +33,6 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
-
 app.use(router)
 
 app.listen(process.env.PORT, () => {
