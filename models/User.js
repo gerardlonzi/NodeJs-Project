@@ -37,11 +37,11 @@ const UserModels = new mongoose.Schema(
                 return this.googleId ? true : false
             }
         },
-        emailVerifiedToken :{
+        rest_token:{
             type:String
         },
-        emailTimeExpire:{
-            type: Date
+        expire_token:{
+            type:Date
         }
 
     },{timestamps:true}

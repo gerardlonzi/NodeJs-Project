@@ -8,8 +8,13 @@
 <body>
     <p>hello world</p>
     <p>
+        <% if (typeof data !=='undefined' && typeof data !=="null") { %>
+            <p><%= data.email %></p>
+        <% } else { %>
+         
         <a href="login">login</a>
         <a href="register">register</a>
+        <% } %>
     </p>
     <p></p>
 </body>

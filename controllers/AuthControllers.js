@@ -3,6 +3,7 @@ const bcript = require("bcryptjs")
 const crypto = require('crypto')
 const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
+const nodemailer = require("nodemailer")
 
 dotenv.config()
 
@@ -48,10 +49,11 @@ exports.register = (req, res) => {
                if(err) throw err;
                newUser.password = hash
                console.log("hash"+hash);
+               
                newUser.save().then(user=>{
                   const token = jwt.sign({id:user.id,role:user.role},process.env.JWT_SECRET,{expiresIn:'1h'})
                   res.cookie('token',token,{httpOnly:true,maxAge:3600000})
-                  res.redirect('/dashboard')
+                  res.redirect('/send-email-verified')
                   console.log("token"+token);
                   console.log("user id"+user.id);
                   console.log(user);
@@ -68,6 +70,14 @@ exports.register = (req, res) => {
 
 exports.login = (req,res) =>{
     const {email,password} = req.body
+    if (!email) {
+      return res.render('login', {error_msg_field_email: typeof email !== 'undefined' ? "": "l'email est requis"  ,error_msg_field_password: typeof password !== 'undefined' ? "": "le passsword est requis", email: email || "", password: password || "" })
+  
+  
+    }
+    if (!password) {
+      return res.render('login', { error_msg_field_password: "le passsword est requis", password: password, email: email || "" })
+    }
      User.findOne({email}).then(user=>{
     if(!user){
       return res.render('login',{email_notExist:"cet utilisateur n'existe pas veuiller creer un compte", password:password ||"" , email: email|| ""})
@@ -91,17 +101,59 @@ exports.verifyToken = (req,res,next)=>{
     console.log(token);
     if(!token){
       
-      return res.render('/login')
-      
+        return next()
     }
 
-    jwt.verify(token,process.env.JWT_SECRET,(err,data)=>{
+    jwt.verify(token,process.env.JWT_SECRET,async(err,data)=>{
       if(err){
-        console.log(location);
-        return res.render(`${location.pathname}`,{eror_token:"Ouff il s'est produit une erreur"})
+        return res.redirect("/error?error=token invalide ou expirer veuiller vous reconnecter")
       }
       req.user = data
-      next()
+      return next()
 
+      
     })
+}
+
+exports.sendMailContain = (options)=>{
+  const transporter = nodemailer.createTransport({
+    service:"Gmail",
+    auth:{
+      user : process.env.EMAIL_NODE,
+      pass:process.env.PASSWORD
+    }
+  })
+  const mail_options ={
+    from:process.env.EMAIL_NODE,
+    to:options.email,
+    subject:options.subject,
+    html:options.message
+  }
+  return transporter.sendMail(mail_options)
+
+}
+
+exports.EmailVerified = async(req,res,next)=>{
+  const userAuth = req.user
+  if(!userAuth){
+    return next()
+  }
+
+  try{
+    const verifiedEmailVerified = await User.findById(req.user.id)
+    if(verifiedEmailVerified.emailVerified !== true){
+      return res.redirect('/send-email-verified?message="vous devez verifier votre email address')
+    }
+    return next()
+  }
+  catch(err){
+    return res.redirect("/error?error=une erreur s'est produit")
+
+  }
+
+}
+
+exports.SendEmail = (req,res)=>{
+  const token = jwt.sign({id:req.user.id,role:req.user.role},process.env.JWT_SECRET_EMAIL,{expiresIn:'1h'})
+  const url = 
 }
