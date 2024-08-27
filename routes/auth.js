@@ -51,8 +51,11 @@ router.get('/send-email-verified',verifyToken,async(req,res)=>{
             console.log(err);
             data = null
         }
+        return res.render('../views/send-email-verified',{data: data || ""})
     }
-    res.render('../views/send-email-verified',{data: data || ""})
+    else{
+      return  res.redirect('/login')
+    }
 })
 router.post('/send-email-verified',verifyToken,SendEmail)
 

@@ -153,7 +153,33 @@ exports.EmailVerified = async(req,res,next)=>{
 
 }
 
-exports.SendEmail = (req,res)=>{
-  const token = jwt.sign({id:req.user.id,role:req.user.role},process.env.JWT_SECRET_EMAIL,{expiresIn:'1h'})
-  const url = 
+exports.SendEmail = async(req,res)=>{
+  try{
+  const user= await User.findById(req.user.id)
+    if(!user){
+      return res.redirect("/error?error= utilisateur non approuver")
+    }
+
+    const token = crypto.randomBytes(20).toString('hex')
+    user.emailVerifiedToken = token
+    user.emailVerifiedTokenExpire = Date.now() + 3600000
+    await user.save()
+    const url =  `http://${req.headers.host}/verified-email?${token}`
+    const options = {
+      email : user.email,
+      subject : "GL dev : Verification de votre adresse email",
+      message:`<p>veuiller cliquer sur ce lien 👇🏼👇🏼 pour verifier votre addresse email \n ${url}</p>`
+    }
+    this.sendMailContain(options).then(result=>{
+      console.log(result);
+  }).catch(err=>{
+    console.log(err);
+  })
+  }
+  catch(err){
+    return res.redirect("/error?error=une erreur s'est produiter")
+  }
+    
+
+
 }
