@@ -1,5 +1,5 @@
 const express = require("express")
-const { register, login, verifyToken, SendEmail, EmailVerified } = require("../controllers/AuthControllers")
+const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified} = require("../controllers/AuthControllers")
 const router = express.Router()
 const User = require("../models/User")
 
@@ -34,12 +34,25 @@ router.get('/dashboard',verifyToken,EmailVerified,(req,res)=>{
         res.redirect("/login")
     }
 })
-router.get("/login", (req, res) => {
-    res.render("../views/login")
+router.get("/login",verifyToken, (req, res) => {
+    console.log(req.user);
+    
+    if(req.user){
+        return res.redirect("/")
+    }
+    else{
+        res.render("../views/login")
+    }
 })
-router.get("/register", (req, res) => {
-    res.render("../views/register")
+router.get("/register",verifyToken, (req, res) => {
+    if(req.user){
+        return res.redirect("/")
+    }
+    else{
+        res.render("../views/register")
+    }
 })
+
 router.get('/send-email-verified',verifyToken,async(req,res)=>{
     let data; 
     if( req.user){
@@ -58,5 +71,16 @@ router.get('/send-email-verified',verifyToken,async(req,res)=>{
     }
 })
 router.post('/send-email-verified',verifyToken,SendEmail)
+router.get('/verified-email',EmailIsVerified)
+router.get('/reset-password',verifyToken,(req,res)=>{
+        if(req.user){
+            res.redirect('/')
+        }
+        else{
+            res.render("../views/reset-password.")
+        }
+})
+router.post('/api/auth/reset-password',verifyToken)
+
 
 module.exports = router

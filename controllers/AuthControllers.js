@@ -162,9 +162,9 @@ exports.SendEmail = async(req,res)=>{
 
     const token = crypto.randomBytes(20).toString('hex')
     user.emailVerifiedToken = token
-    user.emailVerifiedTokenExpire = Date.now() + 3600000
+    user.emailVerifiedTokenExpire = Date.now() + 20000000
     await user.save()
-    const url =  `http://${req.headers.host}/verified-email?${token}`
+    const url =  `http://${req.headers.host}/verified-email?token=${token}`
     const options = {
       email : user.email,
       subject : "GL dev : Verification de votre adresse email",
@@ -179,7 +179,37 @@ exports.SendEmail = async(req,res)=>{
   catch(err){
     return res.redirect("/error?error=une erreur s'est produiter")
   }
-    
-
 
 }
+
+exports.EmailIsVerified = async(req,res,next)=>{
+  const token = req.query.token
+  console.log("token"+token)
+  try{
+
+    const user = await User.findOne({
+      emailVerifiedToken:token,
+      emailVerifiedTokenExpire :{$gt:Date.now()}
+    })
+    console.log("user"+user)
+    if(!user){
+      return res.redirect('/send-email-verified')
+    }
+
+    user.emailVerified = true
+    user.emailVerifiedToken = null
+    user.emailVerifiedTokenExpire = null
+    user.save().then(()=>{
+      res.redirect('/dashboard')
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  } 
+  catch{
+    console.log('une erreur est survenue');
+  }
+}
+
+
+
