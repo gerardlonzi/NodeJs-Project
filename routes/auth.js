@@ -1,5 +1,5 @@
 const express = require("express")
-const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified} = require("../controllers/AuthControllers")
+const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword} = require("../controllers/AuthControllers")
 const router = express.Router()
 const User = require("../models/User")
 
@@ -41,7 +41,7 @@ router.get("/login",verifyToken, (req, res) => {
         return res.redirect("/")
     }
     else{
-        res.render("../views/login")
+        res.render("../views/authViews/login")
     }
 })
 router.get("/register",verifyToken, (req, res) => {
@@ -49,7 +49,7 @@ router.get("/register",verifyToken, (req, res) => {
         return res.redirect("/")
     }
     else{
-        res.render("../views/register")
+        res.render("../views/authViews/register")
     }
 })
 
@@ -64,7 +64,7 @@ router.get('/send-email-verified',verifyToken,async(req,res)=>{
             console.log(err);
             data = null
         }
-        return res.render('../views/send-email-verified',{data: data || ""})
+        return res.render('../views/authViews/send-email-verified',{data: data || ""})
     }
     else{
       return  res.redirect('/login')
@@ -72,15 +72,18 @@ router.get('/send-email-verified',verifyToken,async(req,res)=>{
 })
 router.post('/send-email-verified',verifyToken,SendEmail)
 router.get('/verified-email',EmailIsVerified)
-router.get('/reset-password',verifyToken,(req,res)=>{
+router.get('/forget-password',verifyToken,(req,res)=>{
         if(req.user){
             res.redirect('/')
         }
         else{
-            res.render("../views/reset-password.")
+            res.render("../views/authViews/forget-password",{error : req.query.error,message:req.query.message})
         }
 })
-router.post('/api/auth/reset-password',verifyToken)
-
+router.post('/api/auth/forget-password',forgetpassword)
+router.get('/reset-password',forget_Password_emailVerified,(req,res)=>{
+    return res.render('../views/authViews/reset-password')
+})
+router.post('/api/auth/reset-password',resetPassword)
 
 module.exports = router

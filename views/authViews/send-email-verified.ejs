@@ -6,7 +6,11 @@
     <title>Send email verification</title>
 </head>
 <body>
-    <p class="new"></p>
+    <p class="new">
+        <% if (typeof message !=='undefined') { %>
+         <%= message %>
+        <% } %>
+    </p>
     <h1>un email de verification vous a ete envoyer</h1>
     <input type="email" name="" id="" value="<%= typeof data.email !=='undefined' && data.email !== null ? data.email: "" %>" disabled>
     <button class="btn-sndmail"> envoyer</button>

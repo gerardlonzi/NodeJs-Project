@@ -43,10 +43,10 @@ const UserModels = new mongoose.Schema(
         emailVerifiedTokenExpire :{
             type:Date
         },
-        rest_token:{
+        resetPasswordtoken:{
             type:String
         },
-        expire_token:{
+        resetPasswordtokenExpire:{
             type:Date
         }
 

@@ -142,7 +142,7 @@ exports.EmailVerified = async(req,res,next)=>{
   try{
     const verifiedEmailVerified = await User.findById(req.user.id)
     if(verifiedEmailVerified.emailVerified !== true){
-      return res.redirect('/send-email-verified?message="vous devez verifier votre email address')
+      return res.redirect('/send-email-verified?message=vous devez verifier votre email address')
     }
     return next()
   }
@@ -172,6 +172,8 @@ exports.SendEmail = async(req,res)=>{
     }
     this.sendMailContain(options).then(result=>{
       console.log(result);
+      return res.redirect('/send-email-verified?message=email envoyer')
+
   }).catch(err=>{
     console.log(err);
   })
@@ -208,6 +210,98 @@ exports.EmailIsVerified = async(req,res,next)=>{
   } 
   catch{
     console.log('une erreur est survenue');
+  }
+}
+
+exports.forgetpassword  = async(req,res)=>{
+  const email = req.body.email
+  if(!email || !email.includes('@gmail')){
+    return res.redirect('/forget-password?error=vueiller entrer un addresse email valide')
+  }
+try{
+  await User.findOne({email}).then(user =>{
+    if(!user){
+      return res.redirect("/forget-password?error=cette addresse email n'existe pas")
+    }
+    const token = crypto.randomBytes(20).toString('hex')
+    user.resetPasswordtoken = token
+    user.resetPasswordtokenExpire = Date.now() + 20000000
+    user.save()
+    const url = `http://${req.headers.host}/reset-password?token=${token}`
+    const options = {
+      email : email,
+      subject :"Reunitialisation du mot de passe",
+      message : `<p>cliquer sur ce lien pour reunitialiser votre mot de passe  <a href=${url}>clique ici</a>
+ </p>`
+    }
+    this.sendMailContain(options).then(result=>{
+      console.log(result);
+      return res.redirect('/forget-password?message=email envoyer')
+    }).catch(err=>{
+      console.log(err);
+    })
+
+  }).catch(err=>{
+    console.log(err);
+    return res.redirect('/forget-password?error=une erreur est survenue reesayer')
+  })
+
+  
+}
+catch(err){
+  return res.redirect('/forget-password?error=une erreur est survenue reesayer')
+}
+}
+
+exports.forget_Password_emailVerified = async(req,res,next)=>{
+  const token = req.query.token
+  try{
+    const user = await User.findOne({
+      resetPasswordtoken:token,
+      resetPasswordtokenExpire:{$gt:Date.now()}
+    })
+      if(!user){
+        return res.redirect('/forget-password?error= lien expirer ou token non valide')
+      }
+      return next()
+    
+  }
+  catch(err){
+    return res.redirect('/forget-password?error=une erreur est survenur veuiller reessayer')
+  }
+}
+
+exports.resetPassword = async(req,res)=>{
+  const token = req.query.token
+  try{
+    const user = await User.findOne({
+    resetPasswordtoken:token,
+    resetPasswordtokenExpire:{$gt:Date.now()}
+  })
+      if(!user){
+        console.log('user'+user);
+        
+        return res.redirect('/forget-password?error=une erreur est survenur veuiller reessayer')
+      }
+      bcript.hash(req.body.password,10,(err,pass_hasher)=>{
+        if(err) throw err
+        user.password = pass_hasher
+        user.resetPasswordtoken = null
+        user.resetPasswordtokenExpire = null
+  
+        user.save().then(()=>{
+          return res.redirect('/login')
+        })
+        .catch(()=>{
+          return res.redirect('/reset-password?error=une erreur est survenur veuiller reessayer')
+        })
+        
+      })
+      
+    
+  }
+  catch(err){
+    return res.redirect('/reset-password?error= veuiller actualiser la page et reessayer')
   }
 }
 
