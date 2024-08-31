@@ -1,10 +1,10 @@
 const express = require("express")
-const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword} = require("../controllers/AuthControllers")
+const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword, deleteUser, IsAdmin} = require("../controllers/AuthControllers")
 const router = express.Router()
 const User = require("../models/User")
 
-router.post("/api/auth/register",register)
-router.post("/api/auth/login",login,(req,res)=>{
+router.post("/register",register)
+router.post("/login",login,(req,res)=>{
     
 })
 router.get("/",verifyToken,EmailVerified, async(req, res) => {
@@ -26,9 +26,9 @@ router.get("/error", (req, res) => {
     const error_token = req.query.error || "une erreur s'est produite"
     res.render("../views/error",{error_token:error_token})
 })
-router.get('/dashboard',verifyToken,EmailVerified,(req,res)=>{
-    if(req.user){
-        return res.render("../views/dashboard")
+router.get('/profile',verifyToken,EmailVerified,(req,res)=>{
+    if(req.user && req.user.role=='admin'){
+        return res.render("../views/profile")
     }
     else{
         res.redirect("/login")
@@ -41,7 +41,10 @@ router.get("/login",verifyToken, (req, res) => {
         return res.redirect("/")
     }
     else{
-        res.render("../views/authViews/login")
+        const message = req.session.message || {}
+        req.session.message = null
+
+        res.render("../views/authViews/login",{message:message})
     }
 })
 router.get("/register",verifyToken, (req, res) => {
@@ -49,7 +52,9 @@ router.get("/register",verifyToken, (req, res) => {
         return res.redirect("/")
     }
     else{
-        res.render("../views/authViews/register")
+        const message = req.session.message || {}
+        req.session.message= null
+        res.render("../views/authViews/register",{message:message})
     }
 })
 
@@ -80,10 +85,37 @@ router.get('/forget-password',verifyToken,(req,res)=>{
             res.render("../views/authViews/forget-password",{error : req.query.error,message:req.query.message})
         }
 })
-router.post('/api/auth/forget-password',forgetpassword)
+router.post('/forget-password',forgetpassword)
 router.get('/reset-password',forget_Password_emailVerified,(req,res)=>{
     return res.render('../views/authViews/reset-password')
 })
-router.post('/api/auth/reset-password',resetPassword)
+router.post('/reset-password',resetPassword)
+router.get('/logout',(req,res)=>{
+    req.logout(err=>{
+        if(err){
+           return res.redirect('/profile')
+
+        }
+        
+        res.clearCookie('token')
+        return res.redirect('/login')
+    })
+})
+
+router.delete('/Delete-account',verifyToken,deleteUser)
+router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
+    let data; 
+    if( req.user){
+        try{
+            const user = await User.findById(req.user.id)
+            data = user
+        }
+        catch(err){
+            console.log(err);
+            data = null
+        }
+    }
+    return res.render('../views/dashboard',{data:data})
+})
 
 module.exports = router

@@ -5,7 +5,10 @@ const UserModels = new mongoose.Schema(
             type:String,
         },
         name:{
-            type:String
+            type:String,
+            default:function(){
+                return this.email.split('@')[0]
+            }
         },
         email:{
             type:String,
@@ -21,7 +24,8 @@ const UserModels = new mongoose.Schema(
             required:true
         },
         profilePicture:{
-            type:String
+            type:String,
+            default:'/images/profile-picture.jpg'
         },
         DateOfBirth:{
             type:Date,

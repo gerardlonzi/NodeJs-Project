@@ -6,32 +6,32 @@
     <title>Login</title>
 </head>
 <body>
-   <form action="/api/auth/login" method="post">
+   <form action=""  method="post">
         <p class="ins_conn">Se connecter</p>
         <div>
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email" value="<%=typeof email !=="undefined" ? email : ""  %>">
+            <input type="text" id="email" name="email" value="<%=typeof message !=='undefined' &&typeof message.email !=="undefined" ? message.email : ""  %>">
             <span>
-                <% if (typeof error_msg_field_email !== 'undefined' && error_msg_field_email.length > 0) { %>
-                    <%= error_msg_field_email %>
+                <% if (typeof message.error_msg_field_email !== 'undefined' && error_msg_field_email.length > 0) { %>
+                    <%= message.error_msg_field_email %>
                 <% } %>
             </span>
-            <p><% if (typeof email_notExist !== 'undefined' ) { %>
-               <%= email_notExist %>
+            <p><% if (typeof message.email_notExist !== 'undefined' ) { %>
+               <%= message.email_notExist %>
             <% } %></p>
         </div>
         <div>
             <label for="password">Mot de passe:</label>
-            <input type="password" id="password" name="password" value="<%= typeof password !== 'undefined'? password : '' %>" />
+            <input type="password" id="password" name="password" value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
             <span>
-                <% if (typeof password_length !== 'undefined') { %>
-                    <%= password_length %>
+                <% if (typeof message.password_length !== 'undefined') { %>
+                    <%= message.password_length %>
                 <% } %>
-                <% if (typeof error_msg_field_password !== 'undefined') { %>
-                    <%= error_msg_field_password %>
+                <% if (typeof message.error_msg_field_password !== 'undefined') { %>
+                    <%= message.error_msg_field_password %>
                 <% } %>
-                <% if (typeof incorrect_password !== 'undefined') { %>
-                    <%= incorrect_password %>
+                <% if (typeof message.incorrect_password !== 'undefined') { %>
+                    <%= message.incorrect_password %>
                 <% } %>
 
                 
