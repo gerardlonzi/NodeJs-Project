@@ -8,6 +8,8 @@ router.post("/login",login,(req,res)=>{
     
 })
 router.get("/",verifyToken,EmailVerified, async(req, res) => {
+    console.log(req);
+    
         console.log(req.user);
         let data ;
         if(req.user){

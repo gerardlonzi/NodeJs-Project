@@ -3,7 +3,8 @@ const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const path = require("path")
 const router = require("./routes/auth")
-const passport = require("passport")
+const routerAouth = require('./routes/AuthOuthroad')
+const passport = require("./controllers/AuthOuth")
 const session = require("express-session")
 const cookie_parser = require("cookie-parser")
 const method_overide = require('method-override')
@@ -33,11 +34,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(session({
       secret: process.env.EXPRESS_SECRET,
       resave: true,
-      saveUninitialized: true
+      saveUninitialized: false
 }))
 
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(method_overide('_method'))
 app.use(router)
+app.use('/auth',routerAouth)
 
