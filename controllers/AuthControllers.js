@@ -352,6 +352,9 @@ exports.deleteUser = async (req, res) => {
 }
 
 exports.IsAdmin = (req,res,next)=>{
+  if(!req.user){
+    return res.redirect('/login')
+  }
   if(req.user.role !=='admin'){
     return res.redirect('/profile')
   }

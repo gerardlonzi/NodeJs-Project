@@ -27,7 +27,7 @@ router.get("/error", (req, res) => {
     res.render("../views/error",{error_token:error_token})
 })
 router.get('/profile',verifyToken,EmailVerified,(req,res)=>{
-    if(req.user && req.user.role=='admin'){
+    if(req.user && req.user.role=='user'){
         return res.render("../views/profile")
     }
     else{
@@ -109,13 +109,16 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
         try{
             const user = await User.findById(req.user.id)
             data = user
+             res.render('../views/dashboard',{data:data})
         }
         catch(err){
             console.log(err);
             data = null
         }
     }
-    return res.render('../views/dashboard',{data:data})
+    else{
+        res.redirect('/')
+    }
 })
 
 module.exports = router
