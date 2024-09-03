@@ -21,11 +21,15 @@ const UserModels = new mongoose.Schema(
         },
         password:{
             type:String,
-            required:true
+            required:function(){
+                return this.googleId ? false : true
+            }
         },
         profilePicture:{
             type:String,
-            default:'/images/profile-picture.jpg'
+            default:function(){
+                return this.googleId ? String : '/images/profile-picture.jpg'
+            } 
         },
         DateOfBirth:{
             type:Date,

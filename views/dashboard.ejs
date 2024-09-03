@@ -1,17 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboard</title>
-</head>
-<body>
-    <% if (typeof data !=='undefined' && typeof data !== null) { %>
-        <p><%= data.name || "" %></p>
-        <img src="<%= data.profilePicture || "" %>" alt="">
-        <p><%= data.email || "" %></p>
-    <% } %>
-    <%- include('partiel/disconnect_logout',{title:'Bienvenue dans ton dashbord'}) %>
+<%- include('partiel/head',{title:"Dashboard"}) %>
+    <aside>
+        <p class="title">Dashboard Admin</p>
+        <nav>
+            <ul>
+                <li>
+                    <i class="bi bi-clipboard-data"></i> <a href="/dashboard/all">All</a>
+                </li>
+                <li>
+                    <i class="bi bi-grid-1x2"></i>  <a href="/dashboard/publication">Publication</a>
+                </li>
+                <li>
+                    <i class="bi bi-people"></i><a href="/dashboard/users">Utilisateur</a>
+                </li>
+                <li>
+                    <i class="bi bi-currency-dollar"></i> <a href="/dashboard/Gain">Gain</a>
+                </li>
+                <li>
+                    <i class="bi bi-pen"></i><a href="/dashboard/ecrire">Ecrire</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="profil">
+            <div>
+                <% if (typeof data !=='undefined' && typeof data !== null) { %>
+                    <% if (data.profilePicture) { %>
+                        <img src="<%= data.profilePicture %>" alt="">
+                    <% } else { %>
+                         <div class="img-loader">
+    
+                         </div>
+                    <% } %>
+                    <p><%= data.name || "" %></p>
+                    <!-- <p><%= data.email || "" %></p> -->
+                <% } %>
+            </div>
+            
+        </div>
+    </aside>
+    <main>
+
+        <%- include('partiel/disconnect_logout') %>
+    </main>
+
+
+
+
+
+
+
+
     <%- include('partiel/js') %>
 </body>
 </html>

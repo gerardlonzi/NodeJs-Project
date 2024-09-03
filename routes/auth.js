@@ -8,7 +8,6 @@ router.post("/login",login,(req,res)=>{
     
 })
 router.get("/",verifyToken,EmailVerified, async(req, res) => {
-    console.log(req);
     
         console.log(req.user);
         let data ;
@@ -29,7 +28,8 @@ router.get("/error", (req, res) => {
     res.render("../views/error",{error_token:error_token})
 })
 router.get('/profile',verifyToken,EmailVerified,(req,res)=>{
-    if(req.user && req.user.role=='user'){
+    console.log('requser'+ req.user);
+     if(req.user && req.user.role=='user'){
         return res.render("../views/profile")
     }
     else{

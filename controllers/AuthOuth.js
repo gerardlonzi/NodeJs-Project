@@ -16,10 +16,11 @@ passport.use(new GoogleStrtegy({
             return done(null, user)
         }
         else {
-            user = new user({
+            user = new User({
                 googleId: profile.id,
                 name: profile.displayName,
                 email: profile.emails[0].value,
+                profilePicture:profile.photos[0].value,
                 role: 'user'
             })
             await user.save()
@@ -37,12 +38,13 @@ passport.use(new GoogleStrtegy({
 ))
 
 passport.serializeUser((user, done) => {
-    return done(null, user.id)
+const userIdentify = {id:user.id,role:user.role}
+    return done(null,userIdentify)
 })
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (userIdentify, done) => {
     try {
-        const user = await User.findOne(id);
+        const user = await User.findById(userIdentify.id);
         done(null, user)
     }
     catch (err) {

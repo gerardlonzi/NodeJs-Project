@@ -7,8 +7,12 @@ routerAouth.get('/google',passport.authenticate('google',{
 }))
 routerAouth.get('/google/callback',passport.authenticate('google',{
     failureRedirect:'/',}),(req,res)=>{
-        
-        res.redirect('/profile')
+        if(req.user.role =='user'){
+            return res.redirect('/profile')
+        }
+        if(req.user.role = 'admin'){
+            res.redirect('/dashboard')
+        }
     }
 )
 
