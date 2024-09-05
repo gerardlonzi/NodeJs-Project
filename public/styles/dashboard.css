@@ -19,7 +19,8 @@ body{
 aside{
     background-color: black;
     height: 100vh;
-    width: 20%;
+    position: fixed;
+    width: 18%;
     padding: 20px;
     color: var(--color-no-hover);
     display: flex;
@@ -107,6 +108,38 @@ main{
     background-color: rgb(238, 238, 238);
     width: 100%;
     padding: 50px;
+    margin-left: 18%;
+
+}
+.head_desc{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.head_desc p:first-child{
+font-size: 30px;
+}
+.head_desc p:nth-child(2){
+font-size: 13px;
+}
+hr{
+   border: 1px solid rgb(180, 180, 180);
+}
+.filter-block{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    gap: 10px;
+}
+.filter-block input{
+    color: black;
+}
+.filter-block input::-webkit-datetime-edit { padding: 0.4em; }
+::-webkit-datetime-edit-text { color: red; padding: 0 0.3em; }
+
+.all,.users{
+    height: 100vh;
 
 }
 .block{
@@ -150,4 +183,11 @@ color: grey;
 .element>p{
     font-size: 50px;
     color: gainsboro;
+}
+
+.users{
+    display: flex;
+}
+.action_form form select{
+    padding: 3px;
 }
