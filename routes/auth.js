@@ -106,12 +106,53 @@ router.get('/logout',(req,res)=>{
 
 router.delete('/Delete-account',verifyToken,deleteUser)
 router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
+    const { fromDate, toDate } = req.query;
+    const dateNow = new Date().toISOString().slice(0,10)
     let data; 
     if( req.user){
         try{
             const user = await User.findById(req.user.id)
             data = user
-             res.render('../views/dashboard',{data:data})
+            let allUsers;
+            let usersVerifie;
+            let usersNotVerified;
+
+            if (fromDate && toDate) {
+                const from = new Date(fromDate);
+                const to = new Date(toDate) > Date.now() ? Date.now() : new Date(toDate);
+
+                allUsers = await User.countDocuments({
+                    createdAt: { $gte: from, $lte: to }
+                });
+                usersVerifie = await User.countDocuments({
+                    emailVerified: true,
+                    createdAt: { $gte: from, $lte: to }
+                });
+                usersNotVerified = await User.countDocuments({
+                    emailVerified: false,
+                    createdAt: { $gte: from, $lte: to }
+                });
+            } else {
+                allUsers = await User.countDocuments();
+                usersVerifie = await User.countDocuments({
+                    emailVerified: true
+                });
+                usersNotVerified = await User.countDocuments({
+                    emailVerified: false
+                });
+            }
+            const usersElem = await User.find()
+
+            res.render('../views/dashboard', {
+                data: data,
+                allUsers: allUsers,
+                usersNotVerified: usersNotVerified,
+                usersVerifie: usersVerifie,
+                fromDate:fromDate,
+                toDate:toDate,
+                dateNow:dateNow,
+                usersElem:usersElem
+            });
         }
         catch(err){
             console.log(err);

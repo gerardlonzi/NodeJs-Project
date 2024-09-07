@@ -9,3 +9,55 @@
         bloc.style.display = 'none'
     })
 </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#userTable').DataTable();
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    const growthChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['<%=fromDate  %>', '<%= toDate %>'], // Les mois de référence
+        datasets: [
+          {
+            label: 'Users',  // Ligne pour les utilisateurs vérifiés
+            data: ["<%= allUsers %>","<%= allUsers %>"], // Données pour chaque mois
+            borderColor: 'green', // Couleur de la ligne
+            fill: false,
+            tension: 0.1
+          },
+          {
+            label: 'Utilisateurs non vérifiés',  // Ligne pour les utilisateurs non vérifiés
+            data: ["<%= usersNotVerified %>", "<%= usersNotVerified %>"], // Données pour chaque mois
+            borderColor: 'blue', // Couleur différente pour cette ligne
+            fill: false,
+            tension: 0.1
+          },
+          {
+            label: 'Utilisateurs  vérifiés',  // Ligne pour les utilisateurs non vérifiés
+            data: ["<%= usersVerifie %>", "<%= usersVerifie %>"], // Données pour chaque mois
+            borderColor: 'aqua', // Couleur différente pour cette ligne
+            fill: false,
+            tension: 0.1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true  // Commence l'axe Y à zéro
+          }
+        }
+      }
+    });
+  </script>
+
+  
+
+
+

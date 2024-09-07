@@ -8,6 +8,7 @@ const passport = require("./controllers/AuthOuth")
 const session = require("express-session")
 const cookie_parser = require("cookie-parser")
 const method_overide = require('method-override')
+const routerDashboard = require('./routes/DashboardActionRoad')
 
 
 const app = express()
@@ -15,7 +16,7 @@ app.use(cookie_parser())
 
 dotenv.config()
 
- mongoose.connect(process.env.MONGODB_URL).then(() => {
+mongoose.connect(process.env.MONGODB_URL).then(() => {
       console.log(`connecter a la base de donnees`);
       app.listen(process.env.PORT, () => {
             console.log(`server connecter au port ${process.env.PORT} ou 8000`);
@@ -40,6 +41,8 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(method_overide('_method'))
+
 app.use(router)
 app.use('/auth',routerAouth)
+app.use('/dashboard',routerDashboard)
 

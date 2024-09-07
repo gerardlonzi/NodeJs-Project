@@ -132,14 +132,31 @@ hr{
     align-items: center;
     gap: 10px;
 }
+.filter-block form{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .filter-block input{
     color: black;
+}
+.filter-block input[type='submit']{
+    background-color:rgb(41, 41, 41) ;
+    border: 0;
+    border-radius: 10px;
+    color: white;
+    padding: 9px 17px;
+    cursor: pointer;
+}
+.filter-block input[type='submit']:hover{
+ background-color: rgb(19, 19, 19);
+ transition: .4s ease;
 }
 .filter-block input::-webkit-datetime-edit { padding: 0.4em; }
 ::-webkit-datetime-edit-text { color: red; padding: 0 0.3em; }
 
 .all,.users{
-    height: 100vh;
+    height: 120vh;
 
 }
 .block{
@@ -184,10 +201,55 @@ color: grey;
     font-size: 50px;
     color: gainsboro;
 }
-
 .users{
-    display: flex;
+    margin-top: 100px;
+
 }
-.action_form form select{
-    padding: 3px;
+.users table{
+    width: 100%;
+}  
+.users table td{
+    text-align: center;
+    color:rgb(58, 58, 58) ;
+    letter-spacing: 1px;
+
+} 
+.users table td select{
+    border: 0;
+    font-size: 17px;
+    background-color: transparent;
+    cursor: pointer;
+}
+.users table td select:hover{
+    font-weight: bold;
+    transition: .4s ease;
+}
+#growthChart{
+    margin-top: 25px;
+    
+}
+.profileUser{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.profileUser img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.verifiedProfil{
+  padding: 5px 10px;
+}
+.deleteUser{
+font-size: 20px;
+color: rgb(181, 1, 1);
+border: 0;
+background-color: transparent;
+cursor: pointer;
+}
+.deleteUser:hover{
+    color: rgb(255, 0, 0);
+    transition: .4 ease;
 }
