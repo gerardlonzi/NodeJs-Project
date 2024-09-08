@@ -1,17 +1,21 @@
-<form action="/logout" method="get">
-    <!-- <a href="">logout</a> -->
-    <input type="submit" value="logout">
-</form>
 
-<button class="supp">supprimer le compte</button>
-<div class="bloc" style="display: none ;margin-top: 30px;padding:40px;background-color:blue;">
-    <p style="color: white;">ext vous sur de vouloir supprimer votre compte ? cette action sera irreversible</p>
-    <div style="display: flex;gap:20px">
+<section id="Adminprofile">
 
-        <button class="annuler">Annuler</button>
-        <form action="/Delete-account?_method=DELETE" method="post">
-            <input type="submit" value="supprimer">
-        </form>
+    <form action="/logout" method="get">
+        <!-- <a href="">logout</a> -->
+        <input type="submit" value="logout">
+    </form>
+    
+    <button class="supp">supprimer le compte</button>
+    <div class="bloc" style="display: none ;margin-top: 30px;padding:40px;background-color:blue;">
+        <p style="color: white;">ext vous sur de vouloir supprimer votre compte ? cette action sera irreversible</p>
+        <div style="display: flex;gap:20px">
+    
+            <button class="annuler">Annuler</button>
+            <form action="/Delete-account?_method=DELETE" method="post">
+                <input type="submit" value="supprimer">
+            </form>
+        </div>
     </div>
-</div>
 
+</section>    

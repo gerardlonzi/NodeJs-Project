@@ -116,10 +116,13 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
             let allUsers;
             let usersVerifie;
             let usersNotVerified;
+            let allUserlastmont;
+            let UserVerifielastmont;
+            let UserNotVerifielastmont;
 
             if (fromDate && toDate) {
                 const from = new Date(fromDate);
-                const to = new Date(toDate) > Date.now() ? Date.now() : new Date(toDate);
+                const to = new Date(toDate) 
 
                 allUsers = await User.countDocuments({
                     createdAt: { $gte: from, $lte: to }
@@ -131,6 +134,17 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
                 usersNotVerified = await User.countDocuments({
                     emailVerified: false,
                     createdAt: { $gte: from, $lte: to }
+                });
+                allUserlastmont = await User.countDocuments({
+                    createdAt: { $gte: from.setDate(from.getDay()-7), $lte: to.setDate(to.getDay()-7) }
+                });
+                UserVerifielastmont = await User.countDocuments({
+                    emailVerified: true,
+                    createdAt: { $gte:from.setDate(from.getDay()-7), $lte: to.setDate(to.getDay()-7) }
+                });
+                UserNotVerifielastmont = await User.countDocuments({
+                    emailVerified: false,
+                    createdAt: { $gte: from.setDate(from.getDay()-7), $lte: to.setDate(to.getDay()-7) }
                 });
             } else {
                 allUsers = await User.countDocuments();
@@ -151,7 +165,10 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
                 fromDate:fromDate,
                 toDate:toDate,
                 dateNow:dateNow,
-                usersElem:usersElem
+                usersElem:usersElem,
+                allUserlastmont:allUserlastmont,
+                UserVerifielastmont:UserVerifielastmont,
+                UserNotVerifielastmont:UserNotVerifielastmont
             });
         }
         catch(err){

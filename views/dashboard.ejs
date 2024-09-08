@@ -1,48 +1,55 @@
 <!DOCTYPE html>
 <%- include('partiel/head',{title:"Dashboard"}) %>
-    <aside>
+<link rel="stylesheet" href="/styles/dashboard.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+</head>
+<body>
+    <aside class='aside-dashboard'>
         <p class="title">Dashboard Admin</p>
         <nav>
             <ul>
                 <li>
-                    <i class="bi bi-clipboard-data"></i> <a href="/dashboard/all">All</a>
+                     <a href="#all" class="active"><i class="bi bi-clipboard-data"></i> All</a>
                 </li>
                 <li>
-                    <i class="bi bi-grid-1x2"></i> <a href="/dashboard/publication">Publication</a>
+                     <a href=""><i class="bi bi-grid-1x2"></i> Publication</a>
                 </li>
                 <li>
-                    <i class="bi bi-people"></i><a href="/dashboard/users">Utilisateur</a>
+                    <a href="#users"><i class="bi bi-people"></i> Utilisateur</a>
                 </li>
                 <li>
-                    <i class="bi bi-currency-dollar"></i> <a href="/dashboard/Gain">Gain</a>
+                     <a href=""><i class="bi bi-currency-dollar"></i>Gain</a>
                 </li>
                 <li>
-                    <i class="bi bi-pen"></i><a href="/dashboard/ecrire">Ecrire</a>
+                    <a href=""><i class="bi bi-pen"></i>Ecrire</a>
                 </li>
             </ul>
         </nav>
         <div class="profil">
-            <div>
-                <% if (typeof data !=='undefined' && typeof data !==null) { %>
-                    <% if (data.profilePicture) { %>
-                        <img src="<%= data.profilePicture %>" alt="admin-profile">
-                        <% } else { %>
-                            <div class="img-loader">
+            <a href="#Adminprofile">
 
-                            </div>
-                            <% } %>
-                                <p>
-                                    <%= data.name || "" %>
-                                </p>
-                                <!-- <p><%= data.email || "" %></p> -->
+                <div>
+                    <% if (typeof data !=='undefined' && typeof data !==null) { %>
+                        <% if (data.profilePicture) { %>
+                            <img src="<%= data.profilePicture %>" alt="admin-profile">
+                            <% } else { %>
+                                <div class="img-loader">
+    
+                                </div>
                                 <% } %>
-            </div>
-            <i class="bi bi-gear-fill"></i>
-
+                                    <p>
+                                        <%= data.name || "" %>
+                                    </p>
+                                    <!-- <p><%= data.email || "" %></p> -->
+                                    <% } %>
+                </div>
+                <i class="bi bi-gear-fill"></i>
+            </a>    
         </div>
     </aside>
-    <main>
-        <section class="all">
+    <main id="all">
+        <section class="all" >
             <div class="head_desc">
                 <p>
                     Dashboard
@@ -54,7 +61,7 @@
             <hr>
             <div class="filter-block">
                 <p>Filter par date </p>
-                <form action="/dashboard" method="get">
+                <form action="/dashboard?_method=GET" method="post">
                     <div>
                         <label for="fromDate">du &emsp;</label>
                         <input max="<%= dateNow %>" type="date" value="<%= typeof fromDate !=='undefined' ? fromDate :""
@@ -202,12 +209,12 @@
             </div>
             <canvas id="growthChart" width="400" height="150"></canvas>
         </section>
-        <section class="users">
-            <table id="userTable" class="display">
+        <section class="users" id="users">
+            <table style=" width: 100%;"  id="userTable" class="display">
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Email</th>
+                        <th class="res_email">Email</th>
                         <th>Status</th>
                         <th>role</th>
                         <th>Action</th>
@@ -224,17 +231,17 @@
                                             <%= element.name%>
                                         </p>
                                     </td>
-                                    <td>
+                                    <td class="res_email">
                                         <%= element.email %>
                                     </td>
                                     <td >
-                                        <span class="verifiedProfil" style="background-color: <%= element.emailVerified  ? 'rgba(0, 255, 0, 0.169)' :'rgba(255, 0, 0, 0.334)' %>;
+                                        <span class="verifiedProfil" style="background-color: <%= element.emailVerified  ? 'rgba(0, 255, 0, 0.169)' :'rgba(255, 0, 0, 0.16)' %>;
                                         color:<%= element.emailVerified  ? 'green' :'red' %>;font-size:13px;">
                                             <%= element.emailVerified ? 'verifié' :'non verifié' %>
                                         </span>
                                     </td>
                                     <td>
-                                        <form action="/dashboard/role/">
+                                        <form method="post" action="/dashboard/user/role/<%= element.id %>?_method=PUT">
                                             <select name="role" id="" onchange="this.form.submit()">
                                                 <option value="user" <%= element.role == 'user'? 'selected':"" %> >User</option>
                                                 <option value="admin"   <%= element.role == 'admin'? 'selected':"" %>>Admin</option>

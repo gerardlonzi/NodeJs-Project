@@ -3,22 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/styles/home.css">
+    <title>Home</title>
 </head>
 <body>
-    <p>hello world</p>
-    <p>
-        
-        <% if (typeof data !=='undefined' && typeof data !=="null" && data.role =="user") { %>
-            <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture"> Profile</a>
-        <% } else if (typeof data !=='undefined' && typeof data !=="null" && data.role =="admin") { %>
-            <a href="/dashboard">dashboard</a>
-  
-        <% } else { %>
-        <a href="login">login</a>
-        <a href="register">register</a>
-        <% } %>
-    </p>
-    <p></p>
+    <header>
+        <nav>
+            <img src="/images/logo.png" alt="logo">
+            <ul>
+                <li><a href="">POURQUOI DETECTIF</a></li>
+                <li><a href="">CARACTERISTIQUE</a></li>
+                <li><a href="">FAQ</a></li>
+                <li><a href="">LANGUAGE</a></li>
+                <li> <% if (typeof data !=='undefined' && typeof data !=="null" && data.role =="user") { %>
+                    <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture"> Profile</a>
+                <% } else if (typeof data !=='undefined' && typeof data !=="null" && data.role =="admin") { %>
+                    <a href="/dashboard">dashboard</a>
+          
+                <% } else { %>
+                <a href="login">SE CONNECTER</a>
+                
+                <% } %></li>
+            </ul>
+        </nav>
+    </header>
+    
+    
 </body>
 </html>
