@@ -2,8 +2,194 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+body{
+    background-color: rgb(254, 254, 254);
+    overflow-x: hidden;
+}
+:root{
+    --purple-color : rgb(111, 63, 255);
+    --gris-black:rgb(77, 77, 77);
+    --secondary-color:  rgb(0, 0, 255);
+    --secondary-hover-shadow-color:  rgba(0, 0, 255, 0.507);
+    --SECURITY :rgb(43, 85, 98);
+
 }
 header nav{
     display: flex;
+    justify-content:space-between;
+    align-items: center;
     
+}
+header{
+    padding-inline: 140px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 20;
+   
+   
+}
+.header-scroll{
+transition: .7s ease;
+ background-color:rgb(254, 254, 254) ;
+
+}
+header nav img
+{
+    width: 120px;
+}
+.container{
+    padding-inline: 140px;
+    
+}
+header nav ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+header nav ul a{
+text-decoration: none;
+color:  var(--gris-black);
+font-weight: 600;
+font-size: 14px;
+line-height: 22px;
+letter-spacing: .05em;
+
+}
+header nav ul a:hover{
+    transition: .5s ease;
+    color: var(--purple-color);
+}
+.auth a{
+    color: var(--purple-color);
+    text-decoration: underline;
+}
+.auth a:hover{
+    text-decoration: none;
+}
+.barner{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 160px;
+    position: relative;
+}
+.bl-intro h1{
+    font-size: 55px;
+    font-weight:900;
+    line-height: 65px;
+    color: var(--gris-black);
+}
+.bl-intro h1 span{
+    color: var(--purple-color);
+}
+.bl-intro>div:first-child p{
+    margin-top: 60px;
+    font-size: 21px;
+    color: var(--purple-color);
+    font-weight: bold;
+}
+.bl-img img{
+    width: 550px;
+}
+.blur-bg{
+position: absolute;
+width: 16em ;
+height: 16em;
+background-color: var(--purple-color);
+z-index: -1;
+border-radius: 50%;
+right: -150px;
+top: -10px;
+filter: blur(200px);
+}
+.bl-input-num{
+margin-top: 22px;
+}
+
+.div-input-num{
+    width: 490px;
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 11px rgb(210, 210, 210);
+}
+.div-input-num form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.div-input-num form input{
+    padding: 20px;
+    font-size: 20px;
+    width: 100%;
+    padding-right: 30px;
+    border: 0;
+    outline: none;
+    width: 100%;
+    border-radius: 20px;
+
+}
+.div-input-num form button{
+    border-radius: 20px;
+    border: 0;
+    outline: none;
+    padding-inline: 18px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    background-color:var(--secondary-color);
+
+}
+.div-input-num form button:hover{
+    transition: .5s ease;
+    box-shadow: 0px 0px 30px var(--secondary-hover-shadow-color);
+}
+.iti__selected-flag:hover{
+    border-radius:20px 0px 0px 20px;
+} 
+.errorMessage{
+    margin-top: 7px;
+    color: rgb(245, 3, 3);
+    font-size: 13px;
+}
+.security{
+    margin-top: 35px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--SECURITY);
+}
+/* .security>div */
+.security>div{
+    border: 1px solid var(--gris-black);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 8px 30px;
+    gap: 5px;
+    user-select: none
+
+}
+.security>div i{
+    font-size: 25px;
+    color: var(--gris-black);
+}
+.security>div p{
+    color: var(--SECURITY);
+    font-size: 16px;
+}
+.security>div span{
+    
+    font-size: 10px;
+}
+.security p{
+    margin-top: 0;
+}
+.desc{
+    margin-top: 50px;
+    color: var(--gris-black);
 }

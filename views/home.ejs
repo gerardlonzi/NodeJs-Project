@@ -1,33 +1,175 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%- include('partiel/head',{title:"Home"}) %>
     <link rel="stylesheet" href="/styles/home.css">
-    <title>Home</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <img src="/images/logo.png" alt="logo">
-            <ul>
-                <li><a href="">POURQUOI DETECTIF</a></li>
-                <li><a href="">CARACTERISTIQUE</a></li>
-                <li><a href="">FAQ</a></li>
-                <li><a href="">LANGUAGE</a></li>
-                <li> <% if (typeof data !=='undefined' && typeof data !=="null" && data.role =="user") { %>
-                    <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture"> Profile</a>
-                <% } else if (typeof data !=='undefined' && typeof data !=="null" && data.role =="admin") { %>
-                    <a href="/dashboard">dashboard</a>
-          
-                <% } else { %>
-                <a href="login">SE CONNECTER</a>
-                
-                <% } %></li>
-            </ul>
-        </nav>
-    </header>
-    
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+
+    </head>
+
+    <body>
+        
+            <header>
+                <nav>
+                    <img src="/images/logo.png" alt="logo">
+                    <ul>
+                        <li><a href="">POURQUOI DETECTIF</a></li>
+                        <li><a href="">CARACTĖRISTIQUE</a></li>
+                        <li><a href="">FAQ</a></li>
+                        <li>
+                            <!-- <div id="google_translate_element"></div> -->
+                             <a href="">LANGUAGES</a>
+                        </li>
+                        <li class="auth">
+                            <% if (typeof data !=='undefined' && typeof data !=="null" && data.role=="user" ) { %>
+                                <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture">
+                                    Profile</a>
+                                <% } else if (typeof data !=='undefined' && typeof data !=="null" && data.role=="admin"
+                                    ) { %>
+                                    <a href="/dashboard">dashboard</a>
+
+                                    <% } else { %>
+                                        <a href="login">SE CONNECTER</a>
+
+                                        <% } %>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <div class="container">
+            <main>
+                <section class="barner">
+                    <div class="bl-intro">
+                        <div>
+                            <h1><span> Géolocalisez un</span>
+                                numéro de
+                                téléphone</h1>
+                            <p>Prêt à apprendre où se trouve le téléphone ?</p>
+                        </div>
+                        <div class="bl-input-num">
+                            <div class="div-input-num">
+                                <form action="" id="phone-form">
+                                    <input type="tel"  name="phone" id="phone" >
+                                    <button type="submit"><i class="bi bi-cursor-fill"></i> REPĖRER</button>
+                                </form>
+                            </div>
+                            <div class="errorMessage">
+                            </div>
+                            <div class="security">
+                                <div>
+                                    <i class="bi bi-lock-fill"></i>
+                                    <div>
+                                        <p>SECURE</p>
+                                        <span>SSL ENCRYPTION</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <i class="bi bi-shield-fill-check"></i>
+                                     <div>
+                                        <p>100%</p>
+                                        <span>CONFIDENTIAL</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="desc">
+                                Detectif est opérationnel dans le monde entier. <br> Quel que soit le téléphone. Quel que soit le réseau. <br> Avec Detectico, vous êtes paré.
+                            </p>
+                            
+                        </div>
+                    </div>
+                    <div class="bl-img">
+                        <img src="/images/mokup.png" alt="mokup-phone">
+                    </div>
+                    <div class="blur-bg">
+
+                    </div>
+                </section>
+                <section class="about">
+                    <div>
+                        
+                    </div>
+                    <div></div>
+                </section>
+
+
+            </main>
+        </div>
+
+
+
+
+
+
+
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+    const header = document.querySelector('header')
+
+    window.addEventListener("scroll",(e)=>{
+        if(window.scrollY > 20){
+            header.classList.add("header-scroll")
+            
+        }
+        else{
+            header.classList.remove("header-scroll")
+         
+
+        }
+    })
+    const input = document.querySelector("#phone");
+    input.setAttribute('maxlength','14')
+    const errorMessage = document.querySelector(".errorMessage")
+    // Initialiser intl-tel-input
+    const iti = window.intlTelInput(input, {
+      initialCountry: "auto", 
+        // Détection automatique du pays
+      geoIpLookup: function(callback) {
+        fetch('https://ipinfo.io/json')  // API pour détecter l'IP de l'utilisateur
+          .then(response => response.json())
+          .then(data => {
+            const countryCode = data.country;  // Pays basé sur l'adresse IP
+            callback(countryCode);
+          })
+          .catch(() => callback("fr"));  // Pays par défaut si échec
+      },
+      nationalMode:true,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",  // Script utils pour validation
+    });
+  
+    // Vérifier la validité du numéro de téléphone à la soumission
+    input.addEventListener('countrychange', function() {
+        const exampleNumber = iti.getSelectedCountryData().exampleNumber;
+        input.placeholder = exampleNumber ? exampleNumber : "entrer votre numéro";
+      });
+    input.addEventListener('input',()=>{
+        const value = input.value
+        if(/[^0-9+]/g.test(value)){
+            input.value = value.replace(/[^0-9+]/g,'')
+        }
+        if (!iti.isValidNumber()) {
+            errorMessage.innerHTML="Le numéro de téléphone doit être complet et valide.";
+        } else {
+            errorMessage.innerHTML="";
+            const fullNumber = iti.getNumber(); 
+            console.log(fullNumber);  
+        }
+    })
+    const form = document.querySelector("#phone-form");
+    form.addEventListener("submit", function(event) {
+      
+      if(errorMessage.textContent !== ''){
+        event.preventDefault()
+        return
+      }
+      else{
+        console.log('formulaire soumit')
+      }
+    });
+</script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
-</html>
+
+    </html>
