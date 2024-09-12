@@ -6,11 +6,17 @@
 }
 
 :root {
-    --bg-sidebar : rgb(6, 12, 15);
+    --bg-sidebar : rgb(43, 85, 98);
     --hover-items-sidebar : rgb(7, 17, 36);
     --color-hover:white;
-    --color-no-hover : rgb(120, 134, 157);
+    --color-no-hover : rgb(216, 216, 216);
     --font-roboto : "Roboto", sans-serif ;
+    --purple-color : rgb(111, 63, 255);
+    --gris-black:rgb(77, 77, 77);
+    --secondary-color:  rgb(0, 0, 255);
+    --secondary-hover-shadow-color:  rgba(142, 142, 255, 0.748);
+    --SECURITY :rgb(43, 85, 98);
+
 }
 body{
     display: flex;
@@ -18,7 +24,7 @@ body{
 
 }
 aside{
-    background-color: black;
+    background-color: var(--bg-sidebar);
     height: 100vh;
     position: fixed;
     width: 18%;
@@ -27,7 +33,7 @@ aside{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-right: 4px solid rgb(195, 195, 195);
+    border-right: 4px solid var(--secondary-hover-shadow-color);
 
 }
 aside ul{
@@ -47,7 +53,7 @@ aside ul li i{
 
 }
 aside ul li:hover{
-    background-color:rgb(23, 23, 23);
+    background-color:var(--secondary-hover-shadow-color);
     transition: .4s ease;}
 aside ul li a {
     text-decoration: none;
@@ -75,11 +81,11 @@ aside ul li:hover i{
     text-decoration: none;
 }
 .profil:hover{
-  background-color: rgb(23, 23, 23);
+  background-color: var(--secondary-hover-shadow-color);
   transition: .4s ease;
 }
 .active{
-    background-color: rgb(23, 23, 23);
+    background-color: rgb(156, 123, 255);
     color: white;
 }
 
@@ -149,7 +155,7 @@ hr{
     color: black;
 }
 .filter-block input[type='submit']{
-    background-color:rgb(41, 41, 41) ;
+    background-color:rgb(115, 96, 255) ;
     border: 0;
     border-radius: 10px;
     color: white;
@@ -157,7 +163,7 @@ hr{
     cursor: pointer;
 }
 .filter-block input[type='submit']:hover{
- background-color: rgb(19, 19, 19);
+ background-color: var(--purple-color);
  transition: .4s ease;
 }
 .filter-block input::-webkit-datetime-edit { padding: 0.4em; }
@@ -194,7 +200,7 @@ align-items: center;
     font-weight: 500;
 }
 .element div:first-child div span{
-    background-color: rgba(0, 255, 0, 0.169);
+    background-color: rgba(0, 255, 119, 0.169);
     color: rgb(0, 148, 0);
     padding: 1px 2px;
     border-radius: 4px;
