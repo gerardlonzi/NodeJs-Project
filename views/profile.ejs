@@ -1,20 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partiel/head',{title:"Profile"}) %>
+<link href="/styles/output.css" rel="stylesheet">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 </head>
 
-<body>
+<body class="bg-black">
     <% if (typeof data !=='undefined' && typeof data !== null) { %>
-        <img src="<%= data.profilePicture || "" %>" alt="">
+        <img class="w-32 h-32" src="<%= data.profilePicture || "" %>" alt="">
+        <%- include('partiel/disconnect_logout') %>
+        <div>
+            <p>modifier le profil</p>
+            <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
+                    <div class="previewPicture">
+                        <img style="width: 40px; height:40px" src="<%= data.profilePicture || "" %>" alt="" id="previewImage">
+                        <button class="changeImage">🕹</button>
+                    </div>
+                    <input type="file" hidden name="profilePicture" id="profilePicture" accept="image/*">
+                    <input type="text" id="name"  name="name" value="<%=data.name %>">
+                    <input type="email" value="<%= data.email || "" %>" disabled name="email" id="email">
+                    <input type="password" disabled name="password" id="password" value="          ">
+                    <input type="text" value="<%= data.DateOfBirth.toISOString().slice(0,10) || "" %>" placeholder="MM-JJ-YY" name="DateOfBirth" id="DateOfBirth" >
+                    <input type="text" disabled name="role" id="role" value="<%= data.role %>">
+
+                    
+                    
+                    <input type="submit" value="modifie">
+
+            </form>
+        </div>
      
     <% } %>
-    
-    <%- include('partiel/disconnect_logout') %>
     <%- include('partiel/js') %>
-</body>
+    
+<script>
+    const previewImage = document.querySelector("#previewImage")
+    const profilePicture = document.querySelector("#profilePicture")
+    const changeImage = document.querySelector(".changeImage")
 
+    changeImage.addEventListener("click",(e)=>{
+        e.preventDefault()
+        profilePicture.click()
+    })
+    profilePicture.addEventListener('change',(e)=>{
+        const file = e.target.files[0]
+        console.log(file)
+        if(file && file.type.startsWith('image/')){
+            const reader = new FileReader()
+            reader.onload = function(e){
+                previewImage.src= e.target.result;
+            }
+            reader.readAsDataURL(file)
+        }
+    })
+</script>
+</body>
 </html>

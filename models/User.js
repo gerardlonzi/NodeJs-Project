@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
-const UserModels = new mongoose.Schema(
+
+const Shema = mongoose.Schema 
+const UserModels = new Shema(
     {
         googleId:{
             type:String,
@@ -37,7 +39,7 @@ const UserModels = new mongoose.Schema(
         role:{
             type:String,
             default:"user",
-            enum:["user","admin"]
+            enum:["user","admin","professeur"]
         },
         emailVerified:{
             type:Boolean,
@@ -56,7 +58,9 @@ const UserModels = new mongoose.Schema(
         },
         resetPasswordtokenExpire:{
             type:Date
-        }
+        },
+        approved:{type:Boolean,default:false},
+        purchaseCourse :[{type:Shema.Types.ObjectId,ref:"Course"}]
 
     },{timestamps:true}
 )

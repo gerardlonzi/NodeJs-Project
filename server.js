@@ -9,6 +9,7 @@ const session = require("express-session")
 const cookie_parser = require("cookie-parser")
 const method_overide = require('method-override')
 const routerDashboard = require('./routes/DashboardActionRoad')
+const profileRouter = require("./routes/uploadData")
 
 
 const app = express()
@@ -43,6 +44,7 @@ app.use(passport.session())
 app.use(method_overide('_method'))
 
 app.use(router)
+app.use(profileRouter)
 app.use('/auth',routerAouth)
 app.use('/dashboard',routerDashboard)
 

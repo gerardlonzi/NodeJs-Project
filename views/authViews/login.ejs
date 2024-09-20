@@ -2,13 +2,13 @@
 <link rel="stylesheet" href="/styles/login.css">
 </head>
 <body>
-   <form action=""  method="post">
+   <form action="" class=""  method="post">
         <p class="ins_conn">Se connecter</p>
         <div>
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" value="<%=typeof message !=='undefined' &&typeof message.email !=="undefined" ? message.email : ""  %>">
             <span>
-                <% if (typeof message.error_msg_field_email !== 'undefined' && error_msg_field_email.length > 0) { %>
+                <% if (typeof message.error_msg_field_email !== 'undefined' && message.error_msg_field_email.length > 0) { %>
                     <%= message.error_msg_field_email %>
                 <% } %>
             </span>

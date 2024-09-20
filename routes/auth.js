@@ -27,10 +27,19 @@ router.get("/error", (req, res) => {
     const error_token = req.query.error || "une erreur s'est produite"
     res.render("../views/error",{error_token:error_token})
 })
-router.get('/profile',verifyToken,EmailVerified,(req,res)=>{
+router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
     console.log('requser'+ req.user);
+    let data;
      if(req.user && req.user.role=='user'){
-        return res.render("../views/profile")
+        try{
+            const user = await User.findById(req.user.id)
+            data = user
+            console.log(user);
+            return res.render("../views/profile",{data})
+        }
+        catch(err){
+            data = null
+        }
     }
     else{
         res.redirect("/login")
