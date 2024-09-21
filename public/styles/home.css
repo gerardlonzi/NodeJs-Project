@@ -1,4 +1,4 @@
-*{
+/* *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -163,7 +163,7 @@ margin-top: 22px;
     gap: 20px;
     color: var(--SECURITY);
 }
-/* .security>div */
+/* .security>div 
 .security>div{
     border: 1px solid var(--gris-black);
     border-radius: 10px;
@@ -192,4 +192,4 @@ margin-top: 22px;
 .desc{
     margin-top: 50px;
     color: var(--gris-black);
-}
+} */

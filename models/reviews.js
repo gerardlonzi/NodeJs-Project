@@ -6,3 +6,8 @@ const reviewsModel = new Schema({
     comment :{type:String},
     rating:{type:Number,required:true}
 })
+
+
+const Review = mongoose.model("Reviews",reviewsModel)
+
+module.exports = Review

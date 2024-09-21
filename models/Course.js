@@ -8,6 +8,7 @@ const CourseModel = new Schema({
     },
     description:{
         type:String,
+        required:true
     },
     categorie:{
         type:String,
@@ -23,11 +24,15 @@ const CourseModel = new Schema({
         discount:{type:Number,default:0},
         free : {type:Boolean, default:false}
     },
-    lessons:{type:Schema.Types.ObjectId , ref:"Lessons",required:true},
+    lessons:[{type:Schema.Types.ObjectId , ref:"Lessons"}],
     averageRating:{type:Number, default:0},
-    totalRating:{type:Number, default:0}
-
-
+    totalRating:{type:Number, default:0},
+    typlogie:{type:String, default:"Premium"},
+    difficultyLevel:{type:String},
+    language :{type:String,default:"Français"},
+    approved :{type:String , default:true},
+    review :[{type:Schema.Types.ObjectId , ref:"Reviews"}]
+    
 })
 
 const Course = mongoose.model("Course",CourseModel)

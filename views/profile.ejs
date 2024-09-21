@@ -3,27 +3,24 @@
 
 </head>
 
-<body class="bg-black">
+<body style="background-color: rgb(0, 9, 41); color:white" class="bg-black">
     <% if (typeof data !=='undefined' && typeof data !== null) { %>
         <img class="w-32 h-32" src="<%= data.profilePicture || "" %>" alt="">
         <%- include('partiel/disconnect_logout') %>
         <div>
-            <p>modifier le profil</p>
-            <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
+            <p class="text-red-400">modifier le profil</p>
+            <form  action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
                     <div class="previewPicture">
-                        <img style="width: 40px; height:40px" src="<%= data.profilePicture || "" %>" alt="" id="previewImage">
+                        <img style="width: 40px; height:40px" src="<%= data.profilePicture ?data.profilePicture : "" %>" alt="" id="previewImage">
                         <button class="changeImage">🕹</button>
                     </div>
-                    <input type="file" hidden name="profilePicture" id="profilePicture" accept="image/*">
-                    <input type="text" id="name"  name="name" value="<%=data.name %>">
-                    <input type="email" value="<%= data.email || "" %>" disabled name="email" id="email">
-                    <input type="password" disabled name="password" id="password" value="          ">
-                    <input type="text" value="<%= data.DateOfBirth.toISOString().slice(0,10) || "" %>" placeholder="MM-JJ-YY" name="DateOfBirth" id="DateOfBirth" >
-                    <input type="text" disabled name="role" id="role" value="<%= data.role %>">
-
-                    
-                    
-                    <input type="submit" value="modifie">
+                    <input class="profil-infos"  type="file" value="<%= data.profilePicture?data.profilePicture : "" %>" hidden name="profilePicture" id="profilePicture" accept="image/*">
+                    <input class="profil-infos" type="text" id="name"  name="name" value="<%=data.name %>">
+                    <input class="email" type="email" value="<%= data.email?data.email :""%>"  name="email" id="email">
+                    <input class="py-16 password" type="password"  name="password" id="password" value="          ">
+                    <input class="profil-infos" type="datetime" value="<%=data.DateOfBirth? data.DateOfBirth.toISOString().slice(0,10).replaceAll("-","/") : "" %>" placeholder="MM-JJ-YY" name="DateOfBirth" id="DateOfBirth" >
+                    <input class="role" type="text"  name="role" id="role" value="<%=data.role? data.role :"" %>">
+                    <input id="submit"  type="submit" value="modifie">
 
             </form>
         </div>
@@ -34,8 +31,30 @@
 <script>
     const previewImage = document.querySelector("#previewImage")
     const profilePicture = document.querySelector("#profilePicture")
+    const roleInput = document.querySelector(".role").setAttribute("disabled","true")
+    const passwordInput = document.querySelector(".password").setAttribute("disabled","true")
+    const emailInput = document.querySelector(".email").setAttribute("disabled","true")
+    const submitInput = document.querySelector("#submit")
     const changeImage = document.querySelector(".changeImage")
+    const allInput = document.querySelectorAll(".profil-infos")
+submitInput.setAttribute("disabled","true")
+    const tab = []
+    allInput.forEach(el=>{
+        tab.push(el.value)
+    })
+    allInput.forEach((el,index)=>{
+        el.addEventListener("input",(e)=>{
+            const value = e.target.value
+            console.log(value)
+            if(value !== tab[index]){
+              return submitInput.removeAttribute("disabled")
+            }
+            submitInput.setAttribute("disabled","true")
 
+        })
+    })
+    console.log(tab)
+    console.log(allInput)
     changeImage.addEventListener("click",(e)=>{
         e.preventDefault()
         profilePicture.click()

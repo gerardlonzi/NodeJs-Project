@@ -1,20 +1,21 @@
 <script>
-  const supp = document.querySelector('.supp')
-  const bloc = document.querySelector('.bloc')
-  const annuler = document.querySelector('.annuler')
-  supp.addEventListener('click', () => {
-    bloc.style.display = 'block'
-  })
-  annuler.addEventListener('click', () => {
-    bloc.style.display = 'none'
-  })
-
-  const allLink = document.querySelectorAll(".aside-dashboard a")
-  allLink.forEach((element, id) => {
-    element.addEventListener('click', () => {
-      allLink.forEach(element => element.classList.remove('active'))
-        element.classList.toggle('active')
+    const supp = document.querySelector('.supp')
+    const bloc = document.querySelector('.bloc')
+    const annuler = document.querySelector('.annuler')
+    supp.addEventListener('click', () => {
+      bloc.style.display = 'block'
     })
-  })
-
-</script>
+    annuler.addEventListener('click', () => {
+      bloc.style.display = 'none'
+    })
+  
+    const allLink = document.querySelectorAll(".aside-dashboard a")
+    allLink.forEach((element, id) => {
+      element.addEventListener('click', () => {
+        allLink.forEach(element => element.classList.remove('active'))
+          element.classList.toggle('active')
+      })
+    })
+  
+  </script>
+  

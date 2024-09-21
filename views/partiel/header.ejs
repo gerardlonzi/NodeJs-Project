@@ -1,0 +1,39 @@
+<header>
+    <ul class="auth">
+        <% if (typeof data !=='undefined' && data !=="null" && data.role==="user" ) { %>
+            <li>
+                <a href="/become-teacher">Enseigner sur Maneliza Global </a>
+            </li>
+            <li>
+                <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture">
+                    Profile</a>
+            </li>
+            <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="admin" ) { %>
+                <li>
+                    <a href="/dashboard"><img src="<%= data.profilePicture %>" alt="profile picture">dashboard</a>
+                </li>
+                <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="professeur" ) { %>
+                    <% if (data.approved) { %>
+                        <li>
+                            <a href="/upload-course">
+                                <button <%=!data.approved ? "disabled" :"" %> >
+                                    + publier un cours
+                                </button>
+                            </a>
+
+                        </li>
+                        <% } %>
+
+
+                            <li>
+                                <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture">
+                                    Profile</a>
+                            </li>
+                            <% } else { %>
+                                <li>
+                                    <a href="login">SE CONNECTER</a>
+                                </li>
+
+                                <% } %>
+    </ul>
+</header>

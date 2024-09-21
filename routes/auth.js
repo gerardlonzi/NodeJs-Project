@@ -30,7 +30,7 @@ router.get("/error", (req, res) => {
 router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
     console.log('requser'+ req.user);
     let data;
-     if(req.user && req.user.role=='user'){
+     if(req.user && (req.user.role==='user' || req.user.role==='professeur')){
         try{
             const user = await User.findById(req.user.id)
             data = user
@@ -42,7 +42,7 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
         }
     }
     else{
-        res.redirect("/login")
+        return res.redirect("/login")
     }
 })
 router.get("/login",verifyToken, (req, res) => {

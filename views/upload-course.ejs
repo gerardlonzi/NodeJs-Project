@@ -1,0 +1,120 @@
+<%- include('partiel/head',{title:"upload course"}) %>
+<script src="https://cdn.tiny.cloud/1/jca0kkt1o2e9qy99ct1fclet3s9mjswkrk2ywmv7xh8v3kwb/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: [
+        // Core editing features
+        'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+        // Your account includes a free trial of TinyMCE premium features
+        // Try the most popular premium features until Oct 5, 2024:
+        'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
+      ],
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+      mergetags_list: [
+        { value: 'First.Name', title: 'First Name' },
+        { value: 'Email', title: 'Email' },
+      ],
+      ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+    });
+  </script>
+</head>
+<body style="background-color: rgb(0, 9, 41); color:white">
+    <%- include('partiel/header') %>
+    <main>
+        <section class="upload-course">
+            <div class="message">
+ <%= typeof message !== 'undefined' ? message :"" %>
+            </div>
+            <form action="" method="post" id="form" enctype="multipart/form-data">
+                <div>
+                    <label for="thumbail">Miniature du cours</label>
+                    <div class="image-bl-preview">
+                        
+                    </div>
+                    <button class="btn-image">importer une image</button>
+                    <input type="file" hidden id="thumbail" accept="image/*" name="thumbail">
+                </div>
+                <div>
+                    <label for="name">Nom du cours</label>
+                    <input type="text" placeholder="ex: apprendre node js" name="name" id="name">
+                </div>
+                <div>
+                    <label for="categorie">A quel catégorie appartient votre cours</label>
+                    <select name="categorie" id="categorie">
+                        <option value="Programmation">Programmation</option>
+                        <option value="Web développement">Web développement</option>
+                        <option value="Graphics design">Graphics design</option>
+                        <option value="Outils offices">Outils offices</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="professeur">Nom du professeur</label>
+                    <input type="text" id="professeur" value="<%= data.name?data.name:'' %>" disabled name="professeur">
+                </div>
+                <div>
+                    <label for="prix">Prix de la formation</label>
+                    <input type="number" placeholder="ex: 20000f" name="prix" id="prix">
+                </div>
+                <div>
+                    <label for="typlogie">Typlogie du cours</label>
+                    <select name="typlogie" id="typlogie">
+                        <option value="Premium">Premium</option>
+                        <option value="gratuit">Gratuit</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="difficulty">Niveau de difficulté</label>
+                    <select name="difficultyLevel" id="difficulty">
+                        <option value="débutant">Débutant</option>
+                        <option value="intermédiare">Intermédiare</option>
+                        <option value="avancé">Avancé</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="language">Language du cours</label>
+                    <select name="language" id="language">
+                        <option value="français">Français</option>
+                        <option value="anglais">Anglais</option>
+                    </select>
+                </div>
+                <textarea name="description" id="textarea"></textarea>
+                <input type="submit" value="envoyer">
+
+            </form>
+        </section>
+        
+
+    </main>
+   
+
+    <script>
+        const image_bl_preview = document.querySelector(".image-bl-preview")
+        const btn_image = document.querySelector(".btn-image")
+        const thumbail = document.querySelector("#thumbail")
+
+        btn_image.addEventListener("click",(e)=>{
+            e.preventDefault()
+            thumbail.click()
+        })
+        thumbail.addEventListener("input",(e)=>{
+            dataImage = e.target.files[0]
+            if(dataImage && dataImage.type.startsWith('image/')){
+                const reader = new FileReader()
+                reader.onload =(e)=>{
+                    image_bl_preview.innerHTML=""
+                    const image = document.createElement("img")
+                    image.src = e.target.result
+
+                    image_bl_preview.appendChild(image)
+
+                }
+                reader.readAsDataURL(dataImage)
+            }
+        })
+    </script>
+    </body>
+</html>
+

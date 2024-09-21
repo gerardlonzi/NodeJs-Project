@@ -4,6 +4,7 @@ const crypto = require('crypto')
 const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 const nodemailer = require("nodemailer")
+const cloudinary = require("../config/cloudinary")
 
 dotenv.config()
 
@@ -330,7 +331,13 @@ exports.deleteUser = async (req, res) => {
     return res.redirect('/login')
   }
   try {
+  const user = await User.findById(req.user.id)
+      if(user.profilePicture && user.profilePicture !=="/images/profile-picture.jpg"){
+        const publicId = user.profilePicture.split('/').pop().split('.')[0]
+        await cloudinary.uploader.destroy(`maneSchool/${publicId}`)
+    }
     User.findByIdAndDelete(req.user.id).then((result) => {
+
       res.clearCookie('token')
       console.log(result);
 

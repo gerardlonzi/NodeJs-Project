@@ -3,6 +3,7 @@ const storage = multer.memoryStorage()
 // const {CloudinaryStorage}= require("multer-storage-cloudinary")
 const cloudinary = require("../config/cloudinary")
 const User = require('../models/User')
+const Course = require("../models/Course")
 
 
 // const storage = new CloudinaryStorage({
@@ -60,7 +61,7 @@ exports.updateProfileUsers = async(req,res)=>{
             return res.redirect("/profile");
           }
     
-          // Mettez à jour les informations de l'utilisateur
+          
           User.findByIdAndUpdate(id, {
             name,
             DateOfBirth,
@@ -76,7 +77,7 @@ exports.updateProfileUsers = async(req,res)=>{
           });
         });
     
-        // Envoyer le fichier buffer à Cloudinary
+      
         result.end(req.file.buffer);
     }
     catch(err){
@@ -89,3 +90,67 @@ exports.updateProfileUsers = async(req,res)=>{
 
 }
 
+
+exports.UploadCourse=async(req,res,next)=>{
+   const {name,
+    description,
+    categorie,
+    thumbail,
+    professeur,
+    prix,
+    typlogie,
+    difficultyLevel,
+    language} = req.body
+    const id = req.user.id
+
+    if(!name || !description || !prix || !thumbail){
+      req.session.message = "veuillez renseigner tous les champs s'il vous plait"
+      return res.redirect("/upload-course")
+    }
+    if(!req.file){
+      req.session.message = "Erreur : l'image n'a pas été telecharger veuillez ressayer s'il vous plait"
+      return
+    }
+    try{
+      const user = await User.findById(id)
+      if(!user){
+        return res.redirect("/login")
+      }
+      const result = await cloudinary.uploader.upload_stream({
+        folder: "maneSchool",
+          allowed_formats: ['jpg', 'jpeg', 'png',  'avif', 'webp'],
+          transformation: [
+            { width: 800, height: 600, crop: "limit" },  // Limiter la taille à 500x500 pixels
+            { quality: "auto:good" }  // Compression automatique pour maintenir une bonne qualité
+          ]
+      },(err,done)=>{
+        if(err){
+          req.session.message = "une erreur est survenue lors de la mise a jour de votre miniature ! veuillez ressayer"
+          console.log(err);
+          return
+        }
+        new Course({
+          name,
+          description,
+          categorie,
+          thumbail,
+          professeur:user.id,
+          prix,
+          typlogie,
+          difficultyLevel,
+          language
+        }).save().then(()=>{
+          req.session.message =  "cours envoyer avec succes et en attente de validation"
+          return
+        }).catch(()=>{
+          req.session.message =  "une erreur est survenue lors du téléversement du cours veuillez ressayer svp"
+        })
+      })
+    
+      result.end(req.file.buffer)
+    }
+    catch(err){
+      req.session.message = "une erreur est survenu ! veuillez ressayer"
+      console.log("err"+ err);
+    }
+}
