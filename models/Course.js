@@ -18,7 +18,7 @@ const CourseModel = new Schema({
             type:String,
             required : true
     },
-    professeur:{type:Schema.Types.ObjectId,ref:"Users",required:true},
+    user:{type:Schema.Types.ObjectId,ref:"Users",required:true},
     prix :{type:Number , required:true},
     promotion :{
         discount:{type:Number,default:0},
@@ -27,12 +27,13 @@ const CourseModel = new Schema({
     lessons:[{type:Schema.Types.ObjectId , ref:"Lessons"}],
     averageRating:{type:Number, default:0},
     totalRating:{type:Number, default:0},
-    typlogie:{type:String, default:"Premium"},
+    typologie:{type:String, default:"Premium"},
     difficultyLevel:{type:String},
     language :{type:String,default:"Français"},
     approved :{type:String , default:true},
-    review :[{type:Schema.Types.ObjectId , ref:"Reviews"}]
-    
+    review :[{type:Schema.Types.ObjectId , ref:"Reviews"}],
+    courseTime: {type:String, required:true},
+
 })
 
 const Course = mongoose.model("Course",CourseModel)

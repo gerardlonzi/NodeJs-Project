@@ -60,7 +60,8 @@ const UserModels = new Shema(
             type:Date
         },
         approved:{type:Boolean,default:false},
-        purchaseCourse :[{type:Shema.Types.ObjectId,ref:"Course"}]
+        purchaseCourse :[{type:Shema.Types.ObjectId,ref:"Course"}],
+        aboutYou:{type:String}
 
     },{timestamps:true}
 )

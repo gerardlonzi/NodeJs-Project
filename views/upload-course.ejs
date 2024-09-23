@@ -2,12 +2,12 @@
 <script src="https://cdn.tiny.cloud/1/jca0kkt1o2e9qy99ct1fclet3s9mjswkrk2ywmv7xh8v3kwb/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     tinymce.init({
-      selector: 'textarea',
+      selector: '#textarea',
+      language: 'fr_FR',
       plugins: [
         // Core editing features
         'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-        // Your account includes a free trial of TinyMCE premium features
-        // Try the most popular premium features until Oct 5, 2024:
+        
         'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
       ],
       toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
@@ -26,61 +26,75 @@
     <main>
         <section class="upload-course">
             <div class="message">
- <%= typeof message !== 'undefined' ? message :"" %>
+ <%= typeof message !== 'undefined' && message.message !=='undefined' ? message.message :"" %>
             </div>
-            <form action="" method="post" id="form" enctype="multipart/form-data">
+            <form action="/upload-course/publish" id="form" enctype="multipart/form-data"  method="post">
                 <div>
-                    <label for="thumbail">Miniature du cours</label>
+                    <p>Miniature du cours</p>
                     <div class="image-bl-preview">
                         
                     </div>
                     <button class="btn-image">importer une image</button>
-                    <input type="file" hidden id="thumbail" accept="image/*" name="thumbail">
+                    <input   type="file" id="thumbail" name="thumbail"  hidden accept="image/*">
                 </div>
+                <!-- <div>
+                    <p>Video de résumé du cours</p>
+                    <span>votre video doit étre au format mp4</span>
+                    <div class="video-bl-preview">
+                     
+                    </div>
+                    <button class="btn-video">importer une video</button>
+                    <input   type="file" id="videoResumeCourse" name="videoResumeCourse"  hidden accept="video/*">
+                </div> -->
                 <div>
                     <label for="name">Nom du cours</label>
-                    <input type="text" placeholder="ex: apprendre node js" name="name" id="name">
+                    <input type="text" value="<%= typeof message !== 'undefined' && message.data  && message.data.name !=='undefined' ? message.data.name :"" %>" placeholder="ex: apprendre node js" name="name" id="name">
+                </div>
+                <div>
+                    <label for=courseTime">Dureé du cours</label>
+                    <input type="text" value="<%= typeof message !== 'undefined' && message.data  && message.data.courseTime !=='undefined' ? message.data.courseTime
+ :"" %>"  name="courseTime" id="courseTime">
                 </div>
                 <div>
                     <label for="categorie">A quel catégorie appartient votre cours</label>
-                    <select name="categorie" id="categorie">
-                        <option value="Programmation">Programmation</option>
-                        <option value="Web développement">Web développement</option>
-                        <option value="Graphics design">Graphics design</option>
-                        <option value="Outils offices">Outils offices</option>
+                    <select name="categorie"  id="categorie">
+                        <option <%= typeof message !== 'undefined' && message.data  && message.data.categorie ==='programmation' ? 'selected' :"" %> value="programmation">Programmation</option>
+                        <option  <%= typeof message !== 'undefined' && message.data  && message.data.categorie ==='web développement' ? 'selected' :"" %> value="web développement">Web développement</option>
+                        <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='graphics design' ? 'selected' :"" %> value="graphics design">Graphics design</option>
+                        <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='outils offices' ? 'selected' :"" %> value="outils offices">Outils offices</option>
                     </select>
                 </div>
                 <div>
                     <label for="professeur">Nom du professeur</label>
-                    <input type="text" id="professeur" value="<%= data.name?data.name:'' %>" disabled name="professeur">
+                    <input  type="text" id="professeur" value="<%= data.name?data.name:'' %>" disabled name="professeur">
                 </div>
                 <div>
                     <label for="prix">Prix de la formation</label>
-                    <input type="number" placeholder="ex: 20000f" name="prix" id="prix">
+                    <input value="<%= typeof message !== 'undefined' && message.data  && message.data.prix !=='undefined' ? message.data.prix :"" %>" type="number" placeholder="ex: 20000f" name="prix" id="prix">
                 </div>
                 <div>
-                    <label for="typlogie">Typlogie du cours</label>
-                    <select name="typlogie" id="typlogie">
-                        <option value="Premium">Premium</option>
-                        <option value="gratuit">Gratuit</option>
+                    <label for="typologie">Typlogie du cours</label>
+                    <select name="typologie" id="typlogie">
+                        <option <%= typeof message !== 'undefined' && message.data  && message.data.typlogie ==='premium' ? 'selected' :"" %> value="premium">Premium</option>
+                        <option <%= typeof message !== 'undefined' &&message.data  &&  message.data.typlogie ==='gratuit' ? 'selected' :"" %> value="gratuit">Gratuit</option>
                     </select>
                 </div>
                 <div>
                     <label for="difficulty">Niveau de difficulté</label>
                     <select name="difficultyLevel" id="difficulty">
-                        <option value="débutant">Débutant</option>
-                        <option value="intermédiare">Intermédiare</option>
-                        <option value="avancé">Avancé</option>
+                        <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='débutant' ? 'selected' :"" %> value="débutant">Débutant</option>
+                        <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='intermédiare' ? 'selected' :"" %> value="intermédiare">Intermédiare</option>
+                        <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='avancé' ? 'selected' :"" %> value="avancé">Avancé</option>
                     </select>
                 </div>
                 <div>
                     <label for="language">Language du cours</label>
                     <select name="language" id="language">
-                        <option value="français">Français</option>
-                        <option value="anglais">Anglais</option>
+                        <option <%= typeof message !== 'undefined' && message.data  && message.data.language ==='français' ? 'selected' :"" %> value="français">Français</option>
+                        <option <%= typeof message !== 'undefined' && message.data  && message.data.language ==='anglais' ? 'selected' :"" %> value="anglais">Anglais</option>
                     </select>
                 </div>
-                <textarea name="description" id="textarea"></textarea>
+                <textarea id="textarea"  name="description"  ><%= typeof message !== 'undefined' && message.data  && message.data.description  ? message.data.description :"" %></textarea>
                 <input type="submit" value="envoyer">
 
             </form>
@@ -94,16 +108,19 @@
         const image_bl_preview = document.querySelector(".image-bl-preview")
         const btn_image = document.querySelector(".btn-image")
         const thumbail = document.querySelector("#thumbail")
+        /* const video_bl_preview = document.querySelector(".video-bl-preview")
+        const btn_video = document.querySelector(".btn-video")
+        const videoResumeCourse = document.querySelector("#videoResumeCourse") */
 
         btn_image.addEventListener("click",(e)=>{
             e.preventDefault()
             thumbail.click()
         })
-        thumbail.addEventListener("input",(e)=>{
+        thumbail.addEventListener("change",(e)=>{
             dataImage = e.target.files[0]
             if(dataImage && dataImage.type.startsWith('image/')){
                 const reader = new FileReader()
-                reader.onload =(e)=>{
+                reader.onload =function(e){
                     image_bl_preview.innerHTML=""
                     const image = document.createElement("img")
                     image.src = e.target.result
@@ -114,6 +131,26 @@
                 reader.readAsDataURL(dataImage)
             }
         })
+        /* btn_video.addEventListener("click",(e)=>{
+            e.preventDefault()
+            videoResumeCourse.click()
+        })
+        videoResumeCourse.addEventListener("change",(e)=>{
+            dataVideo = e.target.files[0]
+            if(dataVideo && dataVideo.type.startsWith('video/')){
+                const reader = new FileReader()
+                reader.onload =function(e){
+                    video_bl_preview.innerHTML=""
+                    video_bl_preview.innerHTML=`
+                    <video controls>
+                        <source src=${e.target.result} type="video/mp4" />
+                    </video>
+                    `
+                }
+                reader.readAsDataURL(dataVideo)
+            }
+        }) */
+        
     </script>
     </body>
 </html>

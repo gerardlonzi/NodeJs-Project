@@ -68,7 +68,7 @@ exports.register = (req, res) => {
             console.log("hash" + hash);
 
             newUser.save().then(user => {
-              const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' })
+              const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '5h' })
               res.cookie('token', token, { httpOnly: true, maxAge: 3600000 })
               res.redirect('/send-email-verified')
               console.log("token" + token);
@@ -104,7 +104,7 @@ exports.login = (req, res) => {
     }
     bcript.compare(password, user.password, (err, isvalid) => {
       if (isvalid) {
-        const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' })
+        const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '5h' })
         res.cookie('token', token, { httpOnly: true, maxAge: 3600000 })
         res.redirect('/')
         console.log("token injecter avec succes");

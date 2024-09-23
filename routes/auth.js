@@ -2,6 +2,7 @@ const express = require("express")
 const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword, deleteUser, IsAdmin} = require("../controllers/AuthControllers")
 const router = express.Router()
 const User = require("../models/User")
+const Course = require("../models/Course")
 
 router.post("/register",register)
 router.post("/login",login,(req,res)=>{
@@ -29,13 +30,18 @@ router.get("/error", (req, res) => {
 })
 router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
     console.log('requser'+ req.user);
+    const message = req.session.message || ""
+    req.session.message =  null
     let data;
+    let course;
      if(req.user && (req.user.role==='user' || req.user.role==='professeur')){
         try{
             const user = await User.findById(req.user.id)
             data = user
+            const courseElement = await Course.find({user:req.user.id}).populate('Users')
+            course = courseElement || []
             console.log(user);
-            return res.render("../views/profile",{data})
+            return res.render("../views/profile",{data,message,course})
         }
         catch(err){
             data = null

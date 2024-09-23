@@ -1,75 +1,128 @@
 <%- include('partiel/head',{title:"Profile"}) %>
-<link href="/styles/output.css" rel="stylesheet">
+    <link href="/styles/output.css" rel="stylesheet">
 
-</head>
+    </head>
 
-<body style="background-color: rgb(0, 9, 41); color:white" class="bg-black">
-    <% if (typeof data !=='undefined' && typeof data !== null) { %>
-        <img class="w-32 h-32" src="<%= data.profilePicture || "" %>" alt="">
-        <%- include('partiel/disconnect_logout') %>
-        <div>
-            <p class="text-red-400">modifier le profil</p>
-            <form  action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
-                    <div class="previewPicture">
-                        <img style="width: 40px; height:40px" src="<%= data.profilePicture ?data.profilePicture : "" %>" alt="" id="previewImage">
-                        <button class="changeImage">🕹</button>
-                    </div>
-                    <input class="profil-infos"  type="file" value="<%= data.profilePicture?data.profilePicture : "" %>" hidden name="profilePicture" id="profilePicture" accept="image/*">
-                    <input class="profil-infos" type="text" id="name"  name="name" value="<%=data.name %>">
-                    <input class="email" type="email" value="<%= data.email?data.email :""%>"  name="email" id="email">
-                    <input class="py-16 password" type="password"  name="password" id="password" value="          ">
-                    <input class="profil-infos" type="datetime" value="<%=data.DateOfBirth? data.DateOfBirth.toISOString().slice(0,10).replaceAll("-","/") : "" %>" placeholder="MM-JJ-YY" name="DateOfBirth" id="DateOfBirth" >
-                    <input class="role" type="text"  name="role" id="role" value="<%=data.role? data.role :"" %>">
-                    <input id="submit"  type="submit" value="modifie">
+    <body style="background-color: rgb(0, 9, 41); color:white">
+        <%=typeof message !=='undefined' ? message.message :"" %>
+            <%=typeof message !=='undefined' ? message :"" %>
+                <div>
+                    <% if (type course !=='undefined' ) { %>
+                        <% course.forEach(element=> { %>
+                           
+                                <div>
+                                    <img src="<%= element.thumbail %>" alt="">
+                                    <p>
+                                        <%= element.name %>
+                                    </p>
+                                    <p>
+                                        <%= element.user.name %>
+                                    </p>
+                                    <p>
+                                        <%= element.prix %>
+                                    </p>
+                                </div>
+                          
+                            <% }) %>
+                                <% } %>
 
-            </form>
-        </div>
-     
-    <% } %>
-    <%- include('partiel/js') %>
-    
-<script>
-    const previewImage = document.querySelector("#previewImage")
-    const profilePicture = document.querySelector("#profilePicture")
-    const roleInput = document.querySelector(".role").setAttribute("disabled","true")
-    const passwordInput = document.querySelector(".password").setAttribute("disabled","true")
-    const emailInput = document.querySelector(".email").setAttribute("disabled","true")
-    const submitInput = document.querySelector("#submit")
-    const changeImage = document.querySelector(".changeImage")
-    const allInput = document.querySelectorAll(".profil-infos")
-submitInput.setAttribute("disabled","true")
-    const tab = []
-    allInput.forEach(el=>{
-        tab.push(el.value)
-    })
-    allInput.forEach((el,index)=>{
-        el.addEventListener("input",(e)=>{
-            const value = e.target.value
-            console.log(value)
-            if(value !== tab[index]){
-              return submitInput.removeAttribute("disabled")
-            }
-            submitInput.setAttribute("disabled","true")
+                </div>
 
-        })
-    })
-    console.log(tab)
-    console.log(allInput)
-    changeImage.addEventListener("click",(e)=>{
-        e.preventDefault()
-        profilePicture.click()
-    })
-    profilePicture.addEventListener('change',(e)=>{
-        const file = e.target.files[0]
-        console.log(file)
-        if(file && file.type.startsWith('image/')){
-            const reader = new FileReader()
-            reader.onload = function(e){
-                previewImage.src= e.target.result;
-            }
-            reader.readAsDataURL(file)
-        }
-    })
-</script>
-</body>
-</html>
+
+
+                <!-- name
+description
+categorie
+thumbail
+user
+prix
+   
+lessons
+averageRating
+difficultyLevel
+language
+approved
+review
+courseTime -->
+                <% if (typeof data !=='undefined' && typeof data !==null) { %>
+                    <img class="w-32 h-32" src="<%= data.profilePicture || "" %>" alt="">
+                    <%- include('partiel/disconnect_logout') %>
+                        <div>
+                            <p class="text-red-400">modifier le profil</p>
+                            <form action="/profile/update_profile/<%= data.id %>?_method=PUT"
+                                enctype="multipart/form-data" method="post">
+                                <div class="previewPicture">
+                                    <img style="width: 40px; height:40px"
+                                        src="<%= data.profilePicture ?data.profilePicture : "" %>" alt=""
+                                        id="previewImage">
+                                    <button class="changeImage">importer🔽</button>
+                                </div>
+                                <input class="profil-infos" type="file"
+                                    value="<%= data.profilePicture?data.profilePicture : "" %>" hidden
+                                    name="profilePicture" id="profilePicture" accept="image/*">
+                                <input class="profil-infos" type="text" id="name" name="name" value="<%=data.name %>">
+                                <textarea class="profil-infos" type="text" id="aboutYou"
+                                    name="aboutYou"><%=data.aboutYou ? data.aboutYou :""  %></textarea>
+                                <input class="email" type="email" value="<%= data.email?data.email :""%>" name="email"
+                                    id="email">
+                                <input class="py-16 password" type="password" name="password" id="password"
+                                    value="          ">
+                                <input class="profil-infos" type="datetime"
+                                    value="<%=data.DateOfBirth? data.DateOfBirth.toISOString().slice(0,10).replaceAll("
+                                    -","/") : "" %>" placeholder="MM-JJ-YY" name="DateOfBirth" id="DateOfBirth" >
+                                <input class="role" type="text" name="role" id="role"
+                                    value="<%=data.role? data.role :"" %>">
+                                <input id="submit" type="submit" value="modifie">
+
+                            </form>
+                        </div>
+
+                        <% } %>
+                            <%- include('partiel/js') %>
+
+                                <script>
+                                    const previewImage = document.querySelector("#previewImage")
+                                    const profilePicture = document.querySelector("#profilePicture")
+                                    const roleInput = document.querySelector(".role").setAttribute("disabled", "true")
+                                    const passwordInput = document.querySelector(".password").setAttribute("disabled", "true")
+                                    const emailInput = document.querySelector(".email").setAttribute("disabled", "true")
+                                    const submitInput = document.querySelector("#submit")
+                                    const changeImage = document.querySelector(".changeImage")
+                                    const allInput = document.querySelectorAll(".profil-infos")
+                                    submitInput.setAttribute("disabled", "true")
+                                    const tab = []
+                                    allInput.forEach(el => {
+                                        tab.push(el.value)
+                                    })
+                                    allInput.forEach((el, index) => {
+                                        el.addEventListener("input", (e) => {
+                                            const value = e.target.value
+                                            console.log(value)
+                                            if (value !== tab[index]) {
+                                                return submitInput.removeAttribute("disabled")
+                                            }
+                                            submitInput.setAttribute("disabled", "true")
+
+                                        })
+                                    })
+                                    console.log(tab)
+                                    console.log(allInput)
+                                    changeImage.addEventListener("click", (e) => {
+                                        e.preventDefault()
+                                        profilePicture.click()
+                                    })
+                                    profilePicture.addEventListener('change', (e) => {
+                                        const file = e.target.files[0]
+                                        console.log(file)
+                                        if (file && file.type.startsWith('image/')) {
+                                            const reader = new FileReader()
+                                            reader.onload = function (e) {
+                                                previewImage.src = e.target.result;
+                                            }
+                                            reader.readAsDataURL(file)
+                                        }
+                                    })
+                                </script>
+    </body>
+
+    </html>
