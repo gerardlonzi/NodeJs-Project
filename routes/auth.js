@@ -38,7 +38,7 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
         try{
             const user = await User.findById(req.user.id)
             data = user
-            const courseElement = await Course.find({user:req.user.id}).populate('Users')
+            const courseElement = await Course.find({user:req.user.id}).populate('user')
             course = courseElement || []
             console.log(user);
             return res.render("../views/profile",{data,message,course})

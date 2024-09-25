@@ -59,7 +59,7 @@ const UserModels = new Shema(
         resetPasswordtokenExpire:{
             type:Date
         },
-        approved:{type:Boolean,default:false},
+        approved:{type:String,default:'wait',enum:['no','yes','wait']},
         purchaseCourse :[{type:Shema.Types.ObjectId,ref:"Course"}],
         aboutYou:{type:String}
 

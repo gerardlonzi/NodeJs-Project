@@ -16,7 +16,7 @@
                     <% if (data.approved) { %>
                         <li>
                             <a href="/upload-course">
-                                <button <%=!data.approved ? "disabled" :"" %> >
+                                <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
                                     + publier un cours
                                 </button>
                             </a>

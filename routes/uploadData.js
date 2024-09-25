@@ -17,10 +17,14 @@ profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
     if(req.user && req.user.role==="professeur"){
         try{
             const user = await User.findById(req.user.id)
-            data = user
-            data.approved = null
-            
-            return res.render("../views/upload-course",{data,message})
+            if(user.approved ==="yes"){
+                data = user
+                data.approved = null
+                return res.render("../views/upload-course",{data,message})
+            }
+            else{
+                return res.redirect("/")
+            }
         }
         catch(err){
             data = null
@@ -31,7 +35,10 @@ profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
     }
 })
 profileRouter.post('/upload-course/publish',verifyToken,upload.single("thumbail"),UploadCourse)
-
+profileRouter.get('/profile/cours/:id',verifyToken,async(req,res){
+   const id = req.params.id
+   
+})
 
 
 module.exports = profileRouter

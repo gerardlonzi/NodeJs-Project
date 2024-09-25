@@ -1,85 +1,60 @@
-<%- include('partiel/head',{title:"Profile"}) %>
-    <link href="/styles/output.css" rel="stylesheet">
+<%- include('partiel/head', {title: "Profile"}) %>
+<link href="/styles/output.css" rel="stylesheet">
+</head>
+<body style="background-color: rgb(0, 9, 41); color:white">
+<div>
 
-    </head>
+    <%= message && message.message?message.message : '' %>
+    <%= message ? message : '' %>
+</div>
 
-    <body style="background-color: rgb(0, 9, 41); color:white">
-        <%=typeof message !=='undefined' ? message.message :"" %>
-            <%=typeof message !=='undefined' ? message :"" %>
-                <div>
-                    <% if (type course !=='undefined' ) { %>
-                        <% course.forEach(element=> { %>
-                           
-                                <div>
-                                    <img src="<%= element.thumbail %>" alt="">
-                                    <p>
-                                        <%= element.name %>
-                                    </p>
-                                    <p>
-                                        <%= element.user.name %>
-                                    </p>
-                                    <p>
-                                        <%= element.prix %>
-                                    </p>
-                                </div>
-                          
-                            <% }) %>
-                                <% } %>
+<div>
+    <% if (typeof course !== 'undefined' && course.length > 0) { %>
+        <% course.forEach(element => { %>
+            <% if (element.approved ==='wait') { %>
+                     <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a href="">  A savoir plus sur les rêgles de validations</a></p>
+            <% } else if (element.approved ==='yes') { %>
+                <p><i class="bi bi-check-circle"></i></i> vérifié </p>
+                <% } else { %>
+                    <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
+            <% } %>
+        <a href="/profile/cours/<%= element.id %>?name=
+            <%=element.name%>">
+                
+            <div>
+                <img src="<%= element.thumbail || '' %>" alt="">
+                <p><%= element.name ? element.name : '' %></p>
+                <p><%= element.user ? element.user.name : 'Inconnu' %></p>
+                <p><%= element.prix ? element.prix : '' %></p>
+                <p><%= element.courseTime ? element.courseTime : '' %></p>
+            </div></a>
+        <% }) %>
+    <% } %>
+</div>
 
-                </div>
+<% if (typeof data !== 'undefined' && data !== null) { %>
+    <img class="w-32 h-32" src="<%= data.profilePicture || '' %>" alt="">
+    <%- include('partiel/disconnect_logout') %>
+    <div>
+        <p class="text-red-400">Modifier le profil</p>
+        <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
+            <div class="previewPicture">
+                <img style="width: 40px; height:40px" src="<%= data.profilePicture || '' %>" alt="" id="previewImage">
+                <button class="changeImage">Importer 🔽</button>
+            </div>
+            <input class="profil-infos" type="file" name="profilePicture" id="profilePicture" accept="image/*" hidden>
+            <input class="profil-infos" type="text" id="name" name="name" value="<%= data.name %>">
+            <textarea class="profil-infos" name="aboutYou"><%= data.aboutYou ? data.aboutYou : '' %></textarea>
+            <input class="email" type="email" name="email" id="email" value="<%= data.email || '' %>">
+            <input class="py-16 password" type="password" name="password" value="          ">
+            <input class="profil-infos" type="datetime" name="DateOfBirth" value="<%= data.DateOfBirth ? data.DateOfBirth.toISOString().slice(0,10).replaceAll('-', '/') : '' %>" placeholder="MM-JJ-YY">
+            <input class="role" type="text" name="role" id="role" value="<%= data.role || '' %>">
+            <input id="submit" type="submit" value="Modifier">
+        </form>
+    </div>
+<% } %>
 
-
-
-                <!-- name
-description
-categorie
-thumbail
-user
-prix
-   
-lessons
-averageRating
-difficultyLevel
-language
-approved
-review
-courseTime -->
-                <% if (typeof data !=='undefined' && typeof data !==null) { %>
-                    <img class="w-32 h-32" src="<%= data.profilePicture || "" %>" alt="">
-                    <%- include('partiel/disconnect_logout') %>
-                        <div>
-                            <p class="text-red-400">modifier le profil</p>
-                            <form action="/profile/update_profile/<%= data.id %>?_method=PUT"
-                                enctype="multipart/form-data" method="post">
-                                <div class="previewPicture">
-                                    <img style="width: 40px; height:40px"
-                                        src="<%= data.profilePicture ?data.profilePicture : "" %>" alt=""
-                                        id="previewImage">
-                                    <button class="changeImage">importer🔽</button>
-                                </div>
-                                <input class="profil-infos" type="file"
-                                    value="<%= data.profilePicture?data.profilePicture : "" %>" hidden
-                                    name="profilePicture" id="profilePicture" accept="image/*">
-                                <input class="profil-infos" type="text" id="name" name="name" value="<%=data.name %>">
-                                <textarea class="profil-infos" type="text" id="aboutYou"
-                                    name="aboutYou"><%=data.aboutYou ? data.aboutYou :""  %></textarea>
-                                <input class="email" type="email" value="<%= data.email?data.email :""%>" name="email"
-                                    id="email">
-                                <input class="py-16 password" type="password" name="password" id="password"
-                                    value="          ">
-                                <input class="profil-infos" type="datetime"
-                                    value="<%=data.DateOfBirth? data.DateOfBirth.toISOString().slice(0,10).replaceAll("
-                                    -","/") : "" %>" placeholder="MM-JJ-YY" name="DateOfBirth" id="DateOfBirth" >
-                                <input class="role" type="text" name="role" id="role"
-                                    value="<%=data.role? data.role :"" %>">
-                                <input id="submit" type="submit" value="modifie">
-
-                            </form>
-                        </div>
-
-                        <% } %>
-                            <%- include('partiel/js') %>
-
+<%- include('partiel/js') %>
                                 <script>
                                     const previewImage = document.querySelector("#previewImage")
                                     const profilePicture = document.querySelector("#profilePicture")

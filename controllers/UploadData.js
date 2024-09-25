@@ -103,6 +103,7 @@ exports.UploadCourse = async(req, res) => {
     categorie,
     user,
     prix,
+    thumbail,
     typologie,
     difficultyLevel,
     language } = req.body
@@ -178,7 +179,7 @@ exports.UploadCourse = async(req, res) => {
       try {
         await course.save();
         req.session.message = {
-          message: "Cours envoyé avec succès et en attente de validation."
+          message: "Cours envoyé avec succès"
         };    
         return res.redirect("/profile");
       } catch (err) {

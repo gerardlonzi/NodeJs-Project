@@ -30,7 +30,7 @@ const CourseModel = new Schema({
     typologie:{type:String, default:"Premium"},
     difficultyLevel:{type:String},
     language :{type:String,default:"Français"},
-    approved :{type:String , default:true},
+    approved :{type:String , default:'wait',enum:['no','yes','wait']},
     review :[{type:Schema.Types.ObjectId , ref:"Reviews"}],
     courseTime: {type:String, required:true},
 
