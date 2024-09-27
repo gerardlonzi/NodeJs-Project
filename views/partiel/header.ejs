@@ -1,9 +1,60 @@
 <header>
+    <div>
+
+    </div>
+    <div>
+        <p class="logo">E-Learning</p>
+        <a href="">
+            <div>
+                <p>
+
+                </p>
+                <div>
+                    <span>Call</span>
+                    <span></span>
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div>
+                <p>
+
+                </p>
+                <div>
+                    <span>Email</span>
+                    <span></span>
+
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div>
+                <p>
+
+                </p>
+                <div>
+                    <span>Adress</span>
+                    <span></span>
+
+                </div>
+            </div>
+        </a>
+    </div>
     <ul class="auth">
         <% if (typeof data !=='undefined' && data !=="null" && data.role==="user" ) { %>
+          <div>
+            <li><a href="">Home</a></li>
+            <li><a href="">Courses</a></li>
+            <li><a href="">Event</a></li>
+            <li><a href="">Teachers</a></li>
+            <li><a href="">Princing</a></li>
+            <li><a href="">BLog</a></li>
+            <li><a href="">Contact</a></li>
             <li>
                 <a href="/become-teacher">Enseigner sur Maneliza Global </a>
             </li>
+          </div>
+            
             <li>
                 <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture">
                     Profile</a>
@@ -31,7 +82,7 @@
                             </li>
                             <% } else { %>
                                 <li>
-                                    <a href="login">SE CONNECTER</a>
+                                    <a href="login">SE CONNECTER / S'INSCRIRE</a>
                                 </li>
 
                                 <% } %>

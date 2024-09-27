@@ -179,7 +179,7 @@ exports.UploadCourse = async(req, res) => {
       try {
         await course.save();
         req.session.message = {
-          message: "Cours envoyé avec succès"
+          message: "Cours publié avec succès et en cours de traitement"
         };    
         return res.redirect("/profile");
       } catch (err) {
