@@ -1,7 +1,7 @@
 <%- include('partiel/head', {title: "Profile"}) %>
-<link href="/styles/output.css" rel="stylesheet">
 </head>
 <body style="background-color: rgb(0, 9, 41); color:white">
+    <%- include('partiel/header') %>
 <div>
 
     <%= message && message.message?message.message : '' %>
@@ -18,8 +18,7 @@
                 <% } else { %>
                     <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
             <% } %>
-        <a href="/profile/cours/<%= element.slug %>?name=
-            <%=element.name%>">
+        <a href="/profile/cours/<%= element.slug %>">
                 
             <div>
                 <img src="<%= element.thumbail || '' %>" alt="">

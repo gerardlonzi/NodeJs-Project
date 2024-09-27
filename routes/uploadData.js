@@ -37,6 +37,7 @@ profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
 })
 profileRouter.post('/upload-course/publish',verifyToken,upload.single("thumbail"),UploadCourse)
 profileRouter.get('/profile/cours/:slug',verifyToken,async(req,res)=>{
+    let data
    const slug = req.params.slug
    let message
    if(req.user && req.user.role==="professeur"){
@@ -49,8 +50,10 @@ profileRouter.get('/profile/cours/:slug',verifyToken,async(req,res)=>{
         }
         else{
           const course = await Course.find({slug:slug})
-          if(course){
-            return res.render("../views/update-delete-course",{course})
+          const courses = await Course.find({slug:{$ne:slug}})
+
+          if(course && user.approved ==="yes"){
+            return res.render("../views/update-delete-course",{course:course|| {},data:user ||{},courses:courses||[]})
           }
           else{
             req.session.message = "ce cours n'existe pas"

@@ -1,35 +1,76 @@
 <%- include("partiel/head",{title:'update or delete Course'}) %>
-</head>
-<body>
-    <%- include("partiel/header") %>
-    <div>
+    </head>
 
-        <%= message && message.message?message.message : '' %>
-        <%= message ? message : '' %>
-    </div>
-    
-    <div>
-        <% if (typeof course !== 'undefined' && course.length > 0) { %>
-            <% course.forEach(element => { %>
-                <% if (element.approved ==='wait') { %>
-                         <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a href="">  A savoir plus sur les rêgles de validations</a></p>
-                <% } else if (element.approved ==='yes') { %>
-                    <p><i class="bi bi-check-circle"></i></i> vérifié </p>
-                    <% } else { %>
-                        <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
-                <% } %>
-            <a href="/profile/cours/<%= element.slug %>?name=
-                <%=element.name%>">
-                    
-                <div>
-                    <img src="<%= element.thumbail || '' %>" alt="">
-                    <p><%= element.name ? element.name : '' %></p>
-                    <p><%= element.user ? element.user.name : 'Inconnu' %></p>
-                    <p><%= element.prix ? element.prix : '' %></p>
-                    <p><%= element.courseTime ? element.courseTime : '' %></p>
-                </div></a>
-            <% }) %>
-        <% } %>
-    </div>
-</body>
-</html>
+    <body>
+        <%- include("partiel/header") %>
+            <div>
+
+                <%=typeof message !=='undefined' && message && message.message?message.message : '' %>
+                    <%=typeof message !=='undefined' && message ? message : '' %>
+            </div>
+
+            <div>
+                <% if (typeof course !=='undefined' && course.length> 0) { %>
+                    <% course.forEach(element=> { %>
+                        <% if (element.approved==='wait' ) { %>
+                            <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a
+                                    href=""> A savoir plus sur les rêgles de validations</a></p>
+                            <% } else if (element.approved==='yes' ) { %>
+                                <p><i class="bi bi-check-circle"></i></i> vérifié </p>
+                                <% } else { %>
+                                    <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
+                                    <% } %>
+
+                                        <div>
+                                            <img src="<%= element.thumbail || '' %>" alt="">
+                                            <p>
+                                                <%= element.name ? element.name : '' %>
+                                            </p>
+                                            <p>
+                                                <%= element.user ? element.user.name : 'Inconnu' %>
+                                            </p>
+                                            <p>
+                                                <%= element.prix ? element.prix : '' %>
+                                            </p>
+                                            <p>
+                                                <%= element.courseTime ? element.courseTime : '' %>
+                                            </p>
+                                        </div>
+                                        <% }) %>
+                                            <% } %>
+            </div>
+            <div>
+                <% if (typeof courses !=='undefined' ) { %>
+                    <% courses.forEach(element=> { %>
+                        <% if (element.approved==='wait' ) { %>
+                            <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a
+                                    href=""> A savoir plus sur les rêgles de validations</a></p>
+                            <% } else if (element.approved==='yes' ) { %>
+                                <p><i class="bi bi-check-circle"></i></i> vérifié </p>
+                                <% } else { %>
+                                    <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
+                                    <% } %>
+                                        <a href="/profile/cours/<%= element.slug %>">
+
+                                            <div>
+                                                <img src="<%= element.thumbail || '' %>" alt="">
+                                                <p>
+                                                    <%= element.name ? element.name : '' %>
+                                                </p>
+                                                <p>
+                                                    <%= element.user ? element.user.name : 'Inconnu' %>
+                                                </p>
+                                                <p>
+                                                    <%= element.prix ? element.prix : '' %>
+                                                </p>
+                                                <p>
+                                                    <%= element.courseTime ? element.courseTime : '' %>
+                                                </p>
+                                            </div>
+                                        </a>
+                                        <% }) %>
+                                            <% } %>
+            </div>
+    </body>
+
+    </html>
