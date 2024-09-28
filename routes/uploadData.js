@@ -1,5 +1,5 @@
 const express = require('express')
-const { upload, updateProfileUsers, UploadCourse } = require('../controllers/UploadData')
+const { upload, updateProfileUsers, UploadCourse, updateCourse, DeleteCourse } = require('../controllers/UploadData')
 const { verifyToken } = require('../controllers/AuthControllers')
 const profileRouter = express.Router()
 const User = require("../models/User")
@@ -37,15 +37,15 @@ profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
 })
 profileRouter.post('/upload-course/publish',verifyToken,upload.single("thumbail"),UploadCourse)
 profileRouter.get('/profile/cours/:slug',verifyToken,async(req,res)=>{
-    let data
+   let data
    const slug = req.params.slug
    let message
    if(req.user && req.user.role==="professeur"){
     try{
         const user = await User.findById(req.user.id)
         if(!user){
-            message,req.session.message = "vous n'êtes pas autorisé a voir ce cours "
-            req.session.message=null
+            message = req.session.message 
+            req.session.message= null
             return res.redirect("/profile")
         }
         else{
@@ -70,5 +70,7 @@ profileRouter.get('/profile/cours/:slug',verifyToken,async(req,res)=>{
    
    
 })
+profileRouter.put('/profile/cours/:slug',verifyToken,upload.single('thumbail'),updateCourse)
+profileRouter.delete('/profile/cours/:slug',verifyToken,DeleteCourse)
 
 module.exports = profileRouter

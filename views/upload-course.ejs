@@ -1,25 +1,6 @@
 <%- include('partiel/head',{title:"upload course"}) %>
 <script src="https://cdn.tiny.cloud/1/jca0kkt1o2e9qy99ct1fclet3s9mjswkrk2ywmv7xh8v3kwb/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-    tinymce.init({
-      selector: '#textarea',
-      language: 'fr_FR',
-      plugins: [
-        // Core editing features
-        'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-        
-        'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
-      ],
-      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Author name',
-      mergetags_list: [
-        { value: 'First.Name', title: 'First Name' },
-        { value: 'Email', title: 'Email' },
-      ],
-      ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-    });
-  </script>
+<%- include("partiel/tinymces")%>
 </head>
 <body style="background-color: rgb(0, 9, 41); color:white">
     <%- include('partiel/header') %>
@@ -102,56 +83,7 @@
         
 
     </main>
-   
-
-    <script>
-        const image_bl_preview = document.querySelector(".image-bl-preview")
-        const btn_image = document.querySelector(".btn-image")
-        const thumbail = document.querySelector("#thumbail")
-        /* const video_bl_preview = document.querySelector(".video-bl-preview")
-        const btn_video = document.querySelector(".btn-video")
-        const videoResumeCourse = document.querySelector("#videoResumeCourse") */
-
-        btn_image.addEventListener("click",(e)=>{
-            e.preventDefault()
-            thumbail.click()
-        })
-        thumbail.addEventListener("change",(e)=>{
-            dataImage = e.target.files[0]
-            if(dataImage && dataImage.type.startsWith('image/')){
-                const reader = new FileReader()
-                reader.onload =function(e){
-                    image_bl_preview.innerHTML=""
-                    const image = document.createElement("img")
-                    image.src = e.target.result
-
-                    image_bl_preview.appendChild(image)
-
-                }
-                reader.readAsDataURL(dataImage)
-            }
-        })
-        /* btn_video.addEventListener("click",(e)=>{
-            e.preventDefault()
-            videoResumeCourse.click()
-        })
-        videoResumeCourse.addEventListener("change",(e)=>{
-            dataVideo = e.target.files[0]
-            if(dataVideo && dataVideo.type.startsWith('video/')){
-                const reader = new FileReader()
-                reader.onload =function(e){
-                    video_bl_preview.innerHTML=""
-                    video_bl_preview.innerHTML=`
-                    <video controls>
-                        <source src=${e.target.result} type="video/mp4" />
-                    </video>
-                    `
-                }
-                reader.readAsDataURL(dataVideo)
-            }
-        }) */
-        
-    </script>
+    <%- include("partiel/upload-image")%>
     </body>
 </html>
 

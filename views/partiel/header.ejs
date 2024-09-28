@@ -41,19 +41,19 @@
         </a>
     </div>
     <ul class="auth">
-        <% if (typeof data !=='undefined' && data !=="null" && data.role==="user" ) { %>
-          <div>
-            <li><a href="">Home</a></li>
+        <li><a href="/">Home</a></li>
             <li><a href="">Courses</a></li>
             <li><a href="">Event</a></li>
             <li><a href="">Teachers</a></li>
             <li><a href="">Princing</a></li>
             <li><a href="">BLog</a></li>
             <li><a href="">Contact</a></li>
+        <% if (typeof data !=='undefined' && data !=="null" && data.role==="user" ) { %>
+        
+            
             <li>
                 <a href="/become-teacher">Enseigner sur Maneliza Global </a>
             </li>
-          </div>
             
             <li>
                 <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture">

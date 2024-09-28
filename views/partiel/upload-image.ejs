@@ -1,0 +1,28 @@
+<script>
+    const image_bl_preview = document.querySelector(".image-bl-preview")
+    const btn_image = document.querySelector(".btn-image")
+    const thumbail = document.querySelector("#thumbail")
+    /* const video_bl_preview = document.querySelector(".video-bl-preview")
+    const btn_video = document.querySelector(".btn-video")
+    const videoResumeCourse = document.querySelector("#videoResumeCourse") */
+
+    btn_image.addEventListener("click",(e)=>{
+        e.preventDefault()
+        thumbail.click()
+    })
+    thumbail.addEventListener("change",(e)=>{
+        dataImage = e.target.files[0]
+        if(dataImage && dataImage.type.startsWith('image/')){
+            const reader = new FileReader()
+            reader.onload =function(e){
+                image_bl_preview.innerHTML=""
+                const image = document.createElement("img")
+                image.src = e.target.result
+
+                image_bl_preview.appendChild(image)
+
+            }
+            reader.readAsDataURL(dataImage)
+        }
+    })
+</script>
