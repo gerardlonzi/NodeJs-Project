@@ -1,90 +1,136 @@
 <header>
-    <div>
 
+    <div class="flex-box-text">
+        <p>
+            le meilleur site e-learning de ton pays
+        </p>
+        <div class="flex-box-text">
+
+            <a class="link-hover" href="">
+
+                <i class="bi bi-facebook"></i>
+            </a>
+            <a class="link-hover" href="">
+                <i class="bi bi-twitter-x"></i>
+            </a>
+            <a class="link-hover" href="">
+                <i class="bi bi-youtube"></i>
+            </a>
+            <a class="link-hover" href="">
+                <i class="bi bi-linkedin"></i>
+            </a>
+        </div>
     </div>
+
+
     <div>
-        <p class="logo">E-Learning</p>
-        <a href="">
-            <div>
-                <p>
+        <div class="flex-box-text">
+            <p class="logo"><img src="/images/logo.webp" alt="logo"></p>
+            <div class="flex-box-squares">
+                <a href="">
+                    <p>
+                        <i class="bi bi-telephone-fill"></i>
+                    </p>
+                    <div>
+                        <span>Téléphone</span>
+                        <span class="sm">+673259041</span>
+                    </div>
+                </a>
+                <a href="">
+                    <p>
+                        <i class="bi bi-envelope-fill"></i>
+                    </p>
+                    <div>
+                        <span>Email</span>
+                        <span class="sm">lonzigerard@gmail.com</span>
 
-                </p>
-                <div>
-                    <span>Call</span>
-                    <span></span>
-                </div>
+                    </div>
+                </a>
+                <a href="">
+                    <p>
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </p>
+                    <div>
+                        <span>Adresse</span>
+                        <span class="sm">Yaounde-Cameroun</span>
+                    </div>
+                </a>
             </div>
-        </a>
-        <a href="">
-            <div>
-                <p>
-
-                </p>
-                <div>
-                    <span>Email</span>
-                    <span></span>
-
-                </div>
-            </div>
-        </a>
-        <a href="">
-            <div>
-                <p>
-
-                </p>
-                <div>
-                    <span>Adress</span>
-                    <span></span>
-
-                </div>
-            </div>
-        </a>
-    </div>
-    <ul class="auth">
-        <li><a href="/">Home</a></li>
-            <li><a href="">Courses</a></li>
-            <li><a href="">Event</a></li>
-            <li><a href="">Teachers</a></li>
-            <li><a href="">Princing</a></li>
-            <li><a href="">BLog</a></li>
-            <li><a href="">Contact</a></li>
-        <% if (typeof data !=='undefined' && data !=="null" && data.role==="user" ) { %>
-        
-            
-            <li>
-                <a href="/become-teacher">Enseigner sur Maneliza Global </a>
-            </li>
-            
-            <li>
-                <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture">
-                    Profile</a>
-            </li>
-            <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="admin" ) { %>
-                <li>
-                    <a href="/dashboard"><img src="<%= data.profilePicture %>" alt="profile picture">dashboard</a>
-                </li>
-                <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="professeur" ) { %>
-                    <% if (data.approved) { %>
-                        <li>
-                            <a href="/upload-course">
-                                <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
-                                    + publier un cours
-                                </button>
-                            </a>
-
-                        </li>
+        </div>
+        <div class="flex-box-text menu">
+            <ul class="auth">
+                <li><a href="/">Acceuil</a></li>
+                <li><a href="">Cours</a></li>
+                <li><a href="">Evénement</a></li>
+                <li><a href="">Professeurs</a></li>
+                <li><a href="">Prix</a></li>
+                <li><a href="">Blog</a></li>
+                <li><a href="">Contacts</a></li>
+            </ul>
+            <% if (typeof data !=='undefined' && data !=="null" && data.role==="user" ) { %>
+                <div class="profil-log">
+                    <div class="teach link-hover-sm">
+                        <a href="/become-teacher">Enseigner sur Maneliza </a>
+                    </div>
+                    <div class="profile">
+                        <% if (data.profilePicture) { %>
+                            <a href="/profile" class="link-hover-sm"><img src="<%= data.profilePicture %>" alt="profile picture">
+                      
+                        <% } else { %>
+                            <div class="img-loader">
+                            
+                            </div>
                         <% } %>
+                        
+                    </div>
+
+                </div>
+
+                <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="admin" ) { %>
+                    <div class="dashboard">
+                        <a href="/dashboard"><img src="<%= data.profilePicture %>" alt="profile picture">dashboard</a>
+                    </div>
+                    <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="professeur" ) { %>
+                        <div class="profil-log">
 
 
-                            <li>
-                                <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture">
-                                    Profile</a>
-                            </li>
-                            <% } else { %>
-                                <li>
-                                    <a href="login">SE CONNECTER / S'INSCRIRE</a>
-                                </li>
+                            <% if (data.approved) { %>
+
+                                <div class="uoload-course">
+                                    <a href="/upload-course">
+                                        <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
+                                            <i class="bi bi-plus-lg"></i> publier un cours
+                                        </button>
+                                    </a>
+
+                                </div>
 
                                 <% } %>
-    </ul>
+
+
+                                    <div class="profile">
+                                        <% if (data.profilePicture) { %>
+                                            <a href="/profile" class="link-hover-sm"><img
+                                                    src="<%= data.profilePicture %>" alt="profile picture">
+
+                                                <% } else { %>
+                                                    <div class="img-loader">
+
+                                                    </div>
+                                                    <% } %>
+
+                                                        <span>
+                                                            <%= data.name || '' %>
+                                                        </span>
+                                            </a>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="menu-login">
+                                            <a href="login">SE CONNECTER / S'INSCRIRE</a>
+                                        </div>
+
+                                        <% } %>
+                        </div>
+        </div>
+    </div>
 </header>

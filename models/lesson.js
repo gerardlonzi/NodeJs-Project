@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const lessonsModel = new Schema({
     chapitreName  :{type:String},
+    description  :{type:String},
     title:{type:String,required:true},
     fileType:{type:String,enum:['audio','video','text'] , required:true},
     fileUrl :{ type:String},

@@ -1,45 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
-   <form action=""  method="post">
-        <p class="ins_conn">S'inscrire</p>
-        <div>
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email" value="<%=typeof message !=='undefined' && message.email !=="undefined" ? message.email : ""  %>">
-            <span>
-                <% if (typeof message.error_msg_field_email !== 'undefined' && message.error_msg_field_email.length > 0) { %>
-                    <%= message.error_msg_field_email %>
-                <% } %>
-            </span>
-            <p><% if (typeof message.email_exist !== 'undefined' ) { %>
-               <%= message.email_exist %>
-            <% } %></p>
-        </div>
-        <div>
-            <label for="password">Mot de passe:</label>
-            <input type="password" id="password" name="password" value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
-            <span>
-                <% if (typeof message.password_length !== 'undefined') { %>
-                    <%= message.password_length %>
-                <% } %>
-                <% if (typeof message.error_msg_field_password !== 'undefined') { %>
-                    <%= message.error_msg_field_password %>
-                <% } %>
-            </span>
-        </div>
-        <div>
-            <input type="submit" class="submit" value="S'inscrire'r">
-        </div>
-    </form> 
-    <a href="/auth/google">continuer  avec google</a>
-    <p>
-        Vous avez deja un compte ? <a class="btn_cons_reg" href="/login">Se connecter</a>
-    </p>
-   
-</body>
-</html>
+<%- include('../partiel/head',{title:"Register"}) %>
+    </head>
+
+    <body>
+        <section class="login">
+            <div class="img-bl">
+
+            </div>
+            <div class="form">
+                <form action="" method="post">
+                    <p class="ins_conn">S'inscrire</p>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email"
+                            value="<%=typeof message !=='undefined' && message.email !==" undefined" ? message.email
+                            : "" %>">
+                        <span>
+                            <% if (typeof message.error_msg_field_email !=='undefined' &&
+                                message.error_msg_field_email.length>
+                                0) { %>
+                                <%= message.error_msg_field_email %>
+                                    <% } %>
+                        </span>
+                        <p>
+                            <% if (typeof message.email_exist !=='undefined' ) { %>
+                                <%= message.email_exist %>
+                                    <% } %>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" id="password" name="password"
+                            value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
+                        <span>
+                            <% if (typeof message.password_length !=='undefined' ) { %>
+                                <%= message.password_length %>
+                                    <% } %>
+                                        <% if (typeof message.error_msg_field_password !=='undefined' ) { %>
+                                            <%= message.error_msg_field_password %>
+                                                <% } %>
+                        </span>
+                    </div>
+                    <div>
+                        <input type="submit" class="submit" value="S'inscrire'r">
+                    </div>
+                </form>
+                <div>
+                    <a href="/auth/google">continuer avec google</a>
+                    <p>
+                        Vous avez deja un compte ? <a class="btn_cons_reg" href="/login">Se connecter</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </body>
+    </html>

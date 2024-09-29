@@ -298,8 +298,8 @@ exports.DeleteCourse = async(req,res)=>{
       req.session.message = 'veuillez vous connectez'
       return res.redirect(`/profile/cours/${slug}`)
     }
-     await Course.findOneAndDelete({slug})
-     const id_cloudImage = result.thumbail.split("/").pop().split(".")[0]
+     const course = await Course.findOneAndDelete({slug})
+     const id_cloudImage = course.thumbail.split("/").pop().split(".")[0]
       await cloudinary.uploader.destroy(`maneSchool/${id_cloudImage}`)
       return res.redirect(`/profile`)
   }

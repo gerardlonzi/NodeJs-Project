@@ -6,12 +6,15 @@ routerAouth.get('/google',passport.authenticate('google',{
     scope :['profile','email']
 }))
 routerAouth.get('/google/callback',passport.authenticate('google',{
-    failureRedirect:'/',}),(req,res)=>{
-        if(req.user.role =='user'){
+    failureRedirect:'/login',}),(req,res)=>{
+        if(req.user.role =='user' || req.user.role =='professeur'){
             return res.redirect('/profile')
         }
         if(req.user.role = 'admin'){
-            res.redirect('/dashboard')
+            return res.redirect('/dashboard')
+        }
+        else{
+            return res.redirect('/login')
         }
     }
 )

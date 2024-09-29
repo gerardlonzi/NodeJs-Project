@@ -1,0 +1,271 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+        
+
+}
+:root{
+    --bg-color:#0f2445;
+    --primary-color:rgb(96, 250, 132);
+    --padding-bl-color:#f4f5f7;
+    --terce-color:rgb(133, 133, 133);
+    --link-hover:#208052;
+    --font-roboto : "Roboto", sans-serif ;
+    --green-hover :#1ca965;
+    
+
+}
+.img-loader{
+    background-color: rgb(236, 236, 236);
+    animation: imgLoader 3s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+}
+@keyframes imgLoader {
+    0%{
+        background-color:  rgb(196, 196, 196);
+       
+        
+    }
+    100%{
+        background-color:  rgb(181, 181, 181);
+    }
+}
+
+body{
+    font-family:  var(--font-roboto);
+}
+.flex-box-text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.flex-box-squares{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+.link-hover:hover{
+ color: var(--primary-color);
+ transition: .4s ease;
+}
+.link-hover-sm:hover{
+ color: var(--link-hover);
+ transition: .4s ease;
+}
+header{
+    background-color: var(--bg-color);
+}
+header>div:first-child{
+    color: white;
+    padding-block: 15px;
+    font-size: 17px;
+    padding-inline: 160px;
+
+}
+header>div:first-child div{
+  gap: 15px;
+}
+header>div:nth-child(2)>div:first-child{
+    padding-inline: 160px;
+    padding-block: 15px;
+    background-color: white;
+}
+header>div:nth-child(2) div:first-child>div{
+    gap: 30px;
+}
+header>div:nth-child(2) div:first-child div a{
+ display: flex;
+ align-items: center;
+ gap: 20px;
+ overflow: hidden;
+ color: var(--bg-color);
+}
+header>div:nth-child(2) div:first-child div a i{
+    font-size: 20px;
+    padding-inline: 15px;
+    padding-block: 15px;
+    background-color: var(--padding-bl-color);
+    border: 1px solid #eeeeee ;
+
+}
+   
+header>div:nth-child(2) div:first-child div a div{
+ display: flex;
+ flex-direction: column;
+ gap: 5px;
+}
+.sm{
+    color: var(--terce-color);
+    font-size: 15px;
+}
+header>div:nth-child(2) div:first-child div a div span:not(.sm){
+    font-weight: 600;
+    font-size: 18px;
+
+}
+.container{
+    padding-inline: 160px;
+}
+.menu{
+padding-inline: 160px;
+  background-color: var(--padding-bl-color);  
+  color: var(--bg-color);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.menu ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    font-size: 15px;
+    padding-block: 18px;
+}
+.menu ul a:hover{
+    color: var(--link-hover);
+    transition: .4s ease;
+   
+}
+.menu-login{
+    padding: 20px;
+    background-color: var(--link-hover);
+    color: white;
+}
+.profil-log img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.profil-log,.profil-log .profile,.profil-log .profile a{
+    display: flex;
+    align-items:center ;
+}
+.profil-log{
+    gap: 10px;
+}
+.profil-log .profile{
+    padding-block: 4px;
+}
+.profil-log .profile a{
+    gap: 10px;
+    font-size: 13px;
+
+}
+.uoload-course button{
+    cursor: pointer;
+   border:none;
+ background-color: var(--primary-color);
+ font-size: 17px;
+ padding: 20px 10px;
+ font-weight: 400;
+}
+.user-view{
+display:flex
+}
+
+.teach{
+    font-size: 15px;
+}
+.logo img{
+    width: 130px;
+    height: 70px;
+    object-fit: cover;
+}
+
+/*login et register page*/
+
+.login{
+    display: flex;
+}
+.img-bl{
+    height: 100vh;
+    width: 40%;
+    overflow: hidden;
+    border-right:5px solid #1fff8f;
+}
+.img-bl img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 50%;
+}
+.form form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+.form form input::placeholder{
+    font-size: 15px;
+}
+.form form input{
+    width: 100%;
+    padding-block: 13px;
+    padding-inline: 15px;
+    font-size: 18px;
+    outline: none;
+    border-radius: 7px;
+}
+.form form>div {
+display: flex;
+flex-direction: column;
+gap: 10px;
+font-weight: 600;
+color: #0f2445;
+}
+
+.form form input{
+   border: solid 1px var(--terce-color);
+}
+.form form input[type="submit"]{
+   border:none;
+   background-color: #208052;
+   color: white;
+}
+.form form input[type="submit"]:hover{
+    background-color: var(--green-hover);
+    transition: .5s ease;
+}
+.login-logo-connect{
+flex-direction: column;
+}
+.login-logo-connect img{
+    width: 130px;
+}
+.login-logo-connect p{
+    color: var(--terce-color);
+}
+.auth-google{
+   background-color: #0f2445;
+   padding-block: 17px;
+   border-radius: 7px;
+   
+   
+}
+.auth-google a{
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.or{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--terce-color);
+}
+
+.err-forget{
+}

@@ -1,32 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send email verification</title>
+<%- include('../partiel/head',{title:"Send Email verification"}) %>
 </head>
+
 <body>
-    <p class="new">
-        <% if (typeof message !=='undefined') { %>
-         <%= message %>
-        <% } %>
-    </p>
-    <h1>un email de verification vous a ete envoyer</h1>
-    <input type="email" name="" id="" value="<%= typeof data.email !=='undefined' && data.email !== null ? data.email: "" %>" disabled>
-    <button class="btn-sndmail"> envoyer</button>
+    <section class="login">
+        <div class="img-bl">
+
+        </div>
+        <div class="form">
+            <p class="new">
+                <% if (typeof message !=='undefined' ) { %>
+                    <%= message %>
+                        <% } %>
+            </p>
+            <h1>un email de verification vous a ete envoyer</h1>
+            <input type="email" name="" id=""
+                value="<%= typeof data.email !=='undefined' && data.email !== null ? data.email: "" %>" disabled>
+            <button class="btn-sndmail"> envoyer</button>
+        </div>
+    </section>
     <script>
         const btnsendmail = document.querySelector(".btn-sndmail")
         const newinfos = document.querySelector(".new")
 
-        btnsendmail.addEventListener('click',()=>{
-            fetch('/send-email-verified',{method:'POST'}).then((result)=>{
-                newinfos.innerHTML="email envoyer avec success"
-            }).catch((err)=>{
+        btnsendmail.addEventListener('click', () => {
+            fetch('/send-email-verified', { method: 'POST' }).then((result) => {
+                newinfos.innerHTML = "email envoyer avec success"
+            }).catch((err) => {
                 console.log(err)
-                newinfos.innerHTML="un probleme est survenu veuiller ressayer"
+                newinfos.innerHTML = "un probleme est survenu veuiller ressayer"
             })
-            
+
         })
     </script>
 </body>
+
 </html>

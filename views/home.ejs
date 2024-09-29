@@ -1,31 +1,17 @@
 <%- include('partiel/head',{title:"Home"}) %>
-<meta name="description" content="   ">
+    <meta name="description" content="   ">
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
 
     </head>
 
     <body>
-        <ul class="auth">
-            <%- include('partiel/header') %>
-            <!-- <% if (typeof data !=='undefined' && typeof data !=="null" && data.role=="user" ) { %>
-                <li>
-                    <a href="/profile"><img src="<%= data.profilePicture %>" alt="profile picture">
-                        Profile</a>
-                </li>
-                <% } else if (typeof data !=='undefined' && typeof data !=="null" && data.role=="admin"
-                    ) { %>
-                        <li>
-                            <a href="/dashboard"><img src="<%= data.profilePicture %>"alt="profile picture">dashboard</a>
-                        </li>
+        <%- include('partiel/header') %>
+        <div class="container">
 
-                    <% } else { %>
-                        <li>
-                            <a href="login">SE CONNECTER</a>
-                        </li>
 
-                    <% } %> -->
-        </ul>
-</body>
+           
+        </div>
+    </body>
 
- </html>
+    </html>
