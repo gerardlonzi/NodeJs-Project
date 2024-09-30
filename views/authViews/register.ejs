@@ -4,52 +4,60 @@
     <body>
         <section class="login">
             <div class="img-bl">
-
+                <img src="/images/register.webp" alt="login-picture">
             </div>
             <div class="form">
+                <div class="login-logo-connect flex-box-squares">
+                    <img src="/images/logo.webp" alt="logo">
+                    <p>Je m'inscris chez Maneliza trainning center</p>
+                </div>
                 <form action="" method="post">
-                    <p class="ins_conn">S'inscrire</p>
                     <div>
                         <label for="email">Email:</label>
-                        <input type="text" id="email" name="email"
+                        <input placeholder="email" autocomplete="off" type="email" id="email" name="email"
                             value="<%=typeof message !=='undefined' && message.email !==" undefined" ? message.email
                             : "" %>">
-                        <span>
                             <% if (typeof message.error_msg_field_email !=='undefined' &&
                                 message.error_msg_field_email.length>
                                 0) { %>
+                                    <span class="err-message">
                                 <%= message.error_msg_field_email %>
+                            </span>
                                     <% } %>
-                        </span>
-                        <p>
-                            <% if (typeof message.email_exist !=='undefined' ) { %>
+                                    <% if (typeof message.email_exist !=='undefined' ) { %>
+                                        <p class="err-message">
                                 <%= message.email_exist %>
+                            </p>
                                     <% } %>
-                        </p>
                     </div>
                     <div>
                         <label for="password">Mot de passe:</label>
                         <input type="password" id="password" name="password"
                             value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
-                        <span>
                             <% if (typeof message.password_length !=='undefined' ) { %>
+                                <span class="err-message">
                                 <%= message.password_length %>
+                               </span>
                                     <% } %>
                                         <% if (typeof message.error_msg_field_password !=='undefined' ) { %>
-                                            <%= message.error_msg_field_password %>
+                                            <span class="err-message">
+                                                <%= message.error_msg_field_password %>
+                                            </span>
                                                 <% } %>
-                        </span>
                     </div>
                     <div>
-                        <input type="submit" class="submit" value="S'inscrire'r">
+                        <input type="submit" class="submit" value="S'inscrire">
                     </div>
-                </form>
-                <div>
-                    <a href="/auth/google">continuer avec google</a>
-                    <p>
-                        Vous avez deja un compte ? <a class="btn_cons_reg" href="/login">Se connecter</a>
+                    <p class="or">Or Login With</p>
+                    <div class="auth-google ">
+
+                        <a href="/auth/google"><i class="bi bi-google"></i><span>continuer avec google</span></a>
+                    </div>
+                    <p class="not-regis">
+                        Vous avez déjà un compte ?
+                        <a  href="/login">Se connecter</a>
                     </p>
-                </div>
+                </form>
             </div>
         </section>
     </body>

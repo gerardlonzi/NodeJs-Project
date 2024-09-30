@@ -1,5 +1,4 @@
 <%- include('../partiel/head',{title:"Login"}) %>
-    <link rel="stylesheet" href="/styles/login.css">
     </head>
 
     <body>
@@ -15,20 +14,25 @@
                 <form action="" class="" method="post">
                     <div>
                         <label for="email">Email:</label>
-                        <input placeholder="email" type="text" id="email" name="email"
-                            value="<%=typeof message !=='undefined' &&typeof message.email !==" undefined" ?
-                            message.email : "" %>">
-                        <span>
-                            <% if (typeof message.error_msg_field_email !=='undefined' &&
-                                message.error_msg_field_email.length> 0) { %>
-                                <%= message.error_msg_field_email %>
-                                    <% } %>
-                        </span>
-                        <p>
-                            <% if (typeof message.email_notExist !=='undefined' ) { %>
-                                <%= message.email_notExist %>
-                                    <% } %>
-                        </p>
+                        <div>
+                            <input  placeholder="email" type="email" id="email" name="email"
+                                value="<%=typeof message !=='undefined' &&typeof message.email !==" undefined" ?
+                                message.email : "" %>">
+
+                            <% if (typeof message.error_msg_field_email !=='undefined') { %>
+                                <span class="err-message">
+                                    <%= message.error_msg_field_email %>
+                                </span>
+                                <% } %>
+
+
+                                    <% if (typeof message.email_notExist !=='undefined' ) { %>
+                                        <p class="err-message">
+                                            <%= message.email_notExist %>
+                                        </p>
+                                        <% } %>
+
+                        </div>
                     </div>
                     <div>
                         <label for="password">Mot de passe:</label>
@@ -36,11 +40,11 @@
                             <input type="password" id="password" name="password"
                                 value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
                             <div class="err-forget flex-box-text">
-                                <span>
+                                <span class="err-message">
                                     <% if (typeof message.password_length !=='undefined' ) { %>
                                         <%= message.password_length %>
                                             <% } %>
-                                                <% if (typeof message.error_msg_field_password !=='undefined' ) { %>
+                                    <% if (typeof message.error_msg_field_password !=='undefined' ) { %>
                                                     <%= message.error_msg_field_password %>
                                                         <% } %>
                                                             <% if (typeof message.incorrect_password !=='undefined' ) {
@@ -52,7 +56,7 @@
                                 </span>
                                 <div>
 
-                                    <a href="/forget-password">Mot de passe oublier</a>
+                                    <a href="/forget-password">Mot de passe oublié</a>
                                 </div>
                             </div>
                         </div>
@@ -66,9 +70,9 @@
 
                         <a href="/auth/google"><i class="bi bi-google"></i><span>continuer avec google</span></a>
                     </div>
-                    <p>
-                        je n'ai pas encore de compte !
-                        <a href="/register">m'inscrire</a>
+                    <p class="not-regis">
+                        Je n'ai pas de compte?
+                        <a href="/register"> Inscrire</a>
 
                     </p>
                 </form>

@@ -1,37 +1,44 @@
 <%- include('../partiel/head',{title:"Send Email verification"}) %>
+
 </head>
 
 <body>
     <section class="login">
         <div class="img-bl">
-
+             <img src="/images/forget.avif" alt="">
         </div>
         <div class="form">
-            <p class="new">
-                <% if (typeof message !=='undefined' ) { %>
-                    <%= message %>
+            
+                <% if (typeof message !=='undefined' && message.success ) { %>
+                    <div class="new-sucess disapied">
+                        <p >
+                        <i class="bi bi-check-circle"></i>
+                        <%= message.success %>
+                        </p>
+                        <i class="bi bi-x"></i>
+                    </div>
                         <% } %>
-            </p>
-            <h1>un email de verification vous a ete envoyer</h1>
-            <input type="email" name="" id=""
-                value="<%= typeof data.email !=='undefined' && data.email !== null ? data.email: "" %>" disabled>
-            <button class="btn-sndmail"> envoyer</button>
+                        <% if (typeof message !=='undefined' && message.error ) { %>
+                            <div class="new-error disapied">
+                                <p>
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                <%= message.error %>
+                                </p>
+                                <i class="bi bi-x"></i>
+                            </div>
+                                <% } %>
+            <div class="send-mail">
+                <h1>un email de vérification vous sera envoyer</h1>
+                <form action="/send-email-verified" method="post">
+                   <input type="email" placeholder="email" name="" id=""
+                    value="<%= typeof data.email !=='undefined' && data.email !== null ? data.email: "" %>" disabled>
+                    <input type="submit" value="envoyer">
+            </form>
+            </div>
         </div>
     </section>
-    <script>
-        const btnsendmail = document.querySelector(".btn-sndmail")
-        const newinfos = document.querySelector(".new")
+    <%- include('../partiel/news') %>
 
-        btnsendmail.addEventListener('click', () => {
-            fetch('/send-email-verified', { method: 'POST' }).then((result) => {
-                newinfos.innerHTML = "email envoyer avec success"
-            }).catch((err) => {
-                console.log(err)
-                newinfos.innerHTML = "un probleme est survenu veuiller ressayer"
-            })
-
-        })
-    </script>
 </body>
 
 </html>

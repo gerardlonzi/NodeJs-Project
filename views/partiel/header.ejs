@@ -86,10 +86,21 @@
 
                 </div>
 
-                <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="admin" ) { %>
-                    <div class="dashboard">
-                        <a href="/dashboard"><img src="<%= data.profilePicture %>" alt="profile picture">dashboard</a>
+                <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="admin" )  { %>
+                    <div class="profil-log">
+                        
+                        <div class="profile">
+                            
+                                <a href="/dashboard" class="link-hover-sm">
+                                    <div class="img-loader">
+                                        <img src="<%= data.profilePicture %>" alt="profile picture">
+                                    </div>
+                                    <span><%= data.name %></span>
+                            
+                        </div>
+    
                     </div>
+                    
                     <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="professeur" ) { %>
                         <div class="profil-log">
 
@@ -125,9 +136,13 @@
                                             </a>
                                     </div>
                                     <% } else { %>
-                                        <div class="menu-login">
-                                            <a href="login">SE CONNECTER / S'INSCRIRE</a>
-                                        </div>
+                                        
+                                            <a href="login">
+                                                <div class="menu-login">
+                                                SE CONNECTER / S'INSCRIRE
+                                            </div>
+                                            </a>
+                                       
 
                                         <% } %>
                         </div>

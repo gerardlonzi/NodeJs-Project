@@ -76,6 +76,8 @@ router.get("/register",verifyToken, (req, res) => {
 })
 
 router.get('/send-email-verified',verifyToken,async(req,res)=>{
+    const message = req.session.message
+    req.session.message=null
     let data; 
     if( req.user){
         try{
@@ -86,7 +88,7 @@ router.get('/send-email-verified',verifyToken,async(req,res)=>{
             console.log(err);
             data = null
         }
-        return res.render('../views/authViews/send-email-verified',{data: data || ""})
+        return res.render('../views/authViews/send-email-verified',{data: data || "",message:message||{}})
     }
     else{
       return  res.redirect('/login')
@@ -95,16 +97,20 @@ router.get('/send-email-verified',verifyToken,async(req,res)=>{
 router.post('/send-email-verified',verifyToken,SendEmail)
 router.get('/verified-email',EmailIsVerified)
 router.get('/forget-password',verifyToken,(req,res)=>{
+    const message = req.session.message
+    req.session.message =null
         if(req.user){
             res.redirect('/')
         }
         else{
-            res.render("../views/authViews/forget-password",{error : req.query.error,message:req.query.message})
+            res.render("../views/authViews/forget-password",{message:message||{}})
         }
 })
 router.post('/forget-password',forgetpassword)
 router.get('/reset-password',forget_Password_emailVerified,(req,res)=>{
-    return res.render('../views/authViews/reset-password')
+    const message = req.session.message
+
+    return res.render('../views/authViews/reset-password',{message:message||{}})
 })
 router.post('/reset-password',resetPassword)
 router.get('/logout',(req,res)=>{

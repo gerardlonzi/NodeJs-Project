@@ -13,6 +13,7 @@
     --link-hover:#208052;
     --font-roboto : "Roboto", sans-serif ;
     --green-hover :#1ca965;
+    --bg-hover :#163568;
     
 
 }
@@ -141,6 +142,11 @@ padding-inline: 160px;
     border-radius: 50%;
     object-fit: cover;
 }
+.profil-log .img-loader{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; 
+}
 .profil-log,.profil-log .profile,.profil-log .profile a{
     display: flex;
     align-items:center ;
@@ -184,7 +190,7 @@ display:flex
 }
 .img-bl{
     height: 100vh;
-    width: 40%;
+    width: 45%;
     overflow: hidden;
     border-right:5px solid #1fff8f;
 }
@@ -198,7 +204,8 @@ display:flex
     display: flex;
     flex-direction: column;
     margin: auto;
-    width: 50%;
+    width: 55%;
+    padding-inline: 100px;
 }
 .form form{
     width: 100%;
@@ -244,7 +251,13 @@ flex-direction: column;
     width: 130px;
 }
 .login-logo-connect p{
+    margin-bottom: 20px;
     color: var(--terce-color);
+}
+.auth-google:hover{
+    background-color: var(--bg-hover);
+    transition: .4s ease;
+
 }
 .auth-google{
    background-color: #0f2445;
@@ -268,4 +281,68 @@ flex-direction: column;
 }
 
 .err-forget{
+    margin-top: 0.5rem;
+}
+.err-forget div a{
+    font-size:15px
+}
+.err-message{
+    color: rgb(217, 0, 0);
+    font-weight: lighter;
+    font-size: 15px;
+}
+.not-regis{
+text-align: center;
+color: var(--terce-color);
+}
+.not-regis a{
+    font-weight: bold;
+    color: #0f2445;
+    text-decoration: solid;
+}
+.not-regis a:hover{
+    color: var(--bg-hover);
+    transition: .4s ease;
+
+
+}
+
+/* verification de l'email*/
+.new-error,.new-sucess{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 8px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+.new-sucess{
+    background-color: rgb(151, 255, 165);
+    border-left: 6px solid rgb(0, 215, 0);
+}
+
+.new-error{
+    background-color: rgb(255, 171, 171);
+    border-left: 6px solid rgb(226, 0, 0);
+
+}
+.new-error p i{
+    color: red;
+    margin-right: 7px;
+
+}
+.new-sucess p i{
+    color: rgb(0, 178, 36);
+    margin-right: 7px;
+}
+.bi-x{
+font-size: 25px;
+color: var(--bg-color);
+}
+.send-mail h1{
+color: #0f2445;
+margin-bottom: 15px;
+
+}
+.send-mail {
+    margin-top: 20px;
 }

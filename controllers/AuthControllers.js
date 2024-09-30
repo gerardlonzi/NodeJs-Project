@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 const nodemailer = require("nodemailer")
 const cloudinary = require("../config/cloudinary")
+const Course = require("../models/Course")
+const { default: mongoose } = require("mongoose")
 
 dotenv.config()
 
@@ -88,7 +90,7 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
   const { email, password } = req.body
   if (!email) {
-    req.session.message = { error_msg_field_email: typeof email !== 'undefined' ? "" : "l'email est requis", error_msg_field_password: typeof password !== 'undefined' ? "" : "le passsword est requis", email: email || "", password: password || "" }
+    req.session.message = { error_msg_field_email:"l'email est requis", email: email || "", password: password || "" }
     return res.redirect('login')
 
 
@@ -155,6 +157,7 @@ exports.sendMailContain = (options) => {
 }
 
 exports.EmailVerified = async (req, res, next) => {
+  req.session.message={}
   const userAuth = req.user
   if (!userAuth) {
     return next()
@@ -163,12 +166,19 @@ exports.EmailVerified = async (req, res, next) => {
   try {
     const verifiedEmailVerified = await User.findById(req.user.id)
     if (verifiedEmailVerified.emailVerified !== true) {
-      return res.redirect('/send-email-verified?message=vous devez verifier votre email address')
+      req.session.message={
+        error:"vous devez verifié votre email address"
+      }
+
+      return res.redirect('/send-email-verified')
     }
     return next()
   }
   catch (err) {
-    return res.redirect("/error?error=une erreur s'est produit")
+    req.session.message={
+      error:"une erreur est survenue"
+    }
+    return res.redirect("/error")
 
   }
 
@@ -178,7 +188,7 @@ exports.SendEmail = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
     if (!user) {
-      return res.redirect("/error?error= utilisateur non approuver")
+      return res.redirect("/login")
     }
 
     const token = crypto.randomBytes(20).toString('hex')
@@ -193,14 +203,20 @@ exports.SendEmail = async (req, res) => {
     }
     this.sendMailContain(options).then(result => {
       console.log(result);
-      return res.redirect('/send-email-verified?message=email envoyer')
+      req.session.message={
+        success:"email envoyé avec succes"
+      }
+      return res.redirect('/send-email-verified')
 
     }).catch(err => {
       console.log(err);
     })
   }
   catch (err) {
-    return res.redirect("/error?error=une erreur s'est produiter")
+    req.session.message={
+      error:"une erreur est survenue"
+    }
+    return res.redirect("/send-email-verified")
   }
 
 }
@@ -237,12 +253,18 @@ exports.EmailIsVerified = async (req, res, next) => {
 exports.forgetpassword = async (req, res) => {
   const email = req.body.email
   if (!email || !email.includes('@gmail')) {
-    return res.redirect('/forget-password?error=vueiller entrer un addresse email valide')
+    req.session.message={
+      error:"veuillez entrez un addresse email valide"
+    }
+    return res.redirect('/forget-password')
   }
   try {
     await User.findOne({ email }).then(user => {
       if (!user) {
-        return res.redirect("/forget-password?error=cette addresse email n'existe pas")
+        req.session.message={
+          error:"cette addresse email n'existe pas"
+        }
+        return res.redirect("/forget-password")
       }
       const token = crypto.randomBytes(20).toString('hex')
       user.resetPasswordtoken = token
@@ -257,20 +279,29 @@ exports.forgetpassword = async (req, res) => {
       }
       this.sendMailContain(options).then(result => {
         console.log(result);
-        return res.redirect('/forget-password?message=email envoyer')
+        req.session.message={
+          success:"email envoyé avec succes"
+        }
+        return res.redirect('/forget-password')
       }).catch(err => {
         console.log(err);
       })
 
     }).catch(err => {
       console.log(err);
-      return res.redirect('/forget-password?error=une erreur est survenue reesayer')
+      req.session.message={
+        error:"une erreur est survenue reessayez"
+      }
+      return res.redirect('/forget-password')
     })
 
 
   }
   catch (err) {
-    return res.redirect('/forget-password?error=une erreur est survenue reesayer')
+    req.session.message={
+      error:"une erreur est survenue reesayez"
+    }
+    return res.redirect('/forget-password')
   }
 }
 
@@ -282,13 +313,19 @@ exports.forget_Password_emailVerified = async (req, res, next) => {
       resetPasswordtokenExpire: { $gt: Date.now() }
     })
     if (!user) {
-      return res.redirect('/forget-password?error= lien expirer ou token non valide')
+      req.session.message={
+        error:"le lien de confirmation ou token a expiré  "
+      }
+      return res.redirect('/forget-password')
     }
     return next()
 
   }
   catch (err) {
-    return res.redirect('/forget-password?error=une erreur est survenur veuiller reessayer')
+    req.session.message={
+      error:"une erreur est survenue ! veuillez reessayez"
+    }
+    return res.redirect('/forget-password')
   }
 }
 
@@ -301,8 +338,10 @@ exports.resetPassword = async (req, res) => {
     })
     if (!user) {
       console.log('user' + user);
-
-      return res.redirect('/forget-password?error=une erreur est survenur veuiller reessayer')
+      req.session.message={
+        error:"une erreur est survenue ! veuillez reessayez"
+      }
+      return res.redirect('/forget-password')
     }
     bcript.hash(req.body.password, 10, (err, pass_hasher) => {
       if (err) throw err
@@ -314,7 +353,10 @@ exports.resetPassword = async (req, res) => {
         return res.redirect('/login')
       })
         .catch(() => {
-          return res.redirect('/reset-password?error=une erreur est survenur veuiller reessayer')
+          req.session.message={
+            error:"une erreur est survenue ! veuillez reessayez"
+          }
+          return res.redirect('/reset-password')
         })
 
     })
@@ -322,21 +364,52 @@ exports.resetPassword = async (req, res) => {
 
   }
   catch (err) {
-    return res.redirect('/reset-password?error= veuiller actualiser la page et reessayer')
+    req.session.message={
+      error:"veuillez actualisez la page et reessayez"
+    }
+    return res.redirect('/reset-password')
+  }
+}
+
+const DeleteUser = async(imagetab)=>{
+  if(imagetab){
+    for(const img of imagetab){
+      
+      try{
+        await cloudinary.uploader.destroy(img.thumbail)
+      }
+      catch(err){
+        req.session.message = "une erreur s'est produite"
+      }
+    }
   }
 }
 
 exports.deleteUser = async (req, res) => {
-  if (!req.user) {
+  const session =  mongoose.startSession()
+   (await session).startTransaction()
+  if(!req.user){
     return res.redirect('/login')
-  }
+  } 
+  
   try {
   const user = await User.findById(req.user.id)
-      if(user.profilePicture && user.profilePicture !=="/images/profile-picture.jpg"){
-        const publicId = user.profilePicture.split('/').pop().split('.')[0]
-        await cloudinary.uploader.destroy(`maneSchool/${publicId}`)
+      
+      if(!user){
+        return res.redirect('/profile')
+      }
+
+    const course = await Course.find({user:user.id})
+    if(course){
+        await DeleteUser(course)
     }
-    User.findByIdAndDelete(req.user.id).then((result) => {
+    await Course.deleteMany({user:user.id})
+
+    if(user.profilePicture && user.profilePicture !=="/images/profile-picture.jpg"){
+      const publicId = user.profilePicture.split('/').pop().split('.')[0]
+      await cloudinary.uploader.destroy(`maneSchool/${publicId}`)
+    }
+   await  User.findByIdAndDelete(req.user.id).then((result) => {
 
       res.clearCookie('token')
       console.log(result);
@@ -348,15 +421,16 @@ exports.deleteUser = async (req, res) => {
 
       return res.redirect('/profile')
     })
-
+     await session.commitTransaction()
+     session.endSession()
 
   }
   catch (err) {
     return res.redirect('/profile')
   }
 
-
 }
+
 
 exports.IsAdmin = (req,res,next)=>{
   if(!req.user){

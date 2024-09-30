@@ -40,6 +40,9 @@ profileRouter.get('/profile/cours/:slug',verifyToken,async(req,res)=>{
    let data
    const slug = req.params.slug
    let message
+   if(req.user){
+    return res.redirect("/login")
+   }
    if(req.user && req.user.role==="professeur"){
     try{
         const user = await User.findById(req.user.id)
