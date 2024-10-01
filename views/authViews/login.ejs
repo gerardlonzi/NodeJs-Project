@@ -1,6 +1,5 @@
 <%- include('../partiel/head',{title:"Login"}) %>
-    </head>
-
+</head>
     <body>
         <section class="login">
             <div class="img-bl">
@@ -12,6 +11,15 @@
                     <p>Connectez-vous à votre compte de pages</p>
                 </div>
                 <form action="" class="" method="post">
+                    <% if ( typeof error !=='undefined' && error !== null) { %>
+                        <div class="new-error disapied">
+                            <p>
+                                <i class="bi bi-exclamation-triangle"></i>
+                            <%= error %>
+                            </p>
+                            <i class="bi bi-x"></i>
+                        </div>
+                    <% } %>
                     <div>
                         <label for="email">Email:</label>
                         <div>
@@ -37,8 +45,12 @@
                     <div>
                         <label for="password">Mot de passe:</label>
                         <div>
-                            <input type="password" id="password" name="password"
-                                value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
+                            <div class="input-pass-eyex">
+                                <input placeholder="***********" type="password" id="password" name="password"
+                                    value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
+                                    <span class="eyes"><i class="bi bi-eye-slash"></i></span>
+
+                            </div>
                             <div class="err-forget flex-box-text">
                                 <span class="err-message">
                                     <% if (typeof message.password_length !=='undefined' ) { %>
@@ -79,7 +91,32 @@
 
             </div>
         </section>
+<%- include('../partiel/news') %>
 
-    </body>
+<script>
+    const eyes_bl = document.querySelector(".eyes")
+    const eyes_icon = document.querySelector(".eyes i")
+    const input_password = document.querySelector("input[type='password']")
+    let eyes_open = false
 
-    </html>
+    eyes_bl.addEventListener('click',()=>{
+        eyes_open = !eyes_open
+        
+        if(eyes_open==true){
+            eyes_bl.innerHTML="<i class='bi bi-eye'></i>"
+            input_password.setAttribute("type","text")
+            input_password.setAttribute("placeholder","password")
+        }
+        if(eyes_open==false){
+            eyes_bl.innerHTML="<i class='bi bi-eye-slash'></i>"
+            input_password.setAttribute("type","password")
+            input_password.setAttribute("placeholder","*********")
+        }
+
+    })
+    
+    
+</script>
+</body>
+
+</html>

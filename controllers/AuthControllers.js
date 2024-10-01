@@ -71,7 +71,7 @@ exports.register = (req, res) => {
 
             newUser.save().then(user => {
               const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '5h' })
-              res.cookie('token', token, { httpOnly: true, maxAge: 3600000 })
+              res.cookie('token', token, { httpOnly: true, maxAge: 21600000 })
               res.redirect('/send-email-verified')
               console.log("token" + token);
               console.log("user id" + user.id);
@@ -107,7 +107,7 @@ exports.login = (req, res) => {
     bcript.compare(password, user.password, (err, isvalid) => {
       if (isvalid) {
         const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '5h' })
-        res.cookie('token', token, { httpOnly: true, maxAge: 3600000 })
+        res.cookie('token', token, { httpOnly: true, maxAge: 21600000 })
         res.redirect('/')
         console.log("token injecter avec succes");
       }
@@ -386,8 +386,8 @@ const DeleteUser = async(imagetab)=>{
 }
 
 exports.deleteUser = async (req, res) => {
-  const session =  mongoose.startSession()
-   (await session).startTransaction()
+  const session =  (await mongoose.startSession()).startTransaction()
+  
   if(!req.user){
     return res.redirect('/login')
   } 
@@ -421,8 +421,8 @@ exports.deleteUser = async (req, res) => {
 
       return res.redirect('/profile')
     })
-     await session.commitTransaction()
-     session.endSession()
+      (await mongoose.startSession()).commitTransaction()
+      (await mongoose.startSession()).endSession
 
   }
   catch (err) {

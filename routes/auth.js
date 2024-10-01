@@ -53,6 +53,7 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
 })
 router.get("/login",verifyToken, (req, res) => {
     console.log(req.user);
+    const error_query = req.query.error 
     
     if(req.user){
         return res.redirect("/")
@@ -61,7 +62,7 @@ router.get("/login",verifyToken, (req, res) => {
         const message = req.session.message || {}
         req.session.message = null
 
-        res.render("../views/authViews/login",{message:message})
+        res.render("../views/authViews/login",{message:message,error:error_query})
     }
 })
 router.get("/register",verifyToken, (req, res) => {

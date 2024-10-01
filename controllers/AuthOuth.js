@@ -11,6 +11,10 @@ passport.use(new GoogleStrtegy({
     callbackURL: "http://localhost:5000/auth/google/callback"
 }, async (accessToken, refreshToken, profile, done) => {
     try {
+        let userByEmail = await User.findOne({ email: profile.emails[0].value })
+        if(userByEmail && !userByEmail.googleId){
+            return done( null,false,{redirect_url:"/login?error=vous devez vous connectez par email et password comme la prémiere fois"})
+        }
         let user = await User.findOne({ googleId: profile.id })
         if (user) {
             

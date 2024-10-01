@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 
 })
       .catch(err => {
-            console.log("erreur lors de la connexion ala base de donnees");
+            console.log("erreur lors de la connexion a .la base de donnees");
             return
       })
 

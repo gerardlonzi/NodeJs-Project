@@ -15,10 +15,10 @@
                     <div>
                         <label for="email">Email:</label>
                         <input placeholder="email" autocomplete="off" type="email" id="email" name="email"
-                            value="<%=typeof message !=='undefined' && message.email !==" undefined" ? message.email
+                              value="<%=typeof message !=='undefined' && message.email !==" undefined" ? message.email
                             : "" %>">
                             <% if (typeof message.error_msg_field_email !=='undefined' &&
-                                message.error_msg_field_email.length>
+                                 message.error_msg_field_email.length>
                                 0) { %>
                                     <span class="err-message">
                                 <%= message.error_msg_field_email %>
@@ -32,27 +32,29 @@
                     </div>
                     <div>
                         <label for="password">Mot de passe:</label>
-                        <input type="password" id="password" name="password"
-                            value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
+                        <div>
+                        <div class="input-pass-eyex">
+                            <input placeholder="***********" type="password" id="password" name="password"
+                                value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
+                                <span class="eyes"><i class="bi bi-eye-slash"></i></span>
+                        </div>
+
                             <% if (typeof message.password_length !=='undefined' ) { %>
                                 <span class="err-message">
                                 <%= message.password_length %>
                                </span>
                                     <% } %>
-                                        <% if (typeof message.error_msg_field_password !=='undefined' ) { %>
+                                    <% if (typeof message.error_msg_field_password !=='undefined' ) { %>
                                             <span class="err-message">
                                                 <%= message.error_msg_field_password %>
                                             </span>
                                                 <% } %>
+                                            </div>
                     </div>
                     <div>
                         <input type="submit" class="submit" value="S'inscrire">
                     </div>
-                    <p class="or">Or Login With</p>
-                    <div class="auth-google ">
-
-                        <a href="/auth/google"><i class="bi bi-google"></i><span>continuer avec google</span></a>
-                    </div>
+                    
                     <p class="not-regis">
                         Vous avez déjà un compte ?
                         <a  href="/login">Se connecter</a>
@@ -60,5 +62,31 @@
                 </form>
             </div>
         </section>
+
+        <script>
+            const eyes_bl = document.querySelector(".eyes")
+            const eyes_icon = document.querySelector(".eyes i")
+            const input_password = document.querySelector("input[type='password']")
+            let eyes_open = false
+        
+            eyes_bl.addEventListener('click',()=>{
+                eyes_open = !eyes_open
+                
+                if(eyes_open==true){
+                    eyes_bl.innerHTML="<i class='bi bi-eye'></i>"
+                    input_password.setAttribute("type","text")
+                    input_password.setAttribute("placeholder","password")
+                }
+                if(eyes_open==false){
+                    eyes_bl.innerHTML="<i class='bi bi-eye-slash'></i>"
+                    input_password.setAttribute("type","password")
+                    input_password.setAttribute("placeholder","*********")
+                }
+        
+            })
+            
+        
+        </script>
+        
     </body>
     </html>
