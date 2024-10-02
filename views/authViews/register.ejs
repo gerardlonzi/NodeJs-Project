@@ -11,7 +11,7 @@
                     <img src="/images/logo.webp" alt="logo">
                     <p>Je m'inscris chez Maneliza trainning center</p>
                 </div>
-                <form action="" method="post">
+                <form action="" class="form_submit" method="post">
                     <div>
                         <label for="email">Email:</label>
                         <input placeholder="email" autocomplete="off" type="email" id="email" name="email"
@@ -34,7 +34,7 @@
                         <label for="password">Mot de passe:</label>
                         <div>
                         <div class="input-pass-eyex">
-                            <input placeholder="***********" type="password" id="password" name="password"
+                            <input placeholder="***********" autocomplete="off" type="password" id="password" name="password"
                                 value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
                                 <span class="eyes"><i class="bi bi-eye-slash"></i></span>
                         </div>
@@ -52,9 +52,12 @@
                                             </div>
                     </div>
                     <div>
-                        <input type="submit" class="submit" value="S'inscrire">
+                        <button type="submit" class="submit" >S'inscrire<img class="loader-img" src="/images/spin.png" alt="spinner"></button>
                     </div>
                     
+                    <p class="condition">
+                        En vous inscrivant, vous acceptez nos <a href="">Conditions d'utilisation</a> <br>  et notre <a href="">Politique de confidentialité</a> .
+                    </p>
                     <p class="not-regis">
                         Vous avez déjà un compte ?
                         <a  href="/login">Se connecter</a>
@@ -63,6 +66,7 @@
             </div>
         </section>
 
+        <%- include('../partiel/buttonLoader') %>
         <script>
             const eyes_bl = document.querySelector(".eyes")
             const eyes_icon = document.querySelector(".eyes i")

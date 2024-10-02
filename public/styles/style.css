@@ -46,7 +46,7 @@ body{
     justify-content: space-between;
     align-items: center;
 }
-a{
+header a{
     text-decoration: none;
     color: inherit;
 }
@@ -217,7 +217,7 @@ display:flex
 .form form input::placeholder{
     font-size: 15px;
 }
-.form form input{
+.form form input,button{
     width: 100%;
     padding-block: 13px;
     padding-inline: 15px;
@@ -239,12 +239,34 @@ color: #0f2445;
 .form form input{
    border: solid 1px var(--quatro-color);
 }
-.form form input[type="submit"]{
+.form form button[type="submit"]{
    border:none;
    background-color: #208052;
    color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
 }
-.form form input[type="submit"]:hover{
+.submit[disabled]{
+cursor: not-allowed;
+}
+.submit[disabled]:hover{
+    background-color: #208052;
+}
+.submit img{
+ animation: spinner 1s linear infinite ;
+ filter: brightness(5);
+}
+@keyframes spinner {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+.form form button[type="submit"]:hover{
     background-color: var(--green-hover);
     transition: .5s ease;
 }
@@ -276,6 +298,7 @@ flex-direction: column;
     display: flex;
     justify-content: center;
     gap: 10px;
+    text-decoration: none;
 }
 .or{
     text-align: center;
@@ -301,11 +324,10 @@ transform: translateY(-50%);
     margin-top: 0.5rem;
 
 }
-.err-forget div{
-    text-align: right;
-}
 .err-forget div a{
+    color: var(--bg-color);
     font-size:15px;
+    text-decoration: none;
 }
 .err-message{
     color: rgb(217, 0, 0);
@@ -320,6 +342,7 @@ color: var(--terce-color);
     font-weight: bold;
     color: #0f2445;
     text-decoration: solid;
+    text-decoration: none;
 }
 .not-regis a:hover{
     color: var(--bg-hover);
@@ -335,10 +358,10 @@ color: var(--terce-color);
     padding: 10px 8px;
     margin-bottom: 30px;
     align-items: center;
-    color: var(--bg-hover);
+    color: black;
 }
 .new-sucess{
-    background-color: rgb(151, 255, 165);
+    background-color: rgb(176, 255, 186);
     border-left: 6px solid rgb(0, 215, 0);
 }
 
@@ -362,9 +385,47 @@ color: var(--bg-color);
 }
 .send-mail h1{
 color: #0f2445;
-margin-bottom: 15px;
+margin-bottom: 20px;
 
+}
+.send-mail h1 span{
+    font-size: 15px;
+    color:#1ca965
 }
 .send-mail {
     margin-top: 20px;
 }
+.condition{
+    font-size: 12px;
+    text-align: center;
+    line-height: 19px;
+    color: var(--terce-color);
+}
+.condition a{
+    color: #1ca965;
+}
+
+
+@media screen and (max-width:1050px){
+    .img-bl{
+        display: none;
+    }
+    .login{
+        height: 100vh;
+    }
+    .form{
+        padding-inline: 100px;
+        width: 100%;
+    }
+    .login-logo-connect p{
+margin-bottom: 30px;
+    }
+}
+@media screen and (max-width:1050px){
+   
+    .form{
+       padding-inline: 10px;
+    }
+    
+}
+

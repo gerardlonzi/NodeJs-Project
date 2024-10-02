@@ -1,0 +1,11 @@
+<script>
+    const submit = document.querySelector('.submit')
+    const loader_img = document.querySelector('.loader-img')
+    const form_submit = document.querySelector('.form_submit')
+
+    loader_img.style.display="none"
+    form_submit.addEventListener('submit',(e)=>{
+        loader_img.style.display='block'
+        submit.disabled=true
+    })
+</script>

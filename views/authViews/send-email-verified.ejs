@@ -28,16 +28,20 @@
                             </div>
                                 <% } %>
             <div class="send-mail">
-                <h1>un email de vérification vous sera envoyer</h1>
-                <form action="/send-email-verified" method="post">
+                <h1>un email de vérification vous sera envoyer á <span>
+                    <%= typeof data.email !=='undefined' && data.email !== null ? data.email: "" %>
+                </span></h1>
+                <form action="/send-email-verified" class="form_submit" method="post">
                    <input type="email" placeholder="email" name="" id=""
                     value="<%= typeof data.email !=='undefined' && data.email !== null ? data.email: "" %>" disabled>
-                    <input type="submit" value="envoyer">
+                    <button class="submit" type="submit" >envoyer<img class="loader-img" src="/images/spin.png" alt="spinner"></button>
             </form>
             </div>
         </div>
     </section>
     <%- include('../partiel/news') %>
+    <%- include('../partiel/buttonLoader') %>
+
 
 </body>
 

@@ -10,7 +10,7 @@
                     <img src="/images/logo.webp" alt="logo">
                     <p>Connectez-vous à votre compte de pages</p>
                 </div>
-                <form action="" class="" method="post">
+                <form action="" class="form_submit" method="post">
                     <% if ( typeof error !=='undefined' && error !== null) { %>
                         <div class="new-error disapied">
                             <p>
@@ -23,7 +23,7 @@
                     <div>
                         <label for="email">Email:</label>
                         <div>
-                            <input  placeholder="email" type="email" id="email" name="email"
+                            <input autocomplete="off" placeholder="email" type="email" id="email" name="email"
                                 value="<%=typeof message !=='undefined' &&typeof message.email !==" undefined" ?
                                 message.email : "" %>">
 
@@ -46,7 +46,7 @@
                         <label for="password">Mot de passe:</label>
                         <div>
                             <div class="input-pass-eyex">
-                                <input placeholder="***********" type="password" id="password" name="password"
+                                <input autocomplete="off" placeholder="***********" type="password" id="password" name="password"
                                     value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>" />
                                     <span class="eyes"><i class="bi bi-eye-slash"></i></span>
 
@@ -75,7 +75,7 @@
                     </div>
 
                     <div>
-                        <input type="submit" class="submit" value="Se connecter">
+                        <button type="submit" class="submit" >Se connecter <img class="loader-img" src="/images/spin.png" alt="spinner"></button>
                     </div>
                     <p class="or">Or Login With</p>
                     <div class="auth-google ">
@@ -92,6 +92,7 @@
             </div>
         </section>
 <%- include('../partiel/news') %>
+<%- include('../partiel/buttonLoader') %>
 
 <script>
     const eyes_bl = document.querySelector(".eyes")

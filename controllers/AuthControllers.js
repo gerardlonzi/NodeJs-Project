@@ -40,8 +40,8 @@ exports.register = (req, res) => {
   }
 
   if (password.length < 8) {
-    req.session.message = { password_length: "le mot de paase doit comporter 8 caractere", password: password, email: email || "" }
-    errors.push({ msg: "le mot de paase doit comporter 8 caractere" })
+    req.session.message = { password_length: "le mot de paase doit comporter au moins 8 caractéres", password: password, email: email || "" }
+    errors.push({ msg: "le mot de passe doit comporter au moins 8 caractéres" })
 
     return res.redirect('register')
 
@@ -54,7 +54,7 @@ exports.register = (req, res) => {
   else {
     User.findOne({ email }).then(user => {
       if (user) {
-        req.session.message = { email_exist: " Desoler cette adresse email existe deja", email: email || "", password: password || "" }
+        req.session.message = { email_exist: " Désoler cette adresse email existe deja", email: email || "", password: password || "" }
         res.redirect("register")
         return
       }
@@ -101,7 +101,7 @@ exports.login = (req, res) => {
   }
   User.findOne({ email }).then(user => {
     if (!user) {
-      req.session.message = { email_notExist: "cet utilisateur n'existe pas veuiller creer un compte", password: password || "", email: email || "" }
+      req.session.message = { email_notExist: "cet utilisateur n'existe pas veuiller créer un compte", password: password || "", email: email || "" }
       return res.redirect('login')
     }
     bcript.compare(password, user.password, (err, isvalid) => {
@@ -190,7 +190,7 @@ exports.SendEmail = async (req, res) => {
     if (!user) {
       return res.redirect("/login")
     }
-
+ const date = new Date().getFullYear()
     const token = crypto.randomBytes(20).toString('hex')
     user.emailVerifiedToken = token
     user.emailVerifiedTokenExpire = Date.now() + 20000000
@@ -198,8 +198,35 @@ exports.SendEmail = async (req, res) => {
     const url = `http://${req.headers.host}/verified-email?token=${token}`
     const options = {
       email: user.email,
-      subject: "GL dev : Verification de votre adresse email",
-      message: `<p>veuiller cliquer sur ce lien 👇🏼👇🏼 pour verifier votre addresse email \n ${url}</p>`
+      subject: "Maneliza E-learning : Vérification de votre adresse email",
+      message: `
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    
+    <div style="text-align: center; padding-bottom: 20px;">
+      <img src="https://res.cloudinary.com/dl61aaiee/image/upload/v1727815982/maneliza-removebg-preview_xlig0u.png" alt="Logo" style="width: 120px; margin-bottom: 20px;">
+      <h2 style="color: #0f2445; font-size: 24px;">Vérifiez votre adresse e-mail</h2>
+    </div>
+    <p style="color: #555; font-size: 16px; line-height: 1.5;">
+      Merci de vous être inscrit(e) sur notre plateforme. Afin de compléter votre inscription, veuillez confirmer votre adresse e-mail en cliquant sur le bouton ci-dessous.
+    </p>
+    <div style="text-align: center; margin: 30px 0;">
+      <a href=${url} 
+         style="background-color: #208052; color: white; padding: 12px 24px; font-size: 16px; font-weight: bold; text-decoration: none; border-radius: 5px; display: inline-block;">
+         Vérifier mon e-mail
+      </a>
+    </div>
+    <p style="color: #999; font-size: 14px; line-height: 1.5;">
+      Si vous n'avez pas créé de compte, veuillez ignorer cet email. Ce lien expirera dans 4 heures.
+    </p>
+    <div style="border-top: 1px solid #eaeaea; padding-top: 20px; text-align: center;">
+      <p style="color: #999; font-size: 12px;">
+        © ${date} VotreSite. Tous droits réservés. | <a href="https://votre-site.com" style="color: #208052; text-decoration: none;">votre-site.com</a>
+      </p>
+    </div>
+  </div>
+      `
+      
+
     }
     this.sendMailContain(options).then(result => {
       console.log(result);
@@ -273,7 +300,7 @@ exports.forgetpassword = async (req, res) => {
       const url = `http://${req.headers.host}/reset-password?token=${token}`
       const options = {
         email: email,
-        subject: "Reunitialisation du mot de passe",
+        subject: "Reinitialisation du mot de passe",
         message: `<p>cliquer sur ce lien pour reunitialiser votre mot de passe  <a href=${url}>clique ici</a>
  </p>`
       }
@@ -371,22 +398,10 @@ exports.resetPassword = async (req, res) => {
   }
 }
 
-const DeleteUser = async(imagetab)=>{
-  if(imagetab){
-    for(const img of imagetab){
-      
-      try{
-        await cloudinary.uploader.destroy(img.thumbail)
-      }
-      catch(err){
-        req.session.message = "une erreur s'est produite"
-      }
-    }
-  }
-}
 
 exports.deleteUser = async (req, res) => {
-  const session =  (await mongoose.startSession()).startTransaction()
+   const session = await mongoose.startSession()
+   session.startTransaction()
   
   if(!req.user){
     return res.redirect('/login')
@@ -396,12 +411,25 @@ exports.deleteUser = async (req, res) => {
   const user = await User.findById(req.user.id)
       
       if(!user){
+        session.abortTransaction()
+        session.endSession()
         return res.redirect('/profile')
       }
 
     const course = await Course.find({user:user.id})
     if(course){
-        await DeleteUser(course)
+      for(const el of course){
+      
+        try{
+          await cloudinary.uploader.destroy(`maneSchool/${el.thumbail.split('/').pop().split('.')[0]}`)
+        }
+        catch(err){
+          req.session.message = "une erreur s'est produite"
+          session.abortTransaction()
+        session.endSession()
+          return res.redirect('/profile')
+        }
+      }
     }
     await Course.deleteMany({user:user.id})
 
@@ -409,23 +437,18 @@ exports.deleteUser = async (req, res) => {
       const publicId = user.profilePicture.split('/').pop().split('.')[0]
       await cloudinary.uploader.destroy(`maneSchool/${publicId}`)
     }
-   await  User.findByIdAndDelete(req.user.id).then((result) => {
-
+   await  User.findByIdAndDelete(req.user.id)
       res.clearCookie('token')
       console.log(result);
-
+      session.abortTransaction()
+      session.endSession()
       return res.redirect('/login')
 
-    }).catch((err) => {
-      console.log(err);
-
-      return res.redirect('/profile')
-    })
-      (await mongoose.startSession()).commitTransaction()
-      (await mongoose.startSession()).endSession
 
   }
   catch (err) {
+    session.abortTransaction()
+    session.endSession()
     return res.redirect('/profile')
   }
 

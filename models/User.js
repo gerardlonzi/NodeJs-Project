@@ -30,7 +30,7 @@ const UserModels = new Shema(
         profilePicture:{
             type:String,
             default:function(){
-                return this.googleId ? String : '/images/profile-picture.jpg'
+                return this.googleId ? String : '/images/profile-picture.webp'
             } 
         },
         DateOfBirth:{

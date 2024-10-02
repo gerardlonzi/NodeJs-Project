@@ -148,7 +148,7 @@ exports.UploadCourse = async(req, res) => {
   
     const result = cloudinary.uploader.upload_stream({
       folder: "maneSchool",
-      allowed_formats: ['jpg', 'jpeg', 'png', 'avif', 'webp','mp4'],
+      allowed_formats: ['jpg', 'jpeg', 'png', 'avif', 'webp','mp4','heic'],
       transformation: [
         { width: 800, height: 600, crop: "limit" },  // Limiter la taille à 500x500 pixels
         { quality: "auto:good" }  // Compression automatique pour maintenir une bonne qualité
