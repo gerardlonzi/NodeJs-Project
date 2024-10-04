@@ -110,7 +110,7 @@ exports.UploadCourse = async(req, res) => {
 
   if (!name || !description || !prix  || !courseTime  || !categorie || !typologie || ! difficultyLevel || !language ) {
     req.session.message = {
-      message: "veuillez renseigner tous les champs s'il vous plait",
+      error: "veuillez renseigner tous les champs s'il vous plait",
       data: {
         name,
         thumbail:thumbail || "",
@@ -131,7 +131,7 @@ exports.UploadCourse = async(req, res) => {
   
   if(!req.file) {
     console.log("request file est null");
-    req.session.message ={message: "Erreur : l'image ou la video n'a pas été telecharger veuillez ressayer s'il vous plait"}
+    req.session.message ={error: "Erreur : l'image ou la video n'a pas été telecharger veuillez ressayer s'il vous plait"}
     return res.redirect("/upload-course")
 
   }
@@ -157,7 +157,7 @@ exports.UploadCourse = async(req, res) => {
       
 
       if (err) {
-        req.session.message ={message:"une erreur est survenue lors de la mise a jour de votre miniature ! veuillez ressayer"}
+        req.session.message ={error:"une erreur est survenue lors de la mise a jour de votre miniature ! veuillez ressayer"}
         console.log(err);
         return res.redirect("/upload-course")
 
@@ -168,21 +168,21 @@ exports.UploadCourse = async(req, res) => {
         categorie,
         thumbail:url.secure_url,
         user: user._id,
-        prix,
+        prix:prix.replace(/[a-zA-Z]/g, ''),
         typologie,
         difficultyLevel,
         language,
-        courseTime
+        courseTime:courseTime.replace(/[a-zA-Z]/g, '')
       })
       try {
         await course.save();
         req.session.message = {
-          message: "Cours publié avec succès et en cours de traitement"
+          success: "Cours publié avec succès et en cours de traitement"
         };    
         return res.redirect("/profile");
       } catch (err) {
         req.session.message = {
-          message: "Une erreur est survenue lors du téléversement du cours. Veuillez réessayer."
+          error: "Une erreur est survenue lors du téléversement du cours. Veuillez réessayer."
         };
         console.log("Erreur lors de la sauvegarde du cours : ", err);
         return res.redirect("/upload-course");
@@ -193,7 +193,7 @@ exports.UploadCourse = async(req, res) => {
   }
   catch (err) {
   
-    req.session.message = {message:"une erreur est survenu ! veuillez ressayer"}
+    req.session.message = {error:"une erreur est survenu ! veuillez ressayer"}
     console.log("err" + err);
     return res.redirect("/upload-course");
   }
@@ -231,11 +231,11 @@ const {name,
       name !== course.name && (course.name = name)
         description !== course.description && (course.description = description)
         categorie !== course.categorie && (course.categorie = categorie)
-        prix !== course.prix && (course.prix = prix)
+        prix !== course.prix && (course.prix = prix.replace(/[a-zA-Z]/g, ''))
         typologie !== course.typologie && (course.typologie = typologie)
         difficultyLevel !== course.difficultyLevel && (course.difficultyLevel = difficultyLevel)
         language !== course.language && (course.language = language)
-        courseTime !== course.courseTime && (course.courseTime = courseTime)
+        courseTime !== course.courseTime && (course.courseTime = courseTime.replace(/[a-zA-Z]/g, ''))
 
       if(!req.file){
         await course.save()

@@ -23,10 +23,12 @@
     </div>
 
 
-    <div>
+    <div class="bl-nav">
         <div class="flex-box-text">
-            <p class="logo"><img src="/images/logo.webp" alt="logo"></p>
-            <div class="flex-box-squares">
+            <a href="/">
+                <p class="logo"><img src="/images/logo.webp" alt="logo"></p>
+            </a>
+            <div class="flex-box-squares nav-contact">
                 <a title="Téléphone" href="tel:+673259041">
                     <p>
                         <i class="bi bi-telephone-fill"></i>
@@ -56,21 +58,30 @@
                     </div>
                 </a>
             </div>
+            
         </div>
         <div class="flex-box-text menu">
-            <ul class="auth">
-                <li><a href="/">Acceuil</a></li>
-                <li><a href="">Cours</a></li>
-                <li><a href="">Evénement</a></li>
-                <li><a href="">Professeurs</a></li>
-                <li><a href="">Prix</a></li>
-                <li><a href="">Blog</a></li>
-                <li><a href="">Contacts</a></li>
-            </ul>
+            <div>
+
+                <ul class="auth">
+                    <li><a href="/">Acceuil</a></li>
+                    <li><a href="">Cours</a></li>
+                    <li><a href="">Evénement</a></li>
+                    <li><a href="">Professeurs</a></li>
+                    <li><a href="">Prix</a></li>
+                    <li><a href="">Blog</a></li>
+                    <li><a href="">Contacts</a></li>
+                </ul>
+                <div class="menu-hambuger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
             <% if (typeof data !=='undefined' && data !=="null" && data.role==="user" ) { %>
                 <div class="profil-log">
-                    <div class="teach link-hover-sm">
-                        <a href="/become-teacher">Enseigner sur Maneliza </a>
+                    <div class="teach hide link-hover-sm">
+                        <a href="/become-teacher">Enseigner</a>
                     </div>
                     <div class="profile">
                         <% if (data.profilePicture) { %>
@@ -81,6 +92,9 @@
                             
                             </div>
                         <% } %>
+                        <span class="hide">
+                            <%= data.name || '' %>
+                        </span>
                         
                     </div>
 
@@ -95,7 +109,7 @@
                                     <div class="img-loader">
                                         <img src="<%= data.profilePicture %>" alt="profile picture">
                                     </div>
-                                    <span><%= data.name %></span>
+                                    <span class="hide"><%= data.name %></span>
                             
                         </div>
     
@@ -107,7 +121,7 @@
 
                             <% if (data.approved) { %>
 
-                                <div class="uoload-course">
+                                <div class="uoload-course hide">
                                     <a href="/upload-course">
                                         <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
                                             <i class="bi bi-plus-lg"></i> publier un cours
@@ -130,7 +144,7 @@
                                                     </div>
                                                     <% } %>
 
-                                                        <span>
+                                                        <span class="hide">
                                                             <%= data.name || '' %>
                                                         </span>
                                             </a>
@@ -139,7 +153,7 @@
                                         
                                             <a href="login">
                                                 <div class="menu-login">
-                                                SE CONNECTER / S'INSCRIRE
+                                                SE CONNECTER 
                                             </div>
                                             </a>
                                        

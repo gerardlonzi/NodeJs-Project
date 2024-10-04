@@ -2,88 +2,143 @@
 <script src="https://cdn.tiny.cloud/1/jca0kkt1o2e9qy99ct1fclet3s9mjswkrk2ywmv7xh8v3kwb/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <%- include("partiel/tinymces")%>
 </head>
-<body style="background-color: rgb(0, 9, 41); color:white">
+<body >
     <%- include('partiel/header') %>
     <main>
+        <div class="bg-uplad">
+            <div>
+                <p>Publier un cours  <i class="bi bi-pen"></i></p>
+            </div>
+        </div>
         <section class="upload-course">
             <div class="message">
- <%= typeof message !== 'undefined' && message.message !=='undefined' ? message.message :"" %>
-            </div>
-            <form action="/upload-course/publish" id="form" enctype="multipart/form-data"  method="post">
-                <div>
-                    <p>Miniature du cours</p>
-                    <div class="image-bl-preview">
-                        
+                <% if (typeof message !=='undefined' && message.success ) { %>
+                    <div class="new-sucess disapied">
+                        <p >
+                        <i class="bi bi-check-circle"></i>
+                        <%= message.success %>
+                        </p>
+                        <i class="bi bi-x"></i>
                     </div>
-                    <button class="btn-image">importer une image</button>
+                        <% } %>
+                        <% if (typeof message !=='undefined' && message.error ) { %>
+                            <div class="new-error disapied">
+                                <p>
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                <%= message.error %>
+                                </p>
+                                <i class="bi bi-x"></i>
+                            </div>
+                                <% } %>
+            </div>
+            <div class="container ">
+                <div class="infos-general">
+                    <p>Informations géneral du cours </p>
+                    <hr>
+                </div>
+            <form action="/upload-course/publish" class="form_submit"  id="form_course"  enctype="multipart/form-data"  method="post">
+                <div class="upload-image">
+                    <label for="thumbail">Miniature du cours</label>
+                    <div class="image-bl-preview">
+                        <img class="cloud-logo" src="/images/drag.jpg" alt="import_image">
+                    </div>
+                    <button class="btn-image"><i class="bi bi-cloud-arrow-up-fill"></i> importer une image</button>
                     <input   type="file" id="thumbail" name="thumbail"  hidden accept="image/*">
                 </div>
-                <!-- <div>
-                    <p>Video de résumé du cours</p>
-                    <span>votre video doit étre au format mp4</span>
-                    <div class="video-bl-preview">
-                     
-                    </div>
-                    <button class="btn-video">importer une video</button>
-                    <input   type="file" id="videoResumeCourse" name="videoResumeCourse"  hidden accept="video/*">
-                </div> -->
+                <div>
+
+              
                 <div>
                     <label for="name">Nom du cours</label>
-                    <input type="text" value="<%= typeof message !== 'undefined' && message.data  && message.data.name !=='undefined' ? message.data.name :"" %>" placeholder="ex: apprendre node js" name="name" id="name">
+                    <input autocomplete="off" type="text" value="<%= typeof message !== 'undefined' && message.data  && message.data.name !=='undefined' ? message.data.name :"" %>" placeholder="ex: apprendre node js" name="name" id="name">
                 </div>
                 <div>
-                    <label for=courseTime">Dureé du cours</label>
-                    <input type="text" value="<%= typeof message !== 'undefined' && message.data  && message.data.courseTime !=='undefined' ? message.data.courseTime
+                    <label for=courseTime">Dureé du cours en heure</label>
+                    <input autocomplete="off" type="number" value="<%= typeof message !== 'undefined' && message.data  && message.data.courseTime !=='undefined' ? message.data.courseTime
  :"" %>"  name="courseTime" id="courseTime">
                 </div>
                 <div>
                     <label for="categorie">A quel catégorie appartient votre cours</label>
+                    <div class="custom-select-container">
+
                     <select name="categorie"  id="categorie">
                         <option <%= typeof message !== 'undefined' && message.data  && message.data.categorie ==='programmation' ? 'selected' :"" %> value="programmation">Programmation</option>
                         <option  <%= typeof message !== 'undefined' && message.data  && message.data.categorie ==='web développement' ? 'selected' :"" %> value="web développement">Web développement</option>
                         <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='graphics design' ? 'selected' :"" %> value="graphics design">Graphics design</option>
                         <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='outils offices' ? 'selected' :"" %> value="outils offices">Outils offices</option>
                     </select>
-                </div>
-                <div>
-                    <label for="professeur">Nom du professeur</label>
-                    <input  type="text" id="professeur" value="<%= data.name?data.name:'' %>" disabled name="professeur">
-                </div>
-                <div>
-                    <label for="prix">Prix de la formation</label>
-                    <input value="<%= typeof message !== 'undefined' && message.data  && message.data.prix !=='undefined' ? message.data.prix :"" %>" type="number" placeholder="ex: 20000f" name="prix" id="prix">
+                    <i class="bi bi-chevron-down"></i>
+                    </div>
                 </div>
                 <div>
                     <label for="typologie">Typlogie du cours</label>
+                    <div class="custom-select-container">
+
                     <select name="typologie" id="typlogie">
                         <option <%= typeof message !== 'undefined' && message.data  && message.data.typlogie ==='premium' ? 'selected' :"" %> value="premium">Premium</option>
                         <option <%= typeof message !== 'undefined' &&message.data  &&  message.data.typlogie ==='gratuit' ? 'selected' :"" %> value="gratuit">Gratuit</option>
                     </select>
+                    <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+                <div>
+
+               
+                <div>
+                    <label for="professeur">Titre du professeur</label>
+                    <input  type="text" id="professeur" value="<%= data.name?data.name:'' %>" disabled name="professeur">
                 </div>
                 <div>
+                    <label for="prix">Prix de la formation</label>
+                    <input autocomplete="off" value="<%= typeof message !== 'undefined' && message.data  && message.data.prix !=='undefined' ? message.data.prix :"" %>" type="number" placeholder="ex: 20000f" name="prix" id="prix">
+                </div>
+                
+            </div>
+            <div>
+                <div>
                     <label for="difficulty">Niveau de difficulté</label>
+                    <div class="custom-select-container">
                     <select name="difficultyLevel" id="difficulty">
                         <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='débutant' ? 'selected' :"" %> value="débutant">Débutant</option>
                         <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='intermédiare' ? 'selected' :"" %> value="intermédiare">Intermédiare</option>
                         <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='avancé' ? 'selected' :"" %> value="avancé">Avancé</option>
                     </select>
+                    <i class="bi bi-chevron-down"></i>
+                </div>
                 </div>
                 <div>
                     <label for="language">Language du cours</label>
+                    <div class="custom-select-container">
+
+                    
                     <select name="language" id="language">
                         <option <%= typeof message !== 'undefined' && message.data  && message.data.language ==='français' ? 'selected' :"" %> value="français">Français</option>
                         <option <%= typeof message !== 'undefined' && message.data  && message.data.language ==='anglais' ? 'selected' :"" %> value="anglais">Anglais</option>
                     </select>
+                    <i class="bi bi-chevron-down"></i>
                 </div>
+                </div>
+            </div>
+            <div class="finasubmit">
+                <label>Description du cours</label>
                 <textarea id="textarea"  name="description"  ><%= typeof message !== 'undefined' && message.data  && message.data.description  ? message.data.description :"" %></textarea>
-                <input type="submit" value="envoyer">
+                <div>
+                    <button type="submit" class="submit" >publier <i class="bi bi-send-fill"></i> <img class="loader-img" src="/images/spin.png" alt="spinner"></button>
+                </div>
+            </div>
 
             </form>
+        </div>
         </section>
         
 
     </main>
     <%- include("partiel/upload-image")%>
+    <%- include('partiel/news') %>
+<%- include('partiel/buttonLoader') %>
+
     </body>
 </html>
 
