@@ -9,7 +9,7 @@ const UserModels = new Shema(
         name:{
             type:String,
             default:function(){
-                return this.email.split('@')[0]
+                return this.email.split('@')[0].replace(/[a-zA-Z]/g, '')
             }
         },
         email:{

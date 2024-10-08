@@ -34,9 +34,12 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
     req.session.message =  null
     let data;
     let course;
+    if(!req.user){
+        return res.redirect('/')
+    }
+    const user = await User.findById(req.user.id)
      if(req.user && (req.user.role==='user' || req.user.role==='professeur')){
         try{
-            const user = await User.findById(req.user.id)
             data = user
             const courseElement = await Course.find({user:req.user.id}).populate('user')
             course = courseElement || []

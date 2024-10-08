@@ -62,7 +62,6 @@
         </div>
         <div class="flex-box-text menu">
             <div>
-
                 <ul class="auth">
                     <li><a href="/">Acceuil</a></li>
                     <li><a href="">Cours</a></li>
@@ -85,7 +84,7 @@
                     </div>
                     <div class="profile">
                         <% if (data.profilePicture) { %>
-                            <a href="/profile" class="link-hover-sm"><img src="<%= data.profilePicture %>" alt="profile picture">
+                            <a href="/profile" class="link-hover-sm"><img src="<%= data.profilePicture %>" alt="profile picture" loading="lazy">
                       
                         <% } else { %>
                             <div class="img-loader">
@@ -133,23 +132,21 @@
                                 <% } %>
 
 
-                                    <div class="profile">
+                                <div class="profile">
                                         <% if (data.profilePicture) { %>
                                             <a href="/profile" class="link-hover-sm"><img
                                                     src="<%= data.profilePicture %>" alt="profile picture">
 
-                                                <% } else { %>
-                                                    <div class="img-loader">
-
-                                                    </div>
-                                                    <% } %>
+                                                
 
                                                         <span class="hide">
                                                             <%= data.name || '' %>
                                                         </span>
                                             </a>
+                                            <% } %>
+
                                     </div>
-                                    <% } else { %>
+                <% } else { %>
                                         
                                             <a href="login">
                                                 <div class="menu-login">
@@ -158,7 +155,7 @@
                                             </a>
                                        
 
-                                        <% } %>
+                <% } %>
                         </div>
         </div>
     </div>

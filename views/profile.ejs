@@ -1,41 +1,55 @@
 <%- include('partiel/head', {title: "Profile"}) %>
 </head>
-<body style="background-color: rgb(0, 9, 41); color:white">
+<body >
+    <div class="profile-bl-user">
+
+    
     <%- include('partiel/header') %>
-<div>
+<!-- <div>
 
     <%= message && message.message?message.message : '' %>
     <%= message ? message : '' %>
 </div>
+-->
+<div class="container">
 
-<div>
-    <p>cliquer sur le cours pour voir ou ajouter des modification</p>
-    <% if (typeof course !== 'undefined' && course.length > 0) { %>
-        <% course.forEach(element => { %>
-            <% if (element.approved ==='wait') { %>
-                     <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a href="">  A savoir plus sur les rêgles de validations</a></p>
-            <% } else if (element.approved ==='yes') { %>
-                <p><i class="bi bi-check-circle"></i></i> vérifié </p>
-                <% } else { %>
-                    <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
-            <% } %>
-        <a href="/profile/cours/<%= element.slug %>">
-                
-            <div>
-                <img src="<%= element.thumbail || '' %>" alt="">
-                <p><%= element.name ? element.name : '' %></p>
-                <p><%= element.user ? element.user.name : 'Inconnu' %></p>
-                <p><%= element.prix ? element.prix : '' %></p>
-                <p><%= element.courseTime ? element.courseTime : '' %></p>
-            </div></a>
-        <% }) %>
-    <% } %>
-</div>
 
 <% if (typeof data !== 'undefined' && data !== null) { %>
-    <img class="w-32 h-32" src="<%= data.profilePicture || '' %>" alt="">
-    <%- include('partiel/disconnect_logout') %>
+    <div class="profile-view-infos">
+        <div>
+            <a href="<%= data.profilePicture || '' %>">
+                <img class="" src="<%= data.profilePicture || '' %>" alt="profile_picture">
+            </a>
+        </div>
+        <div>
+            <div>
+                <p><%= data.name || '' %>
+                    <% if (data.role=='professeur') { %>
+                        <% if (data.approved==='wait') { %>
+                         <span class="At">En attente</span>
+                         <% } else if(data.approved==='yes'){ %>
+                          <span class="vr">vérifié</span>
+                          <% } else { %>
+                           <span class="nv">Non vérifié</span>
+                        <% } %>
+                     
+                    <% } %>
+                </p>
+                <div>
+                    <p>Travaille chez Maneliza global</p>
+                    <p>Cmaroon yaounde Kumba</p>
+                </div>
+                <div>
+                    <span>Web development</span>
+                </div>
+                
+            </div>
+            <a href=""><i class="bi bi-send-fill"></i> Envoyé un message</a>
+        </div>
+            
+    </div>
     <div>
+        
         <p class="text-red-400">Modifier le profil</p>
         <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
             <div class="previewPicture">
@@ -54,6 +68,32 @@
     </div>
 <% } %>
 
+<div>
+    <p>cliquer sur le cours pour voir ou ajouter des modification</p>
+    <% if (typeof course !== 'undefined' && course.length > 0) { %>
+        <% course.forEach(element => { %>
+            <% if (element.approved ==='wait') { %>
+                     <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a href="">  A savoir plus sur les rêgles de validations</a></p>
+            <% } else if (element.approved ==='yes') { %>
+                <p><i class="bi bi-check-circle"></i></i> vérifié </p>
+                <% } else { %>
+                    <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
+            <% } %>
+        <a href="/profile/cours/<%= element.slug %>">
+                
+            <div>
+                <img style="width: 100%;" src="<%= element.thumbail || '' %>" alt="">
+                <p><%= element.name ? element.name : '' %></p>
+                <p><%= element.user ? element.user.name : 'Inconnu' %></p>
+                <p><%= element.prix ? element.prix : '' %></p>
+                <p><%= element.courseTime ? element.courseTime : '' %></p>
+            </div></a>
+        <% }) %>
+    <% } %>
+</div>
+</div>
+</div>
+<%- include('partiel/disconnect_logout') %>
 <%- include('partiel/js') %>
                                 <script>
                                     const previewImage = document.querySelector("#previewImage")

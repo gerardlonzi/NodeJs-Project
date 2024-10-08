@@ -555,7 +555,9 @@ width: 150px;
     outline: none;
     
   }
-  
+.ck-editor__editable{
+    height: 250px;
+  }
   /* Position de l'icône */
   .custom-select-container i {
     position: absolute;
@@ -591,7 +593,114 @@ width: 150px;
     justify-content: center;
     gap: 10px;
  }
- 
+ /* profile style */
+ .profile-view-infos{
+    margin-top: 40px;
+    position: relative;
+    border: solid 1px rgb(232, 232, 232);
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px rgb(236, 236, 236);
+
+ }
+ .profile-view-infos>div:first-child{
+padding: 100px;
+background-color: #163568;
+
+border-radius: 10px;
+ }
+ .profile-view-infos>div:first-child img{
+    position: absolute;
+    border-radius: 50%;
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    top: 70px;
+    left: 45px;
+    border: solid 3px var(--green-hover);
+ }
+ .profile-view-infos>div:first-child i{
+    position: absolute;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: var(--link-hover);
+    left: 60px;
+    top: 100px;
+    cursor: pointer;
+ }
+ .profile-view-infos>div:nth-of-type(2){
+    margin-top: 30px;
+    margin: 40px 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 30px;
+    flex-wrap: wrap;
+
+ }
+ .profile-view-infos>div:nth-of-type(2)>div>p:first-child{
+    font-size: 25px;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    font-weight: bold;
+    color: #163568;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+ }
+ .profile-view-infos>div:nth-of-type(2)>div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+ }
+ .profile-view-infos>div:nth-of-type(2) a{
+    padding: 15px;
+    text-decoration: none;
+    background-color: #1ca965;
+    color: white;
+ }
+ .profile-view-infos>div:nth-of-type(2) a:hover{
+    
+    background-color:#208052;
+    transition: .4s ease;
+ }
+ .profile-view-infos>div:nth-of-type(2)>div>div{
+    line-height: 23px;
+ }
+ .profile-view-infos>div:nth-of-type(2)>div>div>p{
+    font-size: 14px;
+    font-weight: 600;
+    word-spacing: 5px;
+    color: rgb(198, 198, 198);
+ }
+ .profile-view-infos>div:nth-of-type(2)>div>div>span{
+    padding: 10px;
+    background-color: #eeeeee;
+    
+    font-size: 14px;
+    font-weight: bold;
+ }
+
+.At,.vr,.nv{
+    font-size: 11px;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+.vr{
+    
+    background-color: #00d56b;
+}
+.At{
+    background-color: rgb(226, 147, 1);
+}
+.nv{
+    background-color: rgb(205, 0, 0);
+}
+.profile-bl-user .profile{
+    display: none;
+}
 
 /*responsive */
 
@@ -609,7 +718,7 @@ width: 150px;
 }
 
 @media screen and (max-width:1050px){
-    .img-bl{
+    .img-bl,.nav-contact,.menu ul,.hide{
         display: none;
     }
     .login{
@@ -622,9 +731,7 @@ width: 150px;
     .login-logo-connect p{
 margin-bottom: 30px;
     }
-    .nav-contact{
-display: none;
-    }
+   
     .container{
         padding-inline: 10px;
     }
@@ -655,12 +762,6 @@ display: none;
         padding-block: 8px;
 
     }
-    .menu ul{
-        display: none;
-    }
-    .hide{
-        display: none;
-    }
     header>div:first-child p{
         display: none;
     }    
@@ -675,7 +776,7 @@ display: none;
         display: flex;
         flex-direction: column;
         align-items:end ;
-        gap: 10px;
+        gap: 8px;
     }
     .bg-uplad div{
         left: 5%;
@@ -687,6 +788,29 @@ display: none;
     .infos-general p{
         font-size: 18px;
     }
+}
+
+@media screen and (max-width:640px){
+    .profile-view-infos>div:first-child img{
+        width: 100px;
+        height: 100px;
+        top: 60px;
+        transform: translateX(-50%);
+        left: 50%;
+     }
+    .profile-view-infos>div:first-child i{
+        
+        top: 60px;
+        left: 55%;
+     }
+     .profile-view-infos>div:nth-of-type(2){
+        margin: 10px;
+        justify-content:initial
+     }
+     .profile-view-infos>div:nth-of-type(2) a{
+         font-size: 15px;
+     }
+    
 }
 
 @media screen and (max-width:430px){
