@@ -12,7 +12,7 @@
 </div>
 -->
 <div class="container">
-
+<p class="marge"></p>
 
 <% if (typeof data !== 'undefined' && data !== null) { %>
     <div class="profile-view-infos">
@@ -48,8 +48,21 @@
         </div>
             
     </div>
-    <div>
+    <div class="profile-view-about">
         
+        <h4>About me</h4>
+        <div class="about-profile-page">
+           <div>
+            <p>Salut , je m'appelle <%= data.name %></p>
+            <p>Travaille chez Maneliza global au Cameroon yaounde Kumba</p>
+          </div>
+        <p><%= data.aboutYou ? data.aboutYou : '' %></p>
+        <div class="shadow-about"></div>
+       
+    </div>
+    <button class="read_more">Voir plus ...</button>
+    </div>
+    <div>
         <p class="text-red-400">Modifier le profil</p>
         <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
             <div class="previewPicture">
@@ -96,6 +109,8 @@
 <%- include('partiel/disconnect_logout') %>
 <%- include('partiel/js') %>
                                 <script>
+                                    const read_more = document.querySelector(".read_more")
+                                    const Paragraph_about = document.querySelector(".about-profile-page>p:nth-child(2)")
                                     const previewImage = document.querySelector("#previewImage")
                                     const profilePicture = document.querySelector("#profilePicture")
                                     const roleInput = document.querySelector(".role").setAttribute("disabled", "true")
@@ -137,6 +152,20 @@
                                             reader.readAsDataURL(file)
                                         }
                                     })
+                                    let isClick = false
+                                    read_more.addEventListener("click",()=>{
+                                        isClick = !isClick
+
+                                        if(isClick===true){
+                                            read_more.textContent="voir moins"
+                                        }
+                                        else{
+                                            read_more.textContent="voir plus..."
+
+                                        }
+
+                                    })
+                                    
                                 </script>
     </body>
 
