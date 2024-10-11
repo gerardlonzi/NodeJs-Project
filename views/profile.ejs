@@ -63,6 +63,39 @@
     <button class="read_more">Voir plus ...</button>
     </div>
     <div>
+        <nav>
+            <ul>
+                <li>Cours</li>
+                <li>Modifier le profile</li>
+                <li>Paramétre</li>
+            </ul>
+        </nav>
+        <div>
+            <div>
+                <p>cliquer sur le cours pour voir ou ajouter des modification</p>
+                <% if (typeof course !== 'undefined' && course.length > 0) { %>
+                    <% course.forEach(element => { %>
+                        <% if (element.approved ==='wait') { %>
+                                 <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a href="">  A savoir plus sur les rêgles de validations</a></p>
+                        <% } else if (element.approved ==='yes') { %>
+                            <p><i class="bi bi-check-circle"></i></i> vérifié </p>
+                            <% } else { %>
+                                <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
+                        <% } %>
+                    <a href="/profile/cours/<%= element.slug %>">
+                            
+                        <div>
+                            <img style="width: 100%;" src="<%= element.thumbail || '' %>" alt="">
+                            <p><%= element.name ? element.name : '' %></p>
+                            <p><%= element.user ? element.user.name : 'Inconnu' %></p>
+                            <p><%= element.prix ? element.prix : '' %></p>
+                            <p><%= element.courseTime ? element.courseTime : '' %></p>
+                        </div></a>
+                    <% }) %>
+                <% } %>
+            </div>
+
+        </div>
         <p class="text-red-400">Modifier le profil</p>
         <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
             <div class="previewPicture">
@@ -81,29 +114,7 @@
     </div>
 <% } %>
 
-<div>
-    <p>cliquer sur le cours pour voir ou ajouter des modification</p>
-    <% if (typeof course !== 'undefined' && course.length > 0) { %>
-        <% course.forEach(element => { %>
-            <% if (element.approved ==='wait') { %>
-                     <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a href="">  A savoir plus sur les rêgles de validations</a></p>
-            <% } else if (element.approved ==='yes') { %>
-                <p><i class="bi bi-check-circle"></i></i> vérifié </p>
-                <% } else { %>
-                    <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
-            <% } %>
-        <a href="/profile/cours/<%= element.slug %>">
-                
-            <div>
-                <img style="width: 100%;" src="<%= element.thumbail || '' %>" alt="">
-                <p><%= element.name ? element.name : '' %></p>
-                <p><%= element.user ? element.user.name : 'Inconnu' %></p>
-                <p><%= element.prix ? element.prix : '' %></p>
-                <p><%= element.courseTime ? element.courseTime : '' %></p>
-            </div></a>
-        <% }) %>
-    <% } %>
-</div>
+
 </div>
 </div>
 <%- include('partiel/disconnect_logout') %>
@@ -111,6 +122,7 @@
                                 <script>
                                     const read_more = document.querySelector(".read_more")
                                     const Paragraph_about = document.querySelector(".about-profile-page>p:nth-child(2)")
+                                    const shadow_about = document.querySelector(".shadow-about")
                                     const previewImage = document.querySelector("#previewImage")
                                     const profilePicture = document.querySelector("#profilePicture")
                                     const roleInput = document.querySelector(".role").setAttribute("disabled", "true")
@@ -158,9 +170,14 @@
 
                                         if(isClick===true){
                                             read_more.textContent="voir moins"
+                                            Paragraph_about.style.height='auto'
+                                            shadow_about.style.display='none'
                                         }
                                         else{
                                             read_more.textContent="voir plus..."
+                                             Paragraph_about.style.height='110px'
+                                             shadow_about.style.display='block'
+
 
                                         }
 

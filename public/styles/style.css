@@ -711,9 +711,9 @@ border-radius: 10px;
 line-height: 26px;
 }
 .about-profile-page>p:nth-child(2){
-    max-height: 110px;
+    height: 110px;
     overflow:hidden;
-    transition:max-height .5s ease ;
+    transition-property: height .5s ease;
 }
 .shadow-about{
     position: absolute;
