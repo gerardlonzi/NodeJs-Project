@@ -1,4 +1,6 @@
 <%- include('partiel/head', {title: "Profile"}) %>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" /></head>
+
 </head>
 <body >
     <div class="profile-bl-user">
@@ -62,61 +64,111 @@
     </div>
     <button class="read_more">Voir plus ...</button>
     </div>
-    <div>
+    <div class="elem-course">
         <nav>
             <ul>
-                <li>Cours</li>
+                <li class="active">Cours</li>
                 <li>Modifier le profile</li>
                 <li>Paramétre</li>
             </ul>
         </nav>
         <div>
             <div>
-                <p>cliquer sur le cours pour voir ou ajouter des modification</p>
+                <div class="allcourse">
+
+               
                 <% if (typeof course !== 'undefined' && course.length > 0) { %>
                     <% course.forEach(element => { %>
+                        <div class="course">
+
+                       
                         <% if (element.approved ==='wait') { %>
-                                 <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a href="">  A savoir plus sur les rêgles de validations</a></p>
+                                 <p class="alert wait-decision"><i class="bi bi-exclamation-circle"></i> en attente</p>
                         <% } else if (element.approved ==='yes') { %>
-                            <p><i class="bi bi-check-circle"></i></i> vérifié </p>
+                            <p class="alert decision-verified"><i class="bi bi-check-circle"></i></i>  cours vérifié </p>
                             <% } else { %>
-                                <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
+                                <p class="alert decision-notverified"><i class="bi bi-x-circle"></i></i>  cours non vérifié !</p>
                         <% } %>
-                    <a href="/profile/cours/<%= element.slug %>">
+                    
                             
-                        <div>
-                            <img style="width: 100%;" src="<%= element.thumbail || '' %>" alt="">
-                            <p><%= element.name ? element.name : '' %></p>
-                            <p><%= element.user ? element.user.name : 'Inconnu' %></p>
-                            <p><%= element.prix ? element.prix : '' %></p>
-                            <p><%= element.courseTime ? element.courseTime : '' %></p>
-                        </div></a>
+                        <div class="desc-prof">
+                            <a href="/profile/cours/<%= element.slug %>">
+                            <img class="img" style="width: 100%;" src="<%= element.thumbail || '' %>" alt="">
+                           </a>
+                           <div>
+                               <p class="name">
+                                   <a href="/profile/cours/<%= element.slug %>">
+                                   <%= element.name ? element.name : '' %>
+                                   </a>
+                               </p>
+                               <p class="description"><%- element.description ? element.description : '' %></p><span style="font-weight: bolder;">...</span>
+                               <hr>
+                               <div class="profilepresent flex-box-text">
+                                   <div>
+                                           <img class="ProfilePicture" src="<%= data.profilePicture || '' %>" alt="profile_picture">
+                                       <p class="user"><%= element.user ? element.user.name : 'Inconnu' %></p>
+                                   </div>
+                                   <p class="price"><%= element.prix ? element.prix : '' %> XOF</p>
+   
+                               </div>
+                           </div>
+                        </div>
+                    </div>
                     <% }) %>
                 <% } %>
             </div>
-
-        </div>
-        <p class="text-red-400">Modifier le profil</p>
-        <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post">
-            <div class="previewPicture">
-                <img style="width: 40px; height:40px" src="<%= data.profilePicture || '' %>" alt="" id="previewImage">
-                <button class="changeImage">Importer 🔽</button>
             </div>
-            <input class="profil-infos" type="file" name="profilePicture" id="profilePicture" accept="image/*" hidden>
-            <input class="profil-infos" type="text" id="name" name="name" value="<%= data.name %>">
-            <textarea class="profil-infos" name="aboutYou"><%= data.aboutYou ? data.aboutYou : '' %></textarea>
-            <input class="email" type="email" name="email" id="email" value="<%= data.email || '' %>">
-            <input class="py-16 password" type="password" name="password" value="          ">
-            <input class="profil-infos" type="datetime" name="DateOfBirth" value="<%= data.DateOfBirth ? data.DateOfBirth.toISOString().slice(0,10).replaceAll('-', '/') : '' %>" placeholder="MM-JJ-YY">
-            <input class="role" type="text" name="role" id="role" value="<%= data.role || '' %>">
-            <input id="submit" type="submit" value="Modifier">
-        </form>
+            <div>
+                        <p class="text-red-400">Modifier le profil</p>
+
+                <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post" class="updatePofil">
+                    <div class="previewPicture ">
+                        <label for="profilePicture">Photo de profil</label>
+                        <div class="image-bl-preview">
+                            <img  src="<%= data.profilePicture || '' %>" alt="" id="previewImage" class="cloud-logo">
+                        </div>
+                        <button class="changeImage btn-image"><i class="bi bi-cloud-arrow-up-fill"></i> Importer </button>
+                        <input class="profil-infos" type="file" name="profilePicture" id="profilePicture" accept="image/*" hidden>
+                    </div>
+                    
+                    <div>
+                        <label for="name">Nom</label>
+                        <input class="profil-infos" type="text" id="name" name="name" value="<%= data.name %>">
+                    </div>
+                    <div>
+                        <label for="email">Address email</label>
+                        <input class="email" type="email" name="email" id="email" value="<%= data.email || '' %>">
+                    </div>
+                    <div>
+                        <label for="password">Mot de passe</label>
+                        <input class="py-16 password" id="password" type="password" name="password" value="          ">
+                    </div>
+                    <div>
+                        <label for="date">Date d'anniversaire</label>
+                        <input id="date" class="profil-infos" type="datetime" name="DateOfBirth" value="<%= data.DateOfBirth ? data.DateOfBirth.toISOString().slice(0,10).replaceAll('-', '/') : '' %>" placeholder="MM-JJ-YY">
+                    </div>
+                    <div>
+                        <label for="role">Rôle de l'utilisateur</label>
+                        <input class="role"  type="text" name="role" id="role" value="<%= data.role || '' %>">
+                    </div>
+                    <div>
+                        <label for="editor">A propos de vous</label>
+                        <textarea class="profil-infos " id="editor" name="aboutYou"><%- data.aboutYou ? data.aboutYou : '' %></textarea>
+
+                    </div>
+                    <input id="submit" type="submit" value="Modifier">
+                </form>
+            </div>
+        </div>
+        
     </div>
 <% } %>
 
 
 </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js"></script>
+<%- include('partiel/ckeditorScript') %>
 <%- include('partiel/disconnect_logout') %>
 <%- include('partiel/js') %>
                                 <script>

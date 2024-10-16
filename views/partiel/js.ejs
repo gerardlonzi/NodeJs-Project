@@ -2,11 +2,14 @@
     const supp = document.querySelector('.supp')
     const bloc = document.querySelector('.bloc')
     const annuler = document.querySelector('.annuler')
+    const popup = document.querySelector('.popup')
     supp.addEventListener('click', () => {
       bloc.style.display = 'block'
+      popup.style.display = 'block'
     })
     annuler.addEventListener('click', () => {
       bloc.style.display = 'none'
+      popup.style.display = 'none'
     })
   
     const allLink = document.querySelectorAll(".aside-dashboard a")

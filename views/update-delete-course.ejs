@@ -1,7 +1,4 @@
 <%- include("partiel/head",{title:'update or delete Course'}) %>
-<script src="https://cdn.tiny.cloud/1/jca0kkt1o2e9qy99ct1fclet3s9mjswkrk2ywmv7xh8v3kwb/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-
-    <%- include("partiel/tinymces")%>
 
         </head>
 
@@ -172,7 +169,7 @@
                                     </select>
                                 </div>
                                 <textarea id="textarea"
-                                    name="description"><%= typeof  element.description !== 'undefined' &&element.description  && element.description  ? element.description :"" %></textarea>
+                                    name="description"><%- typeof  element.description !== 'undefined' &&element.description  && element.description  ? element.description :"" %></textarea>
                                 
 
                             </form>
@@ -220,7 +217,6 @@
                                                             <% }) %>
                                                                 <% } %>
                                 </div>
-                                <%- include("partiel/tinymces")%>
 
                                 <%- include("partiel/upload-image")%>
 

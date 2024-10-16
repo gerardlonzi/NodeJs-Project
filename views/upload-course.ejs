@@ -122,7 +122,7 @@
             </div>
             <div class="finasubmit">
                 <label>Description du cours</label>
-                <textarea id="editor"  name="description"  ><%= typeof message !== 'undefined' && message.data  && message.data.description  ? message.data.description :"" %></textarea>
+                <textarea id="editor"  name="description"  ><%- typeof message !== 'undefined' && message.data  && message.data.description  ? message.data.description :"" %></textarea>
                 <div>
                     <button type="submit" class="submit" >publier <i class="bi bi-send-fill"></i> <img class="loader-img" src="/images/spin.png" alt="spinner"></button>
                 </div>
