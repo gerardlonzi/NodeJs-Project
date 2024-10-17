@@ -58,7 +58,7 @@
                     </div>
                 </a>
             </div>
-            
+
         </div>
         <div class="flex-box-text menu">
             <div>
@@ -82,42 +82,47 @@
                     <div class="teach hide link-hover-sm">
                         <a href="/become-teacher">Enseigner</a>
                     </div>
-                    <div class="profile">
-                        <% if (data.profilePicture) { %>
-                            <a href="/profile" class="link-hover-sm"><img src="<%= data.profilePicture %>" alt="profile picture" loading="lazy">
-                      
-                        <% } else { %>
-                            <div class="img-loader">
-                            
+                    <% if (data.profilePicture) { %>
+                        <div class="profile">
+                            <a href="/profile" class="link-hover-sm">
+                                        <div class="container-widht-anim">
+                                            <div class="img-loader">
+                                            </div>
+                                        <img src="<%= data.profilePicture %>"
+                                            alt="profile picture" loading="lazy">
+                                
                             </div>
-                        <% } %>
-                        <span class="hide">
-                            <%= data.name || '' %>
-                        </span>
-                        
-                    </div>
+                            <span class="hide">
+                                <%= data.name || '' %>
+                            </span>
+                            </a>
 
+                    </div>
+                    <% } %>
                 </div>
 
-                <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="admin" )  { %>
+            <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="admin" ) { %>
                     <div class="profil-log">
-                        
+
                         <div class="profile">
-                            
-                                <a href="/dashboard" class="link-hover-sm">
-                                    <div class="img-loader">
-                                        <img src="<%= data.profilePicture %>" alt="profile picture">
-                                    </div>
-                                    <span class="hide"><%= data.name %></span>
-                            
+
+                            <a href="/dashboard" class="link-hover-sm">
+                                <div class="container-widht-anim">
+                                <div class="img-loader">
+                                </div>
+                                    <img src="<%= data.profilePicture %>" alt="profile picture">
+                                
+                                   </div>
+                                <span class="hide">
+                                    <%= data.name %>
+                                </span>
+                            </a>
                         </div>
-    
+
                     </div>
-                    
-                    <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="professeur" ) { %>
+
+            <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="professeur" ){ %>
                         <div class="profil-log">
-
-
                             <% if (data.approved) { %>
 
                                 <div class="uoload-course hide">
@@ -128,35 +133,40 @@
                                     </a>
 
                                 </div>
-
                                 <% } %>
+                                <% if (data.profilePicture) { %>
+                                    <div class="profile">
 
+                                            <a href="/profile" class="link-hover-sm">
+                                                        <div class="container-widht-anim">
+                                                            <div class="img-loader">
+                                                            </div>
+                                                <img
+                                                            src="<%= data.profilePicture %>" alt="profile picture">
 
-                                <div class="profile">
-                                        <% if (data.profilePicture) { %>
-                                            <a href="/profile" class="link-hover-sm"><img
-                                                    src="<%= data.profilePicture %>" alt="profile picture">
-
-                                                
-
+                                                       
+                                                    </div>
                                                         <span class="hide">
                                                             <%= data.name || '' %>
                                                         </span>
-                                            </a>
+                                                    </a>
+
+                                                </div>
                                             <% } %>
+                                        </div>
 
-                                    </div>
-                <% } else { %>
-                                        
-                                            <a href="login">
-                                                <div class="menu-login">
-                                                SE CONNECTER 
+            <% } else { %>
+
+                                        <a href="login">
+                                            <div class="menu-login">
+                                                SE CONNECTER
                                             </div>
-                                            </a>
-                                       
+                                        </a>
 
-                <% } %>
-                        </div>
+
+                               
+                        
+            <% } %>
         </div>
     </div>
 </header>

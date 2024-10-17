@@ -1,0 +1,18 @@
+<script >
+    const loader = document.querySelector(' .img-loader');
+const img = document.querySelector('.container-widht-anim img');
+console.log(img)
+console.log(loader)
+// Afficher l'image une fois qu'elle est complètement chargée
+if(img){
+
+    img.onload = function() {
+        loader.style.display = 'none'; // Masquer le loader
+        img.style.display = 'block'; // Afficher l'image
+    };
+    img.src = img.getAttribute('src');
+}
+
+// Déclencher le chargement de l'image
+
+</script>
