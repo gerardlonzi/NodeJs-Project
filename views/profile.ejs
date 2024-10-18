@@ -178,7 +178,7 @@
 
                                     const elem_course_course =document.querySelector(".elem-course-course")
                                     const elem_course_update_profile = document.querySelector(".elem-course-update-profile")
-                                    const elem_course_connection= document.querySelector(".elem-cours-connection")
+                                    const elem_course_connection= document.querySelector(".elem-course-connection")
                                     const elem_course_nav= document.querySelectorAll(".elem-course nav li")
                                     const read_more = document.querySelector(".read_more")
                                     const Paragraph_about = document.querySelector(".about-profile-page>p:nth-child(2)")
@@ -243,7 +243,6 @@
 
                                     })
                                     const tab_elemCourse = [elem_course_course,elem_course_update_profile,elem_course_connection]
-                                    
                                     elem_course_nav.forEach((el,index)=>{
                                         el.addEventListener("click",()=>{
                                             elem_course_nav.forEach(element=>{
@@ -251,10 +250,10 @@
                                             })
                                             el.classList.add("active")
                                             tab_elemCourse.forEach(els=>{
-                                                els.classList.remove("element-appears")
+                                                els.style.display='none'
                                             })
+                                            tab_elemCourse[index].style.display="block"
                                             
-                                            tab_elemCourse[index].style.display='block'
                                         })
                                     })
                                     
