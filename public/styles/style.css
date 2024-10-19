@@ -622,20 +622,39 @@ gap: 10px;
  }
  .profile-view-infos>div:first-child{
 
-padding: 100px;
-background-color: #163568;
+width: 100%;
+height: 28vh;
+overflow: hidden;
+background-color:#163568;
 
 border-radius: 10px;
  }
- .profile-view-infos>div:first-child img{
+ .bgProfileCover{
+    width: 100%;
+    height: 100%;
+    filter: brightness(.5);
+    object-fit: cover;
+    opacity: 1; 
+    animation: fadeIn 7s linear;
+ }
+ @keyframes fadeIn {
+    from { opacity: .8; }
+    to { opacity: 1; }
+  }
+  
+  
+ .profile-view-infos>div:first-child img:not(.bgProfileCover){
     position: absolute;
     border-radius: 50%;
-    width: 160px;
-    height: 160px;
+    width: 140px;
+    height: 140px;
     object-fit: cover;
-    top: 70px;
+    top: 100px;
     left: 45px;
     border: solid 3px var(--green-hover);
+ }
+ .container_CoverImage{
+    height: 100%;
  }
  .profile-view-infos>div:first-child i{
     position: absolute;
@@ -779,8 +798,6 @@ margin-top: 20px;
     width: 100%;
     padding-block: 15px;
     cursor: pointer;
-    border-top-left-radius:10px ;
-    border-top-right-radius:10px ;
     border-bottom: #eeeeee 2px solid;
 
 }
@@ -1066,9 +1083,9 @@ margin-bottom: 30px;
 }
 
 @media screen and (max-width:640px){
-    .profile-view-infos>div:first-child img{
-        width: 100px;
-        height: 100px;
+    .profile-view-infos>div:first-child img:not(.bgProfileCover){
+        width: 120px;
+        height: 120px;
         top: 60px;
         transform: translateX(-50%);
         left: 50%;
@@ -1115,6 +1132,12 @@ height: 15rem;
     
     .bloc{
         width: 18rem;
+    }
+    .elem-course nav ul li:where(:first-child,:nth-child(3)){
+        width: 25%;
+    }
+    .elem-course nav ul li:nth-child(2){
+        width: 50%;
     }
         
     

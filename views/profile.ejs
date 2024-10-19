@@ -19,6 +19,10 @@
 <% if (typeof data !== 'undefined' && data !== null) { %>
     <div class="profile-view-infos">
         <div>
+            <div class="container_CoverImage">
+
+                <img src="images/coverProfile/images4.webp" class="bgProfileCover" alt="">
+            </div>
             <a href="<%= data.profilePicture || '' %>">
                 <img class="" src="<%= data.profilePicture || '' %>" alt="profile_picture">
             </a>
@@ -119,7 +123,6 @@
             </div>
             </div>
             <div class="elem-course-update-profile" style="display:none;">
-                        <p class="text-red-400">Modifier le profil</p>
 
                 <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post" class="updatePofil">
                     <div class="previewPicture ">
@@ -175,7 +178,8 @@
 <%- include('partiel/ckeditorScript') %>
 <%- include('partiel/js') %>
                                 <script>
-
+                                    const container_Cover = document.querySelector(" .profile-view-infos>div:first-child")
+                                    const container_CoverImage = document.querySelector(" .container_CoverImage")
                                     const elem_course_course =document.querySelector(".elem-course-course")
                                     const elem_course_update_profile = document.querySelector(".elem-course-update-profile")
                                     const elem_course_connection= document.querySelector(".elem-course-connection")
@@ -256,6 +260,21 @@
                                             
                                         })
                                     })
+
+                                    const tabImage =['images1','images2','images3','images4','images5','images6']
+                                    let index = 0
+                                    setInterval(()=>{
+                                        index++
+                                        if(index<tabImage.length){
+                                            container_CoverImage.innerHTML=` <img src="images/coverProfile/${tabImage[index]}.webp" class="bgProfileCover" alt="">`
+                                        }
+                                        if(index >=tabImage.length){
+                                            index=0
+                                        }
+
+                                    },20000)
+
+
                                     
                                 </script>
     </body>
