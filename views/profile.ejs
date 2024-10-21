@@ -1,282 +1,353 @@
-<%- include('partiel/head', {title: "Profile"}) %>
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" /></head>
+<%- include('partiel/head', {title: "Profile" }) %>
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
+    </head>
 
-</head>
-<body >
-    <div class="profile-bl-user">
+    </head>
 
-    
-    <%- include('partiel/header') %>
-<!-- <div>
+    <body>
+        <div class="profile-bl-user">
+
+
+            <%- include('partiel/header') %>
+                <!-- <div>
 
     <%= message && message.message?message.message : '' %>
     <%= message ? message : '' %>
 </div>
 -->
-<div class="container">
-<p class="marge"></p>
+                <div class="container">
+                    <p class="marge"></p>
 
-<% if (typeof data !== 'undefined' && data !== null) { %>
-    <div class="profile-view-infos">
-        <div>
-            <div class="container_CoverImage">
+                    <% if (typeof data !=='undefined' && data !==null) { %>
+                        <div class="profile-view-infos">
+                            <div>
+                                <div class="container_CoverImage">
 
-                <img src="images/coverProfile/images4.webp" class="bgProfileCover" alt="">
-            </div>
-            <a href="<%= data.profilePicture || '' %>">
-                <img class="" src="<%= data.profilePicture || '' %>" alt="profile_picture">
-            </a>
-        </div>
-        <div>
-            <div>
-                <p><%= data.name || '' %>
-                    <% if (data.role=='professeur') { %>
-                        <% if (data.approved==='wait') { %>
-                         <span class="At">En attente</span>
-                         <% } else if(data.approved==='yes'){ %>
-                          <span class="vr">vérifié</span>
-                          <% } else { %>
-                           <span class="nv">Non vérifié</span>
-                        <% } %>
-                     
-                    <% } %>
-                </p>
-                <div>
-                    <p>Travaille chez Maneliza global</p>
-                    <p>Cmaroon yaounde Kumba</p>
-                </div>
-                <div>
-                    <span>Web development</span>
-                </div>
-                
-            </div>
-            <a href=""><i class="bi bi-send-fill"></i> Envoyé un message</a>
-        </div>
+                                    <img src="images/coverProfile/images4.webp" class="bgProfileCover" alt="">
+                                </div>
+                                <a href="<%= data.profilePicture || '' %>">
+                                    <div class="container-widht-anim">
+                                        <div class="img-loader"></div>
+                                        <img class="i" src="<%= data.profilePicture || '' %>" alt="profile_picture">
+                                    </div>
+                                </a>
+
+                            </div>
+                            <div>
+                                <div>
+                                    <p>
+                                        <%= data.name || '' %>
+                                            <% if (data.role=='professeur' ) { %>
+                                                <% if (data.approved==='wait' ) { %>
+                                                    <span class="At">En attente</span>
+                                                    <% } else if(data.approved==='yes' ){ %>
+                                                        <span class="vr">vérifié</span>
+                                                        <% } else { %>
+                                                            <span class="nv">Non vérifié</span>
+                                                            <% } %>
+
+                                                                <% } %>
+                                    </p>
+                                    <div>
+                                        <p class="textLoader">Travaille chez Maneliza global</p>
+                                        <p class="textLoader">Cmaroon yaounde Kumba</p>
+                                    </div>
+                                    <div>
+                                        <span class="textLoader">Web development</span>
+                                    </div>
+
+                                </div>
+                                <a href=""><i class="bi bi-send-fill"></i> Envoyé un message</a>
+                            </div>
+
+                        </div>
+                        <div class="profile-view-about">
+
+                            <h4>About me</h4>
+                            <div class="about-profile-page">
+                                <div>
+                                    <p class="textLoader">Salut , je m'appelle <%= data.name %>
+                                    </p>
+                                    <p class="textLoader">Travaille chez Maneliza global au Cameroon yaounde Kumba</p>
+                                </div>
+                                <p class="textLoader">
+                                    <%= data.aboutYou ? data.aboutYou : '' %>
+                                </p>
+                                <div class="shadow-about"></div>
+
+                            </div>
+                            <button class="read_more">Voir plus ...</button>
+                        </div>
+                        <div class="elem-course">
+                            <nav>
+                                <ul>
+                                    <li class="active">Cours</li>
+                                    <li>Modifier le profile</li>
+                                    <li>Paramétre</li>
+                                </ul>
+                            </nav>
+                            <div>
+                                <div class="elem-course-course element-appears">
+                                    <div class="allcourse">
+
+
+                                        <% if (typeof course !=='undefined' && course.length> 0) { %>
+                                            <% course.forEach(element=> { %>
+                                                <div class="course">
+
+
+                                                    <% if (element.approved==='wait' ) { %>
+                                                        <p class="alert wait-decision"><i
+                                                                class="bi bi-exclamation-circle"></i> en attente</p>
+                                                        <% } else if (element.approved==='yes' ) { %>
+                                                            <p class="alert decision-verified"><i
+                                                                    class="bi bi-check-circle"></i></i> cours vérifié
+                                                            </p>
+                                                            <% } else { %>
+                                                                <p class="alert decision-notverified"><i
+                                                                        class="bi bi-x-circle"></i></i> cours non
+                                                                    vérifié !</p>
+                                                                <% } %>
+
+
+                                                                    <div class="desc-prof">
+                                                                        <a href="/profile/cours/<%= element.slug %>">
+                                <div class="container-widht-anim">
+
+                               <div class="img-loader"></div>
+                               <img class="img" style="width: 100%;"
+                                    src="<%= element.thumbail || '' %>"
+                                   alt="">
+                       </div>
+                                        
+                                                                        </a>
+                                                                        <div>
+                                                                            <div class="textLoader">
+                                                                                <p class="name">
+                                                                                    <a
+                                                                                        href="/profile/cours/<%= element.slug %>">
+                                                                                        <%= element.name ? element.name : ''
+                                                                                            %>
+                                                                                    </a>
+                                                                                </p>
+
+                                                                            </div>
+                                                                            <div class="textLoader">
+                                                                                <p class="description"><%-
+                                                                                        element.description ?
+                                                                                        element.description : '' %></p><span
+                                                                                    style="font-weight: bolder;">...</span>
+                                                                            </div>
+                                                                            <hr>
+                                                                            <div class="profilepresent flex-box-text">
+                                                                                <div>
+                                                                                    <div class="container-widht-anim">
+
+                                                                                        <div class="img-loader"></div>
+                                                                                        <img class="ProfilePicture"
+                                                                                            src="<%= data.profilePicture || '' %>"
+                                                                                            alt="profile_picture">
+                                                
+                                                                                    </div>
+                                                                                    <div class="textLoader">
+                                                                                        <p class="user">
+                                                                                            <%= element.user ?
+                                                                                                element.user.name
+                                                                                                : 'Inconnu' %>
+                                                                                        </p>
+                                                                                    </div>
+                                                
+                                                                                </div>
+                                                                                <div class="textLoader">
+                                                                                    <p class="price">
+                                                                                        <%= element.prix ? element.prix : ''
+                                                                                            %> XOF
+                                                                                    </p>
+
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                </div>
+                                                <% }) %>
+                                                    <% } %>
+                                    </div>
+                                </div>
+                                <div class="elem-course-update-profile" style="display:none;">
+
+                                    <form action="/profile/update_profile/<%= data.id %>?_method=PUT"
+                                        enctype="multipart/form-data" method="post" class="updatePofil">
+                                        <div class="previewPicture ">
+                                            <label for="profilePicture">Photo de profil</label>
+                                            <div class="image-bl-preview">
+                                                <div class="container-widht-anim">
+
+                                                    <div class="img-loader"></div>
             
-    </div>
-    <div class="profile-view-about">
-        
-        <h4>About me</h4>
-        <div class="about-profile-page">
-           <div>
-            <p>Salut , je m'appelle <%= data.name %></p>
-            <p>Travaille chez Maneliza global au Cameroon yaounde Kumba</p>
-          </div>
-        <p><%= data.aboutYou ? data.aboutYou : '' %></p>
-        <div class="shadow-about"></div>
-       
-    </div>
-    <button class="read_more">Voir plus ...</button>
-    </div>
-    <div class="elem-course">
-        <nav>
-            <ul>
-                <li class="active">Cours</li>
-                <li>Modifier le profile</li>
-                <li>Paramétre</li>
-            </ul>
-        </nav>
-        <div>
-            <div class="elem-course-course element-appears">
-                <div class="allcourse">
+                                                    <img src="<%= data.profilePicture || '' %>" alt="" id="previewImage"
+                                                        class="cloud-logo">
+                                                </div>
+            
+                                            </div>
+                                            <button class="changeImage btn-image"><i
+                                                    class="bi bi-cloud-arrow-up-fill"></i> Importer </button>
+                                            <input class="profil-infos" type="file" name="profilePicture"
+                                                id="profilePicture" accept="image/*" hidden>
+                                        </div>
 
-               
-                <% if (typeof course !== 'undefined' && course.length > 0) { %>
-                    <% course.forEach(element => { %>
-                        <div class="course">
+                                        <div>
+                                            <label for="name">Nom</label>
+                                            <input class="profil-infos" type="text" id="name" name="name"
+                                                value="<%= data.name %>">
+                                        </div>
+                                        <div>
+                                            <label for="email">Address email</label>
+                                            <input class="email" type="email" name="email" id="email"
+                                                value="<%= data.email || '' %>">
+                                        </div>
+                                        <div>
+                                            <label for="password">Mot de passe</label>
+                                            <input class="py-16 password" id="password" type="password" name="password"
+                                                value="          ">
+                                        </div>
+                                        <div>
+                                            <label for="date">Date d'anniversaire</label>
+                                            <input id="date" class="profil-infos" type="datetime" name="DateOfBirth"
+                                                value="<%= data.DateOfBirth ? data.DateOfBirth.toISOString().slice(0,10).replaceAll('-', '/') : '' %>"
+                                                placeholder="MM-JJ-YY">
+                                        </div>
+                                        <div>
+                                            <label for="role">Rôle de l'utilisateur</label>
+                                            <input class="role" type="text" name="role" id="role"
+                                                value="<%= data.role || '' %>">
+                                        </div>
+                                        <div>
+                                            <label for="editor">A propos de vous</label>
+                                            <textarea class="profil-infos " id="editor"
+                                                name="aboutYou"><%- data.aboutYou ? data.aboutYou : '' %></textarea>
 
-                       
-                        <% if (element.approved ==='wait') { %>
-                                 <p class="alert wait-decision"><i class="bi bi-exclamation-circle"></i> en attente</p>
-                        <% } else if (element.approved ==='yes') { %>
-                            <p class="alert decision-verified"><i class="bi bi-check-circle"></i></i>  cours vérifié </p>
-                            <% } else { %>
-                                <p class="alert decision-notverified"><i class="bi bi-x-circle"></i></i>  cours non vérifié !</p>
+                                        </div>
+                                        <input id="submit" type="submit" value="Modifier">
+                                    </form>
+                                </div>
+                                <div class="elem-course-connection" style="display:none;">
+                                    <%- include('partiel/disconnect_logout') %>
+
+                                </div>
+                            </div>
+
+                        </div>
                         <% } %>
-                    
-                            
-                        <div class="desc-prof">
-                            <a href="/profile/cours/<%= element.slug %>">
-                            <img class="img" style="width: 100%;" src="<%= element.thumbail || '' %>" alt="">
-                           </a>
-                           <div>
-                               <p class="name">
-                                   <a href="/profile/cours/<%= element.slug %>">
-                                   <%= element.name ? element.name : '' %>
-                                   </a>
-                               </p>
-                               <p class="description"><%- element.description ? element.description : '' %></p><span style="font-weight: bolder;">...</span>
-                               <hr>
-                               <div class="profilepresent flex-box-text">
-                                   <div>
-                                           <img class="ProfilePicture" src="<%= data.profilePicture || '' %>" alt="profile_picture">
-                                       <p class="user"><%= element.user ? element.user.name : 'Inconnu' %></p>
-                                   </div>
-                                   <p class="price"><%= element.prix ? element.prix : '' %> XOF</p>
-   
-                               </div>
-                           </div>
-                        </div>
-                    </div>
-                    <% }) %>
-                <% } %>
-            </div>
-            </div>
-            <div class="elem-course-update-profile" style="display:none;">
 
-                <form action="/profile/update_profile/<%= data.id %>?_method=PUT" enctype="multipart/form-data" method="post" class="updatePofil">
-                    <div class="previewPicture ">
-                        <label for="profilePicture">Photo de profil</label>
-                        <div class="image-bl-preview">
-                            <img  src="<%= data.profilePicture || '' %>" alt="" id="previewImage" class="cloud-logo">
-                        </div>
-                        <button class="changeImage btn-image"><i class="bi bi-cloud-arrow-up-fill"></i> Importer </button>
-                        <input class="profil-infos" type="file" name="profilePicture" id="profilePicture" accept="image/*" hidden>
-                    </div>
-                    
-                    <div>
-                        <label for="name">Nom</label>
-                        <input class="profil-infos" type="text" id="name" name="name" value="<%= data.name %>">
-                    </div>
-                    <div>
-                        <label for="email">Address email</label>
-                        <input class="email" type="email" name="email" id="email" value="<%= data.email || '' %>">
-                    </div>
-                    <div>
-                        <label for="password">Mot de passe</label>
-                        <input class="py-16 password" id="password" type="password" name="password" value="          ">
-                    </div>
-                    <div>
-                        <label for="date">Date d'anniversaire</label>
-                        <input id="date" class="profil-infos" type="datetime" name="DateOfBirth" value="<%= data.DateOfBirth ? data.DateOfBirth.toISOString().slice(0,10).replaceAll('-', '/') : '' %>" placeholder="MM-JJ-YY">
-                    </div>
-                    <div>
-                        <label for="role">Rôle de l'utilisateur</label>
-                        <input class="role"  type="text" name="role" id="role" value="<%= data.role || '' %>">
-                    </div>
-                    <div>
-                        <label for="editor">A propos de vous</label>
-                        <textarea class="profil-infos " id="editor" name="aboutYou"><%- data.aboutYou ? data.aboutYou : '' %></textarea>
 
-                    </div>
-                    <input id="submit" type="submit" value="Modifier">
-                </form>
-            </div>
-            <div class="elem-course-connection" style="display:none;">
-                <%- include('partiel/disconnect_logout') %>
-
-            </div>
+                </div>
         </div>
         
-    </div>
-<% } %>
+            <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js"></script>
+            <%- include('partiel/ckeditorScript') %>
+                <%- include('partiel/js') %>
+                    <script>
+                        const container_Cover = document.querySelector(" .profile-view-infos>div:first-child")
+                        const container_CoverImage = document.querySelector(" .container_CoverImage")
+                        const elem_course_course = document.querySelector(".elem-course-course")
+                        const elem_course_update_profile = document.querySelector(".elem-course-update-profile")
+                        const elem_course_connection = document.querySelector(".elem-course-connection")
+                        const elem_course_nav = document.querySelectorAll(".elem-course nav li")
+                        const read_more = document.querySelector(".read_more")
+                        const Paragraph_about = document.querySelector(".about-profile-page>p:nth-child(2)")
+                        const shadow_about = document.querySelector(".shadow-about")
+                        const previewImage = document.querySelector("#previewImage")
+                        const profilePicture = document.querySelector("#profilePicture")
+                        const roleInput = document.querySelector(".role").setAttribute("disabled", "true")
+                        const passwordInput = document.querySelector(".password").setAttribute("disabled", "true")
+                        const emailInput = document.querySelector(".email").setAttribute("disabled", "true")
+                        const submitInput = document.querySelector("#submit")
+                        const changeImage = document.querySelector(".changeImage")
+                        const allInput = document.querySelectorAll(".profil-infos")
+                        submitInput.setAttribute("disabled", "true")
+                        const tab = []
+                        allInput.forEach(el => {
+                            tab.push(el.value)
+                        })
+                        allInput.forEach((el, index) => {
+                            el.addEventListener("input", (e) => {
+                                const value = e.target.value
+                                console.log(value)
+                                if (value !== tab[index]) {
+                                    return submitInput.removeAttribute("disabled")
+                                }
+                                submitInput.setAttribute("disabled", "true")
+
+                            })
+                        })
+                        console.log(tab)
+                        console.log(allInput)
+                        changeImage.addEventListener("click", (e) => {
+                            e.preventDefault()
+                            profilePicture.click()
+                        })
+                        profilePicture.addEventListener('change', (e) => {
+                            const file = e.target.files[0]
+                            console.log(file)
+                            if (file && file.type.startsWith('image/')) {
+                                const reader = new FileReader()
+                                reader.onload = function (e) {
+                                    previewImage.src = e.target.result;
+                                }
+                                reader.readAsDataURL(file)
+                            }
+                        })
+                        let isClick = false
+                        read_more.addEventListener("click", () => {
+                            isClick = !isClick
+
+                            if (isClick === true) {
+                                read_more.textContent = "voir moins"
+                                Paragraph_about.style.height = 'auto'
+                                shadow_about.style.display = 'none'
+                            }
+                            else {
+                                read_more.textContent = "voir plus..."
+                                Paragraph_about.style.height = '110px'
+                                shadow_about.style.display = 'block'
 
 
-</div>
-</div>
-<script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js"></script>
-<%- include('partiel/ckeditorScript') %>
-<%- include('partiel/js') %>
-                                <script>
-                                    const container_Cover = document.querySelector(" .profile-view-infos>div:first-child")
-                                    const container_CoverImage = document.querySelector(" .container_CoverImage")
-                                    const elem_course_course =document.querySelector(".elem-course-course")
-                                    const elem_course_update_profile = document.querySelector(".elem-course-update-profile")
-                                    const elem_course_connection= document.querySelector(".elem-course-connection")
-                                    const elem_course_nav= document.querySelectorAll(".elem-course nav li")
-                                    const read_more = document.querySelector(".read_more")
-                                    const Paragraph_about = document.querySelector(".about-profile-page>p:nth-child(2)")
-                                    const shadow_about = document.querySelector(".shadow-about")
-                                    const previewImage = document.querySelector("#previewImage")
-                                    const profilePicture = document.querySelector("#profilePicture")
-                                    const roleInput = document.querySelector(".role").setAttribute("disabled", "true")
-                                    const passwordInput = document.querySelector(".password").setAttribute("disabled", "true")
-                                    const emailInput = document.querySelector(".email").setAttribute("disabled", "true")
-                                    const submitInput = document.querySelector("#submit")
-                                    const changeImage = document.querySelector(".changeImage")
-                                    const allInput = document.querySelectorAll(".profil-infos")
-                                    submitInput.setAttribute("disabled", "true")
-                                    const tab = []
-                                    allInput.forEach(el => {
-                                        tab.push(el.value)
-                                    })
-                                    allInput.forEach((el, index) => {
-                                        el.addEventListener("input", (e) => {
-                                            const value = e.target.value
-                                            console.log(value)
-                                            if (value !== tab[index]) {
-                                                return submitInput.removeAttribute("disabled")
-                                            }
-                                            submitInput.setAttribute("disabled", "true")
+                            }
 
-                                        })
-                                    })
-                                    console.log(tab)
-                                    console.log(allInput)
-                                    changeImage.addEventListener("click", (e) => {
-                                        e.preventDefault()
-                                        profilePicture.click()
-                                    })
-                                    profilePicture.addEventListener('change', (e) => {
-                                        const file = e.target.files[0]
-                                        console.log(file)
-                                        if (file && file.type.startsWith('image/')) {
-                                            const reader = new FileReader()
-                                            reader.onload = function (e) {
-                                                previewImage.src = e.target.result;
-                                            }
-                                            reader.readAsDataURL(file)
-                                        }
-                                    })
-                                    let isClick = false
-                                    read_more.addEventListener("click",()=>{
-                                        isClick = !isClick
+                        })
+                        const tab_elemCourse = [elem_course_course, elem_course_update_profile, elem_course_connection]
+                        elem_course_nav.forEach((el, index) => {
+                            el.addEventListener("click", () => {
+                                elem_course_nav.forEach(element => {
+                                    element.classList.remove("active")
+                                })
+                                el.classList.add("active")
+                                tab_elemCourse.forEach(els => {
+                                    els.style.display = 'none'
+                                })
+                                tab_elemCourse[index].style.display = "block"
 
-                                        if(isClick===true){
-                                            read_more.textContent="voir moins"
-                                            Paragraph_about.style.height='auto'
-                                            shadow_about.style.display='none'
-                                        }
-                                        else{
-                                            read_more.textContent="voir plus..."
-                                             Paragraph_about.style.height='110px'
-                                             shadow_about.style.display='block'
+                            })
+                        })
+
+                        const tabImage = ['images1', 'images2', 'images3', 'images4', 'images5', 'images6']
+                        let index = 0
+                        setInterval(() => {
+                            index++
+                            if (index < tabImage.length) {
+                                container_CoverImage.innerHTML = ` <img src="images/coverProfile/${tabImage[index]}.webp" class="bgProfileCover" alt="">`
+                            }
+                            if (index >= tabImage.length) {
+                                index = 0
+                            }
+
+                        }, 20000)
 
 
-                                        }
 
-                                    })
-                                    const tab_elemCourse = [elem_course_course,elem_course_update_profile,elem_course_connection]
-                                    elem_course_nav.forEach((el,index)=>{
-                                        el.addEventListener("click",()=>{
-                                            elem_course_nav.forEach(element=>{
-                                                element.classList.remove("active")
-                                            })
-                                            el.classList.add("active")
-                                            tab_elemCourse.forEach(els=>{
-                                                els.style.display='none'
-                                            })
-                                            tab_elemCourse[index].style.display="block"
-                                            
-                                        })
-                                    })
-
-                                    const tabImage =['images1','images2','images3','images4','images5','images6']
-                                    let index = 0
-                                    setInterval(()=>{
-                                        index++
-                                        if(index<tabImage.length){
-                                            container_CoverImage.innerHTML=` <img src="images/coverProfile/${tabImage[index]}.webp" class="bgProfileCover" alt="">`
-                                        }
-                                        if(index >=tabImage.length){
-                                            index=0
-                                        }
-
-                                    },20000)
-
-
-                                    
-                                </script>
+                    </script>
+                    <%- include('partiel/loader') %>
     </body>
 
     </html>

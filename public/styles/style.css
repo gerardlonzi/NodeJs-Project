@@ -31,13 +31,33 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
 }
-.container-widht-anim {
+.textLoader{
+    padding-block: 5px;
+    background-color: #efefef;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.container-widht-anim{
+    overflow: hidden;
+    position: relative;
+
+}
+header .container-widht-anim {
     width: 50px;
     height: 50px;
-    overflow: hidden;
     border-radius: 50%;
-    position: relative;
+
+}
+.profile-view-infos .container-widht-anim{
+    position: absolute;
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    top: 100px;
+    left: 45px;
+    border: solid 3px var(--green-hover);
 
 }
 
@@ -189,11 +209,6 @@ padding-inline: 160px;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-}
-.profil-log .img-loader{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; 
 }
 .profil-log,.profil-log .profile,.profil-log .profile a{
     display: flex;
@@ -644,14 +659,9 @@ border-radius: 10px;
   
   
  .profile-view-infos>div:first-child img:not(.bgProfileCover){
-    position: absolute;
-    border-radius: 50%;
-    width: 140px;
-    height: 140px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    top: 100px;
-    left: 45px;
-    border: solid 3px var(--green-hover);
  }
  .container_CoverImage{
     height: 100%;
@@ -1083,7 +1093,7 @@ margin-bottom: 30px;
 }
 
 @media screen and (max-width:640px){
-    .profile-view-infos>div:first-child img:not(.bgProfileCover){
+    .profile-view-infos .container-widht-anim{
         width: 120px;
         height: 120px;
         top: 60px;
