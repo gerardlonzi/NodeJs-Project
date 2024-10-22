@@ -1,21 +1,19 @@
-<script>
-    const loader = document.querySelector('.img-loader');
-    const textLoader = document.querySelector('.textLoader');
+<script defer>
+    window.onload = function() {
+        const loader = document.querySelector('.container-widht-anim .img-loader');
+        const textLoader = document.querySelector('.textLoader');
+        const img = document.querySelector('.container-widht-anim img');
+        console.log(img)
+        console.log(loader)
 
-    const img = document.querySelector('.container-widht-anim img');
-    console.log(img)
-    console.log(loader)
-    // Afficher l'image une fois qu'elle est complètement chargée
-    if (img) {
-       textLoader.innerHTML=""
-        img.onload = function(){
-            textLoader.setAttribute("class","")
-            loader.style.display = 'none'; // Masquer le loader
-            img.style.display = 'block'; // Afficher l'image
-        };
-        img.src = img.getAttribute('src');
-    }
-
-    // Déclencher le chargement de l'image
-
+    
+        if (img) {
+            img.onload = function() {
+                loader.style.display = 'none';
+                img.style.display = 'block';
+            };
+            img.src = img.getAttribute('src');
+        }
+    };
+    
 </script>
