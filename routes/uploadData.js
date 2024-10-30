@@ -32,48 +32,44 @@ profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
         }
     }
     else{
-        return res.redirect("/profile")
+        return res.redirect(`/profile`)
     }
 })
 profileRouter.post('/upload-course/publish',verifyToken,upload.single("thumbail"),UploadCourse)
-profileRouter.get('/profile/cours/:slug',verifyToken,async(req,res)=>{
-   let data
+profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
+   let IsAuthStatus_And_admin = false
    const slug = req.params.slug
-   let message
+   
    if(!req.user){
-    return res.redirect("/login")
+    IsAuthStatus_And_admin ="false"
    }
-   if(req.user && req.user.role==="professeur"){
     try{
+        const course = await Course.findOne({slug:slug})
+        const courses = await Course.find({slug:{$ne:slug}})
         const user = await User.findById(req.user.id)
         if(!user){
             message = req.session.message 
             req.session.message= null
-            return res.redirect("/profile")
         }
-        else{
-          const course = await Course.find({slug:slug})
-          const courses = await Course.find({slug:{$ne:slug}})
+        else if(user && user._id.toString() === course.user._id.toString()){
+            IsAuthStatus_And_admin ="true"
 
-          if(course && user.approved ==="yes"){
-            return res.render("../views/update-delete-course",{course:course|| {},data:user ||{},courses:courses||[]})
-          }
-          else{
-            req.session.message = "ce cours n'existe pas"
-            return res.redirect("/profile")
-
-          }
         }
+       
+        console.log("Status"+ IsAuthStatus_And_admin);
+        
+        return res.render("../views/update-delete-course",{course:course|| {},data:user ||{},courses:courses||[],status:IsAuthStatus_And_admin})
     }
     catch(err){
-        req.session.message = "vous n'êtes pas autorisé a voir ce cours "
-        return res.redirect("/profile")
+        req.session.message = "ce cours n'existe pas"
+        return res.redirect(`/cours`)
     }
-   }
+   
    
    
 })
-profileRouter.put('/profile/cours/:slug',verifyToken,upload.single('thumbail'),updateCourse)
-profileRouter.delete('/profile/cours/:slug',verifyToken,DeleteCourse)
+profileRouter.put('/cours/:slug',verifyToken,upload.single('thumbail'),updateCourse)
+profileRouter.delete('/cours/:slug',verifyToken,DeleteCourse)
+
 
 module.exports = profileRouter

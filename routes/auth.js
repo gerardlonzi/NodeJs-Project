@@ -12,17 +12,22 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
     
         console.log(req.user);
         let data ;
+        let courses
         if(req.user){
             try{
                 const user = await User.findById(req.user.id)
                 data = user
                 console.log(user);
+                
+                
+                
             }
             catch(err){
                 data = null
             }
         }
-        res.render("../views/home",{data:data})
+        courses= await Course.find().populate("user")
+        res.render("../views/home",{data:data,courses:courses || []})
 })
 router.get("/error", (req, res) => {
     const error_token = req.query.error || "une erreur s'est produite"
@@ -57,11 +62,17 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
 router.get("/login",verifyToken, (req, res) => {
     console.log(req.user);
     const error_query = req.query.error 
+    console.log("-----------");
     
     if(req.user){
+        console.log("==========");
+        
         return res.redirect("/")
     }
+    
     else{
+        console.log("++++++++++");
+
         const message = req.session.message || {}
         req.session.message = null
 
@@ -104,7 +115,7 @@ router.get('/forget-password',verifyToken,(req,res)=>{
     const message = req.session.message
     req.session.message =null
         if(req.user){
-            res.redirect('/')
+            res.redirect(`/${req.user.name}`)
         }
         else{
             res.render("../views/authViews/forget-password",{message:message||{}})
@@ -117,10 +128,10 @@ router.get('/reset-password',forget_Password_emailVerified,(req,res)=>{
     return res.render('../views/authViews/reset-password',{message:message||{}})
 })
 router.post('/reset-password',resetPassword)
-router.get('/logout',(req,res)=>{
+router.get('/logout',verifyToken, (req,res)=>{
     req.logout(err=>{
         if(err){
-           return res.redirect('/profile')
+           return res.redirect(`/${req.user.name}`)
 
         }
         
@@ -206,4 +217,25 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
     }
 })
 
+router.get("/:name",verifyToken,async(req,res)=>{
+    const slug = req.params.name
+    try{
+        const user = await User.findOne({slug})
+        if(!user){
+           return  res.redirect("/cours")
+        }
+        else if(req.user.id && user.id===req.user.id){
+            return res.redirect("/profile")
+        }
+       
+        const courses= await Course.find({user:user.id}).populate("user")
+       
+        return res.render("../views/courseTeacherProfile",{user,courses})
+    }
+    catch(err){
+        console.log(err);
+        return res.redirect("/cours")
+        
+    }
+})
 module.exports = router

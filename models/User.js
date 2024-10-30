@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const slugify = require('slugify')
 
 const Shema = mongoose.Schema 
 const UserModels = new Shema(
@@ -11,6 +12,10 @@ const UserModels = new Shema(
             default:function(){
                 return this.email.split('@')[0].replace(/[a-zA-Z]/g, '')
             }
+        },
+        slug:{
+            type:String,
+            unique:true
         },
         email:{
             type:String,
@@ -65,6 +70,19 @@ const UserModels = new Shema(
 
     },{timestamps:true}
 )
+
+UserModels.pre("save",async function(next){
+    if(this.isModified('name' || this.isNew)){
+        let baseUrl = slugify(this.name,{lower:true,strict:true})
+        let unique_slug= baseUrl
+        let count=1
+        while(await User.exists({slug:unique_slug})){
+            unique_slug =  `${baseUrl}-${count}`
+            count++
+        }
+        this.slug = unique_slug
+    }
+})
 const User = mongoose.model("Users",UserModels)
 
 module.exports = User

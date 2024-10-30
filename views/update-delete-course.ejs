@@ -1,4 +1,4 @@
-<%- include("partiel/head",{title:'update or delete Course'}) %>
+<%- include("partiel/head",{title:<%= course.slug %>}) %>
 
         </head>
 
@@ -13,69 +13,81 @@
 
                 <!--affiche  le cour-->
 
-                <% if (typeof course !=='undefined' && course.length> 0) { %>
-                    <% course.forEach(element=> { %>
+                <% if (typeof course !=='undefined' && course !== null) { %>
+                    
                         <div class="aboutCourse">
-                            <button class="modify">Modifier le cours</button>
-                            <form action="/profile/cours/<%= element.slug %>?_method=DELETE" method="post">
-                                <input type="submit" value="Supprimer le cours">
-                            </form>
-                            <% if (element.approved==='wait' ) { %>
-                                <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de vérification! <a
-                                        href=""> A savoir plus sur les rêgles de validations</a></p>
-                                <% } else if (element.approved==='yes' ) { %>
-                                    <p><i class="bi bi-check-circle"></i></i> vérifié </p>
+                            <% if (status==="true") { %>
+                                <button class="modify">Modifier le cours</button>
+                                <form action="/cours/<%= course.slug %>?_method=DELETE" method="post">
+                                    <input type="submit" value="Supprimer le cours">
+                                </form>
+                            <% } %>
+                            
+                            
+                            <% if (course.approved==='wait' ) { %>
+                                <p ><i
+                                        class="bi bi-exclamation-circle"></i> en attente</p>
+                                <% } else if (course.approved==='yes' ) { %>
+                                    <p ><i
+                                            class="bi bi-check-circle"></i></i> cours vérifié
+                                    </p>
                                     <% } else { %>
-                                        <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
+                                        <p ><i
+                                                class="bi bi-x-circle"></i></i> cours non
+                                            vérifié !</p>
                                         <% } %>
+                                    
+                                      
                                             <div>
 
                                                 <div>
                                                     <p>Informations sur le cours</p>
-                                                    <img src="<%= element.thumbail || '' %>" alt="">
+                                                    <img src="<%= course.thumbail || '' %>" alt="">
                                                     <p>
-                                                        <%= element.name && typeof  element.name!=="undefined" ? element.name : '' %>
+                                                        <%= course.name && typeof  course.name!=="undefined" ? course.name : '' %>
                                                     </p>
                                                     <p class="desc">
-                                                        <%- element.description && typeof  element.description!=="undefined" ? element.description : '' %>
+                                                        <%- course.description && typeof  course.description!=="undefined" ? course.description : '' %>
 
                                                     </p>
 
                                                 </div>
                                                 <div>
                                                     <p>
-                                                        <%= element.categorie && typeof  element.categorie!=="undefined" ? element.categorie : '' %>
+                                                        <%= course.categorie && typeof  course.categorie!=="undefined" ? course.categorie : '' %>
                                                     </p>
                                                     <p>
-                                                        <%= element.user && typeof  element.user!=="undefined" && element.user.name ? element.user.name : 'Inconnu' %>
+                                                        <%= course.user && typeof  course.user!=="undefined" && course.user.name ? course.user.name : 'Inconnu' %>
                                                     </p>
                                                     <p>
-                                                        <%= element.difficultyLevel && typeof  element.difficultyLevel!=="undefined" ? element.difficultyLevel : '' %>
+                                                        <%= course.difficultyLevel && typeof  course.difficultyLevel!=="undefined" ? course.difficultyLevel : '' %>
                                                     </p>
                                                     <p>
-                                                        <%= element.typologie && typeof  element.typologie!=="undefined" ? element. typologie : '' %>
+                                                        <%= course.typologie && typeof  course.typologie!=="undefined" ? course. typologie : '' %>
                                                     </p>
                                                     <p>
-                                                        <%= element.prix  && typeof  element.prix!=="undefined"? element.prix : '' %>
+                                                        <%= course.prix  && typeof  course.prix!=="undefined"? course.prix : '' %>
                                                     </p>
                                                     <p>
-                                                        <%= element.language && typeof  element.language!=="undefined" ? element.language : '' %>
+                                                        <%= course.language && typeof  course.language!=="undefined" ? course.language : '' %>
                                                     </p>
                                                     <p>
-                                                        <%= element.courseTime && typeof element.courseTime!=="undefined" ? element.courseTime : '' %>
+                                                        <%= course.courseTime && typeof course.courseTime!=="undefined" ? course.courseTime : '' %>
                                                     </p>
                                                     <div>
-                                                        <%=typeof element.lessons !==null && typeof element.lessons
-                                                            !=='undefined' && element.length> 0 ? element.courseTime :
+                                                        <%=typeof course.lessons !==null && typeof course.lessons
+                                                            !=='undefined' && course.length> 0 ? course.courseTime :
                                                             'Les cours que vous publierez a propos de ce cours s afficheront ici' %>
 
                                                     </div>
                                                 </div>
                                             </div>
+                                           
+
                         </div>
                         <!--mettre a jour le cour-->
                         <div class="update-course" style="display: none;">
-                            <form action="/profile/cours/<%= element.slug %>?_method=PUT" id="form" enctype="multipart/form-data" method="post">
+                            <form action="/cours/<%= course.slug %>?_method=PUT" id="form" enctype="multipart/form-data" method="post">
                                 <div>
                                     <input type="submit" value="Enregister">
                                     <button class="cancel">Annuler</button>
@@ -83,7 +95,7 @@
                                 <div>
                                     <p>Miniature du cours</p>
                                     <div class="image-bl-preview">
-                                        <img src="<%= element.thumbail || '' %>" alt="thumbail" >
+                                        <img src="<%= course.thumbail || '' %>" alt="thumbail" >
                                     </div>
                                     <button class="btn-image">importer une image</button>
                                     <input type="file" id="thumbail" name="thumbail" hidden accept="image/*">
@@ -100,28 +112,28 @@
                                 <div>
                                     <label for="name">Nom du cours</label>
                                     <input type="text"
-                                        value="<%= typeof element.name !== 'undefined' && element.name ? element.name :"" %>"
+                                        value="<%= typeof course.name !== 'undefined' && course.name ? course.name :"" %>"
                                         placeholder="ex: apprendre node js" name="name" id="name">
                                 </div>
                                 <div>
                                     <label for=courseTime">Dureé du cours</label>
-                                    <input type="text" value="<%= typeof element.courseTime !== 'undefined' && element.courseTime  ? element.courseTime
+                                    <input type="text" value="<%= typeof course.courseTime !== 'undefined' && course.courseTime  ? course.courseTime
              :"" %>" name="courseTime" id="courseTime">
                                 </div>
                                 <div>
                                     <label for="categorie">A quel catégorie appartient votre cours</label>
                                     <select name="categorie" id="categorie">
-                                        <option <%=typeof element.categorie !=='undefined' && element.categorie &&
-                                        element.categorie==='programmation' ? 'selected' :"" %>
+                                        <option <%=typeof course.categorie !=='undefined' && course.categorie &&
+                                        course.categorie==='programmation' ? 'selected' :"" %>
                                             value="programmation">Programmation</option>
-                                        <option <%=typeof element.categorie !=='undefined' && element.categorie &&
-                                        element.categorie==='web développement' ? 'selected' :"" %> value="web
+                                        <option <%=typeof course.categorie !=='undefined' && course.categorie &&
+                                        course.categorie==='web développement' ? 'selected' :"" %> value="web
                                             développement">Web développement</option>
-                                        <option <%=typeof element.categorie !=='undefined' && element.categorie &&
-                                        element.categorie==='graphics design' ? 'selected' :"" %>
+                                        <option <%=typeof course.categorie !=='undefined' && course.categorie &&
+                                        course.categorie==='graphics design' ? 'selected' :"" %>
                                             value="graphics design">Graphics design</option>
-                                        <option <%=typeof element.categorie !=='undefined' && element.categorie &&
-                                        element.categorie==='outils offices' ? 'selected' :"" %> value="outils
+                                        <option <%=typeof course.categorie !=='undefined' && course.categorie &&
+                                        course.categorie==='outils offices' ? 'selected' :"" %> value="outils
                                             offices">Outils offices</option>
                                     </select>
                                 </div>
@@ -129,47 +141,47 @@
                                 <div>
                                     <label for="prix">Prix de la formation</label>
                                     <input
-                                        value="<%= typeof element.prix !== 'undefined' && element.prix   ? element.prix :"" %>"
+                                        value="<%= typeof course.prix !== 'undefined' && course.prix   ? course.prix :"" %>"
                                         type="number" placeholder="ex: 20000f" name="prix" id="prix">
                                 </div>
                                 <div>
                                     <label for="typologie">Typlogie du cours</label>
                                     <select name="typologie" id="typlogie">
-                                        <option <%=typeof element.typlogie !=='undefined' && element.typlogie &&
-                                        element.typlogie==='premium' ? 'selected' :"" %>
+                                        <option <%=typeof course.typlogie !=='undefined' && course.typlogie &&
+                                        course.typlogie==='premium' ? 'selected' :"" %>
                                             value="premium">Premium</option>
-                                        <option <%=typeof element.typlogie !=='undefined' &&element.typlogie &&
-                                        element.typlogie==='gratuit' ? 'selected' :"" %>
+                                        <option <%=typeof course.typlogie !=='undefined' &&course.typlogie &&
+                                        course.typlogie==='gratuit' ? 'selected' :"" %>
                                             value="gratuit">Gratuit</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label for="difficulty">Niveau de difficulté</label>
                                     <select name="difficultyLevel" id="difficulty">
-                                        <option <%=typeof element.difficultyLevel !=='undefined' && element.difficultyLevel &&
-                                        element.difficultyLevel==='débutant' ? 'selected' :"" %>
+                                        <option <%=typeof course.difficultyLevel !=='undefined' && course.difficultyLevel &&
+                                        course.difficultyLevel==='débutant' ? 'selected' :"" %>
                                             value="débutant">Débutant</option>
-                                        <option <%=typeof element.difficultyLevel !=='undefined' && element.difficultyLevel &&
-                                        element.difficultyLevel==='intermédiare' ? 'selected' :"" %>
+                                        <option <%=typeof course.difficultyLevel !=='undefined' && course.difficultyLevel &&
+                                        course.difficultyLevel==='intermédiare' ? 'selected' :"" %>
                                             value="intermédiare">Intermédiare</option>
-                                        <option <%=typeof element.difficultyLevel !=='undefined' && element.difficultyLevel &&
-                                        element.difficultyLevel==='avancé' ? 'selected' :"" %>
+                                        <option <%=typeof course.difficultyLevel !=='undefined' && course.difficultyLevel &&
+                                        course.difficultyLevel==='avancé' ? 'selected' :"" %>
                                             value="avancé">Avancé</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label for="language">Language du cours</label>
                                     <select name="language" id="language">
-                                        <option <%=typeof element.language !=='undefined' &&  element.language &&
-                                        element.language==='français' ? 'selected' :"" %>
+                                        <option <%=typeof course.language !=='undefined' &&  course.language &&
+                                        course.language==='français' ? 'selected' :"" %>
                                             value="français">Français</option>
-                                        <option <%=typeof  element.language !=='undefined' &&  element.language &&
-                                        element.language==='anglais' ? 'selected' :"" %>
+                                        <option <%=typeof  course.language !=='undefined' &&  course.language &&
+                                        course.language==='anglais' ? 'selected' :"" %>
                                             value="anglais">Anglais</option>
                                     </select>
                                 </div>
                                 <textarea id="textarea"
-                                    name="description"><%- typeof  element.description !== 'undefined' &&element.description  && element.description  ? element.description :"" %></textarea>
+                                    name="description"><%- typeof  course.description !== 'undefined' && course.description  && course.description  ? course.description :"" %></textarea>
                                 
 
                             </form>
@@ -178,23 +190,18 @@
                         </div>
                         <!--afficher les autre cours le cour-->
 
-                        <% }) %>
+                      
 
                             <% } %>
 
                                 <div>
                                     <% if (typeof courses !=='undefined' ) { %>
                                         <% courses.forEach(element=> { %>
-                                            <% if (element.approved==='wait' ) { %>
-                                                <p><i class="bi bi-exclamation-circle"></i> votre cours est cours de
-                                                    vérification! <a href=""> A savoir plus sur les rêgles de
-                                                        validations</a></p>
-                                                <% } else if (element.approved==='yes' ) { %>
+                                            <% if (element.approved==='yes' ) { %>
                                                     <p><i class="bi bi-check-circle"></i></i> vérifié </p>
-                                                    <% } else { %>
-                                                        <p><i class="bi bi-x-circle"></i></i>Non vérifié </p>
-                                                        <% } %>
-                                                            <a href="/profile/cours/<%= element.slug %>">
+                                                    
+                                                        
+                                                            <a href="/cours/<%= element.slug %>">
 
                                                                 <div>
                                                                     <img src="<%= element.thumbail || '' %>" alt="">
@@ -214,6 +221,7 @@
                                                                     </p>
                                                                 </div>
                                                             </a>
+                                                            <% } %>
                                                             <% }) %>
                                                                 <% } %>
                                 </div>

@@ -24,6 +24,7 @@
 body{
     font-family:  var(--font-roboto);
 }
+/*n dans profile represente imgloader que je peux remplacer en cas d'utilites*/
 .img-loader{
     background-color: #dadada;
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -34,11 +35,11 @@ body{
     width: 100%;
     height: 100%;
 }
-.textLoader{
+/* .textLoader{
     padding-block: 10px;
     background-color: #efefef;
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
+} */
 .container-widht-anim{
     overflow: hidden;
     position: relative;
@@ -203,6 +204,32 @@ padding-inline: 160px;
     padding: 20px;
     background-color: var(--link-hover);
     color: white;
+}
+.add-card {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 10px;
+width: 100%;
+font-size: 18px;
+background-color: #208052;
+text-align: center;
+padding-block: 14px;
+margin-top: 4px;
+border: 0;
+
+}
+.add-card:hover{
+    background-color:#1ca965;
+    transition: .4s ease;
+}
+.add-card i{
+    color: white;
+
+}
+.add-card span{
+    color: white;
+
 }
 .profil-log img{
     width: 100%;
@@ -854,6 +881,7 @@ display: block;
     width: 8rem;
     font-size: 15px;
     text-align: center;
+    z-index: 1;
 
 }
 .wait-decision{
@@ -1002,7 +1030,7 @@ background-color: #1ca965;
 /*home*/
 
 .barner{
-    background:linear-gradient(#0a1e41b6,#0a1e41b6),url(/images/ovarlay-slide.jpg);
+    background:linear-gradient(#0d2754b6,#0d2754b6),url(/images/ovarlay-slide.jpg);
     background-attachment: fixed;
     position: relative;
     
@@ -1048,6 +1076,7 @@ gap: 25px;
     text-decoration: none;
     color: #0a1e41;
     font-weight: 600;
+    margin-bottom: 20px;
 }
 .barner .container>div a:hover{
     background-color:#1fff8f;
@@ -1059,10 +1088,11 @@ gap: 25px;
 .intro-title{
     text-align: center;
     margin-bottom: 40px;
+    margin-top: 80px;
 }
 .intro-title h2{
 font-size: 35px;
-margin-bottom: 20px;
+margin-block: 20px;
 color: #0a1e41;
 }
 .intro-title p{
@@ -1074,45 +1104,46 @@ color: #0a1e41;
     grid-template-columns: repeat(3,1fr);
     gap: 20px;
 }
-.allAvantage>div i{
-    
-    
-   
+.allAvantage>div{
+    display:  flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .allAvantage>div>div:first-child{
     margin-bottom:25px ;
-    padding: 25px;
+    width: 100px;
+    height: 100px;
     display: inline-block;
     font-size: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    
 }
 .allAvantage>div:first-child>div:first-child{
     color: #0a1e41;
-    border-radius: 50%;
     background-color: #8ea4ca;
 }
 .allAvantage>div:nth-child(2)>div:first-child{
     color: #0073e6;
-    border-radius: 50%;
     background-color: #caddff;
 }
 .allAvantage>div:nth-child(3)>div:first-child{
     color: #ff368a;
-    border-radius: 50%;
     background-color: #ffd3e3;
 }
 .allAvantage>div:nth-child(4)>div:first-child{
     color: #42ff87;
-    border-radius: 50%;
     background-color: #e3ffdb;
 }
 .allAvantage>div:nth-child(5)>div:first-child{
     color: #6f80ff;
-    border-radius: 50%;
     background-color: #b7bdff;
 }
-.allAvantage>div:nth-child(5)>div:first-child{
+.allAvantage>div:nth-child(6)>div:first-child{
     color: #ff9525;
-    border-radius: 50%;
     background-color: #fff1c5;
 }
 .allAvantage>div{
@@ -1142,6 +1173,7 @@ color: #0a1e41;
     .container{
         padding-inline: 40px;
     }
+    
     
 }
 
@@ -1219,6 +1251,32 @@ margin-bottom: 30px;
     .allcourse{
         grid-template-columns: repeat(2,1fr);
     }
+    .barner .container{
+        display: flex;
+        flex-direction: column;
+       
+       
+    }
+    .barner .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding-top: 70px;
+    }
+    .barner .container>img{
+        width: 270px;
+        height: 270px;
+    }
+    .allAvantage{
+       
+        grid-template-columns: repeat(2,1fr);
+       
+    }
+   
+    
+    
+    
 }
 
 @media screen and (max-width:640px){
@@ -1258,11 +1316,32 @@ height: 15rem;
     .bloc p{
         margin-top: 40px;
     }
+    
+  
+    .barner .container>div>h1{
+        font-size: 30px;
+        color: white;
+        line-height: 40px;
+    
+    }
+    .allAvantage{
+        grid-template-columns: repeat(1,1fr);
+    }
+    .barner .container>img{
+        display: none;
+    }
+    .barner{
+   
+        height: 90vh;
+    }
+   
+    
 }
+
 
 @media screen and (max-width:430px){
     .container{
-        padding-inline: 8px;
+        padding-inline: 14px;
     }
 
     #form_course  .submit{
@@ -1278,7 +1357,13 @@ height: 15rem;
     .elem-course nav ul li:nth-child(2){
         width: 50%;
     }
+    
+    .menu-login{
+        padding: 10px;
+        font-size: 13px;
         
+    }
+   
     
 }
 

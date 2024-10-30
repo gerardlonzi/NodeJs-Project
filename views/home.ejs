@@ -91,13 +91,134 @@
                     </div>
                 </div>
                 </section>
+                <section class="variete-course">
+<div class="container">
+    <div class="intro-title">
+        <h2>Découvrez la variété des cours ici</h2>
+        <p>Choisissez un cours approprié pour vous parmi les nombreux cours disponibles <br> sur cette plateforme.</p>
+    </div>
+    <div>
+        <div class="elem-course">
+            <nav>
+                <ul>
+                    <li class="active">Cours</li>
+                    <li>Modifier le profile</li>
+                    <li>Paramétre</li>
+                </ul>
+            </nav>
+            <div>
+                <div class="elem-course-course element-appears">
+                    <div class="allcourse">
+                        <% if (typeof courses !=='undefined' && courses.length> 0) { %>
+                            <% courses.forEach(element=> { %>
+                                <div class="course">
+
+                                
+                                        <% if (element.approved==='yes' ) { %>
+                                            <p class="alert decision-verified"><i
+                                                class="bi bi-check-circle"></i></i> cours vérifié
+                                        </p>
+                                            
+                                        
+
+
+                                                    <div class="desc-prof">
+                                                        <a href="/cours/<%= element.slug %>">
+                                                            <div class="container-widht-anim">
+
+                                                                <div class="n"></div>
+                                                                <img class="img" style="width: 100%;"
+                                                                    src="<%= element.thumbail || '' %>"
+                                                                    alt="">
+                                                            </div>
+
+                                                        </a>
+                                                        <div>
+                                                            <div class="textLoader">
+                                                                <p class="name">
+                                                                    <a
+                                                                        href="/profile/cours/<%= element.slug %>">
+                                                                        <%= element.name ? element.name
+                                                                            : '' %>
+                                                                    </a>
+                                                                </p>
+
+                                                            </div>
+                                                            <div class="textLoader">
+                                                                <p class="description"><%-
+                                                                        element.description ?
+                                                                        element.description : '' %></p>
+                                                                <span
+                                                                    style="font-weight: bolder;">...</span>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="profilepresent flex-box-text">
+                                                                <a href="/<%= element.user.slug %>">
+                                                                <div>
+                                                                    <div class="container-widht-anim">
+
+                                                                        <div class="n"></div>
+                                                                        <img class="ProfilePicture"
+                                                                            src="<%= element.user.profilePicture || '' %>"
+                                                                            alt="profile_picture">
+
+                                                                    </div>
+                                                                    <div class="textLoader">
+                                                                   
+                                                                            <p class="user">
+                                                                                <%= element.user ?
+                                                                                    element.user.name
+                                                                                    : 'Inconnu' %>
+                                                                            </p>
+                                                                       
+                                                                        
+                                                                    </div>
+
+                                                                </div>
+                                                            </a>
+                                                                <div class="textLoader addCart-price">
+
+
+                                                                    <p class="price">
+                                                                        <%= element.prix ? element.prix
+                                                                            : '' %> XOF
+                                                                    </p>
+
+                                                                </div>
+
+                                                            </div>
+                                                            <form action="" class="form_submit">
+                                                                <button type="submit"
+                                                                    title="Add to Card"
+                                                                    class="submit add-card">
+                                                                    <img class="loader-img"
+                                                                        src="/images/spin.png"
+                                                                        alt="spinner">
+                                                                    <div>
+                                                                        <i class="bi bi-cart-fill"></i>
+                                                                        <span>Ajouter au panier</span>
+                                                                    </div>
+                                                                </button>
+                                                            </form>
+
+
+                                                        </div>
+                                                    </div>
+                                             <% } %>
+                                </div>
+                                <% }) %>
+                                <% } %>
+                                
+                    </div>
+                </div>
+                </div>
+    </div>
+</div>
+                </section>
             </main>
-            <div class="container">
+            
 
-
-            </div>
-
-
+            <%- include('partiel/buttonLoader') %>
 
             <%- include('partiel/loader') %>
     </body>

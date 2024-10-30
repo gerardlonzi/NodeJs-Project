@@ -27,7 +27,7 @@
                                 </div>
                                 <a href="<%= data.profilePicture || '' %>">
                                     <div class="container-widht-anim">
-                                        <div class="img-loader"></div>
+                                        <div class=""></div>
                                         <img class="i" src="<%= data.profilePicture || '' %>" alt="profile_picture">
                                     </div>
                                 </a>
@@ -111,23 +111,23 @@
 
 
                                                                     <div class="desc-prof">
-                                                                        <a href="/profile/cours/<%= element.slug %>">
-                                <div class="container-widht-anim">
+                                                                        <a href="/cours/<%= element.slug %>">
+                                                                            <div class="container-widht-anim">
 
-                               <div class="img-loader"></div>
-                               <img class="img" style="width: 100%;"
-                                    src="<%= element.thumbail || '' %>"
-                                   alt="">
-                       </div>
-                                        
+                                                                                <div class="n"></div>
+                                                                                <img class="img" style="width: 100%;"
+                                                                                    src="<%= element.thumbail || '' %>"
+                                                                                    alt="">
+                                                                            </div>
+
                                                                         </a>
                                                                         <div>
                                                                             <div class="textLoader">
                                                                                 <p class="name">
                                                                                     <a
                                                                                         href="/profile/cours/<%= element.slug %>">
-                                                                                        <%= element.name ? element.name : ''
-                                                                                            %>
+                                                                                        <%= element.name ? element.name
+                                                                                            : '' %>
                                                                                     </a>
                                                                                 </p>
 
@@ -135,7 +135,8 @@
                                                                             <div class="textLoader">
                                                                                 <p class="description"><%-
                                                                                         element.description ?
-                                                                                        element.description : '' %></p><span
+                                                                                        element.description : '' %></p>
+                                                                                <span
                                                                                     style="font-weight: bolder;">...</span>
                                                                             </div>
                                                                             <hr>
@@ -143,11 +144,11 @@
                                                                                 <div>
                                                                                     <div class="container-widht-anim">
 
-                                                                                        <div class="img-loader"></div>
+                                                                                        <div class="n"></div>
                                                                                         <img class="ProfilePicture"
                                                                                             src="<%= data.profilePicture || '' %>"
                                                                                             alt="profile_picture">
-                                                
+
                                                                                     </div>
                                                                                     <div class="textLoader">
                                                                                         <p class="user">
@@ -156,21 +157,40 @@
                                                                                                 : 'Inconnu' %>
                                                                                         </p>
                                                                                     </div>
-                                                
+
                                                                                 </div>
-                                                                                <div class="textLoader">
+                                                                                <div class="textLoader addCart-price">
+
+
                                                                                     <p class="price">
-                                                                                        <%= element.prix ? element.prix : ''
-                                                                                            %> XOF
+                                                                                        <%= element.prix ? element.prix
+                                                                                            : '' %> XOF
                                                                                     </p>
 
                                                                                 </div>
 
                                                                             </div>
+                                                                            <form action="" class="form_submit">
+                                                                                <button type="submit"
+                                                                                    title="Add to Card"
+                                                                                    class="submit add-card">
+                                                                                    <img class="loader-img"
+                                                                                        src="/images/spin.png"
+                                                                                        alt="spinner">
+                                                                                    <div>
+                                                                                        <i class="bi bi-cart-fill"></i>
+                                                                                        <span>Ajouter au panier</span>
+                                                                                    </div>
+                                                                                </button>
+                                                                            </form>
+
+
                                                                         </div>
                                                                     </div>
                                                 </div>
                                                 <% }) %>
+                                                <% } else { %>
+                                                 <p style="text-align: center;font-style:italic;color:rgb(182, 182, 182);font-size:19px">Tous vos cours apparaitrons ici </p>
                                                     <% } %>
                                     </div>
                                 </div>
@@ -183,12 +203,12 @@
                                             <div class="image-bl-preview">
                                                 <div class="container-widht-anim">
 
-                                                    <div class="img-loader"></div>
-            
+                                                    <div class="n"></div>
+
                                                     <img src="<%= data.profilePicture || '' %>" alt="" id="previewImage"
                                                         class="cloud-logo">
                                                 </div>
-            
+
                                             </div>
                                             <button class="changeImage btn-image"><i
                                                     class="bi bi-cloud-arrow-up-fill"></i> Importer </button>
@@ -238,116 +258,118 @@
                             </div>
 
                         </div>
-                        <% } %>
+                    <% } %>
 
 
                 </div>
         </div>
-        
+
+        <%- include('partiel/buttonLoader') %>
 
             <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js"></script>
             <%- include('partiel/ckeditorScript') %>
-            <%- include('partiel/loader') %>
-                <%- include('partiel/js') %>
-                    <script>
-                        const container_Cover = document.querySelector(" .profile-view-infos>div:first-child")
-                        const container_CoverImage = document.querySelector(" .container_CoverImage")
-                        const elem_course_course = document.querySelector(".elem-course-course")
-                        const elem_course_update_profile = document.querySelector(".elem-course-update-profile")
-                        const elem_course_connection = document.querySelector(".elem-course-connection")
-                        const elem_course_nav = document.querySelectorAll(".elem-course nav li")
-                        const read_more = document.querySelector(".read_more")
-                        const Paragraph_about = document.querySelector(".about-profile-page>p:nth-child(2)")
-                        const shadow_about = document.querySelector(".shadow-about")
-                        const previewImage = document.querySelector("#previewImage")
-                        const profilePicture = document.querySelector("#profilePicture")
-                        const roleInput = document.querySelector(".role").setAttribute("disabled", "true")
-                        const passwordInput = document.querySelector(".password").setAttribute("disabled", "true")
-                        const emailInput = document.querySelector(".email").setAttribute("disabled", "true")
-                        const submitInput = document.querySelector("#submit")
-                        const changeImage = document.querySelector(".changeImage")
-                        const allInput = document.querySelectorAll(".profil-infos")
-                        submitInput.setAttribute("disabled", "true")
-                        const tab = []
-                        allInput.forEach(el => {
-                            tab.push(el.value)
-                        })
-                        allInput.forEach((el, index) => {
-                            el.addEventListener("input", (e) => {
-                                const value = e.target.value
-                                console.log(value)
-                                if (value !== tab[index]) {
-                                    return submitInput.removeAttribute("disabled")
+                <%- include('partiel/loader') %>
+                    <%- include('partiel/js') %>
+                        <script>
+                            const container_Cover = document.querySelector(" .profile-view-infos>div:first-child")
+                            const container_CoverImage = document.querySelector(" .container_CoverImage")
+                            const elem_course_course = document.querySelector(".elem-course-course")
+                            const elem_course_update_profile = document.querySelector(".elem-course-update-profile")
+                            const elem_course_connection = document.querySelector(".elem-course-connection")
+                            const elem_course_nav = document.querySelectorAll(".elem-course nav li")
+                            const read_more = document.querySelector(".read_more")
+                            const Paragraph_about = document.querySelector(".about-profile-page>p:nth-child(2)")
+                            const shadow_about = document.querySelector(".shadow-about")
+                            const previewImage = document.querySelector("#previewImage")
+                            const profilePicture = document.querySelector("#profilePicture")
+                            const roleInput = document.querySelector(".role").setAttribute("disabled", "true")
+                            const passwordInput = document.querySelector(".password").setAttribute("disabled", "true")
+                            const emailInput = document.querySelector(".email").setAttribute("disabled", "true")
+                            const submitInput = document.querySelector("#submit")
+                            const changeImage = document.querySelector(".changeImage")
+                            const allInput = document.querySelectorAll(".profil-infos")
+                            submitInput.setAttribute("disabled", "true")
+                            const tab = []
+                            allInput.forEach(el => {
+                                tab.push(el.value)
+                            })
+                            allInput.forEach((el, index) => {
+                                el.addEventListener("input", (e) => {
+                                    const value = e.target.value
+                                    console.log(value)
+                                    if (value !== tab[index]) {
+                                        return submitInput.removeAttribute("disabled")
+                                    }
+                                    submitInput.setAttribute("disabled", "true")
+
+                                })
+                            })
+                            console.log(tab)
+                            console.log(allInput)
+                            changeImage.addEventListener("click", (e) => {
+                                e.preventDefault()
+                                profilePicture.click()
+                            })
+                            profilePicture.addEventListener('change', (e) => {
+                                const file = e.target.files[0]
+                                console.log(file)
+                                if (file && file.type.startsWith('image/')) {
+                                    const reader = new FileReader()
+                                    reader.onload = function (e) {
+                                        previewImage.src = e.target.result;
+                                    }
+                                    reader.readAsDataURL(file)
                                 }
-                                submitInput.setAttribute("disabled", "true")
+                            })
+                            let isClick = false
+                            read_more.addEventListener("click", () => {
+                                isClick = !isClick
+
+                                if (isClick === true) {
+                                    read_more.textContent = "voir moins"
+                                    Paragraph_about.style.height = 'auto'
+                                    shadow_about.style.display = 'none'
+                                }
+                                else {
+                                    read_more.textContent = "voir plus..."
+                                    Paragraph_about.style.height = '110px'
+                                    shadow_about.style.display = 'block'
+
+
+                                }
 
                             })
-                        })
-                        console.log(tab)
-                        console.log(allInput)
-                        changeImage.addEventListener("click", (e) => {
-                            e.preventDefault()
-                            profilePicture.click()
-                        })
-                        profilePicture.addEventListener('change', (e) => {
-                            const file = e.target.files[0]
-                            console.log(file)
-                            if (file && file.type.startsWith('image/')) {
-                                const reader = new FileReader()
-                                reader.onload = function (e) {
-                                    previewImage.src = e.target.result;
-                                }
-                                reader.readAsDataURL(file)
-                            }
-                        })
-                        let isClick = false
-                        read_more.addEventListener("click", () => {
-                            isClick = !isClick
+                            const tab_elemCourse = [elem_course_course, elem_course_update_profile, elem_course_connection]
+                            elem_course_nav.forEach((el, index) => {
+                                el.addEventListener("click", () => {
+                                    elem_course_nav.forEach(element => {
+                                        element.classList.remove("active")
+                                    })
+                                    el.classList.add("active")
+                                    tab_elemCourse.forEach(els => {
+                                        els.style.display = 'none'
+                                    })
+                                    tab_elemCourse[index].style.display = "block"
 
-                            if (isClick === true) {
-                                read_more.textContent = "voir moins"
-                                Paragraph_about.style.height = 'auto'
-                                shadow_about.style.display = 'none'
-                            }
-                            else {
-                                read_more.textContent = "voir plus..."
-                                Paragraph_about.style.height = '110px'
-                                shadow_about.style.display = 'block'
-
-
-                            }
-
-                        })
-                        const tab_elemCourse = [elem_course_course, elem_course_update_profile, elem_course_connection]
-                        elem_course_nav.forEach((el, index) => {
-                            el.addEventListener("click", () => {
-                                elem_course_nav.forEach(element => {
-                                    element.classList.remove("active")
                                 })
-                                el.classList.add("active")
-                                tab_elemCourse.forEach(els => {
-                                    els.style.display = 'none'
-                                })
-                                tab_elemCourse[index].style.display = "block"
-
                             })
-                        })
 
-                        const tabImage = ['images1', 'images2', 'images3', 'images4', 'images5', 'images6']
-                        let index = 0
-                        setInterval(() => {
-                            index++
-                            if (index < tabImage.length) {
-                                container_CoverImage.innerHTML = ` <img src="images/coverProfile/${tabImage[index]}.webp" class="bgProfileCover" alt="">`
-                            }
-                            if (index >= tabImage.length) {
-                                index = 0
-                            }
+                            const tabImage = ['images1', 'images2', 'images3', 'images4', 'images5', 'images6']
+                            let index = 0
+                            setInterval(() => {
+                                index++
+                                if (index < tabImage.length) {
+                                    container_CoverImage.innerHTML = ` <img src="images/coverProfile/${tabImage[index]}.webp" class="bgProfileCover" alt="">`
+                                }
+                                if (index >= tabImage.length) {
+                                    index = 0
+                                }
 
-                        }, 20000)
-
+                            }, 20000)
 
 
-                    </script>
+
+                        </script>
     </body>
+
     </html>
