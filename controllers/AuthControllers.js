@@ -43,19 +43,19 @@ exports.register = (req, res) => {
     req.session.message = { password_length: "le mot de paase doit comporter au moins 8 caractéres", password: password, email: email || "" }
     errors.push({ msg: "le mot de passe doit comporter au moins 8 caractéres" })
 
-    return res.redirect('register')
+    return res.redirect('/register')
 
   }
   if (errors.length > 0) {
     req.session.message = { eror_spec: "une erreur s'est produite" }
-    return res.redirect('register')
+    return res.redirect('/register')
 
   }
   else {
     User.findOne({ email }).then(user => {
       if (user) {
         req.session.message = { email_exist: " Désoler cette adresse email existe deja", email: email || "", password: password || "" }
-        res.redirect("register")
+        res.redirect("/register")
         return
       }
       else {
@@ -91,18 +91,18 @@ exports.login = (req, res) => {
   const { email, password } = req.body
   if (!email) {
     req.session.message = { error_msg_field_email:"l'email est requis", email: email || "", password: password || "" }
-    return res.redirect('login')
+    return res.redirect('/login')
 
 
   }
   if (!password) {
     req.session.message = { error_msg_field_password: "le passsword est requis", password: password, email: email || "" }
-    return res.redirect('login')
+    return res.redirect('/login')
   }
   User.findOne({ email }).then(user => {
     if (!user) {
       req.session.message = { email_notExist: "cet utilisateur n'existe pas veuiller créer un compte", password: password || "", email: email || "" }
-      return res.redirect('login')
+      return res.redirect('/login')
     }
     bcript.compare(password, user.password, (err, isvalid) => {
       if (isvalid) {
@@ -113,7 +113,7 @@ exports.login = (req, res) => {
       }
       else {
         req.session.message = { incorrect_password: "mot de passe incorrect", password: password || "", email: email || "" }
-        res.redirect('login')
+        res.redirect('/login')
       }
     })
   })

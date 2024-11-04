@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 *{
     margin:0;
     padding: 0;
@@ -5,6 +7,13 @@
         
 
 }
+
+
+body {
+	font-family: 'Open Sans', sans-serif;
+    
+}
+
 :root{
     --bg-color:#0f2445;
     --primary-color:rgb(96, 250, 132);
@@ -12,18 +21,128 @@
     --terce-color:rgb(133, 133, 133);
     --quatro-color:rgb(219, 219, 219) ;
     --link-hover:#208052;
-    --font-roboto : "Roboto", sans-serif ;
+    --font-roboto :'Open Sans', sans-serif;
     --green-hover :#1ca965;
     --bg-hover :#163568;
     
 
 }
-
-
-
-body{
-    font-family:  var(--font-roboto);
+/*princing*/
+.text-center {
+	text-align: center;
 }
+
+.pricing-box-container {
+	display: flex;
+    gap: 25px;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+    padding-top: 40px;
+
+}
+
+.pricing-box {
+	background-color: #ffffff;
+	box-shadow: 0px 2px 15px 0px rgba(54, 54, 54, 0.5);
+	border-radius: 5px;
+	flex: 1;
+	min-width: 250px;
+	max-width: 350px;
+    height: 500px;
+}
+.pricing-box:hover{
+    transform: scale(1.1);
+    transition: .6s ease;
+}
+.pricing-box:nth-child(2){
+    transform: translateY(-20px);
+}
+.pricing-box h5 {
+	text-transform: uppercase;
+    padding-block: 20px;
+    font-size: 25px;
+    color: white;
+}
+.pricing-box:first-child h5{
+    background-color: var(--bg-color);
+
+}
+.pricing-box:nth-child(2) h5{
+    background-color: var(--green-hover);
+
+}
+.pricing-box:nth-child(3) h5{
+    background-color: var(--link-hover);
+
+}
+
+.pricing-box .price {
+	margin: 24px 0;
+	font-size: 36px;
+	font-weight: 900;
+}
+
+.pricing-box .price sub,.pricing-box  .price sup {
+	font-size: 16px;
+	font-weight: 100;
+}
+
+.features-list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.features-list li {
+	font-weight: 100;
+	padding: 12px 0;
+	font-weight: 100;
+}
+
+.features-list li:not(:last-of-type) {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary{
+	border: none;
+	color: #ffffff;
+	cursor: pointer;
+	padding: 15px 25px;
+	margin-top: 20px;
+	text-transform: uppercase;
+	transition: all 0.1s ease-in-out;
+}
+.pricing-box:first-child .btn-primary{
+	background-color: var(--bg-color);
+
+}
+.pricing-box:nth-child(2) .btn-primary{
+	background-color: var(--green-hover);
+
+}
+.pricing-box:nth-child(3) .btn-primary{
+	background-color: var(--link-hover);
+
+}
+.btn-primary:hover {
+	box-shadow: 0px 2px 15px 0px rgba(42, 42, 42, 0.5);
+	transform: translateY(-3px);
+}
+
+.pricing-box-bg-image {
+	background-image: url('https://images.unsplash.com/photo-1550029402-226115b7c579?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80');
+	background-size: cover;
+	background-position: center center;
+	color: #ffffff;
+}
+
+.pricing-box-bg-image .features-list li {
+	border-bottom-color: rgba(255, 255, 255, 1);
+}
+
+
+
+
 /*n dans profile represente imgloader que je peux remplacer en cas d'utilites*/
 .img-loader{
     background-color: #dadada;
@@ -125,6 +244,10 @@ header a{
 .link-hover-sm:hover{
  color: var(--link-hover);
  transition: .4s ease;
+}
+.uoload-course button:disabled{
+    opacity: .6;
+    cursor: not-allowed;
 }
 header{
     background-color: var(--bg-color);
@@ -647,7 +770,6 @@ width: 150px;
  }
  /* profile style */
 .profile-bl-user .container{
-    font-family: "Poppins", sans-serif;
   font-style: normal;
 display: flex;
 flex-direction: column;
@@ -924,7 +1046,7 @@ font-weight: bold;
 font-size: 15px;
 }
 .allcourse .description{
-    height: 52px;
+    height: 60px;
     overflow: hidden;
     font-size: 15px;
 }
@@ -1159,8 +1281,74 @@ color: #0a1e41;
     line-height: 25px;
 }
     
+/* teacher*/
+ .splite-image{
+    height: 300px;
+    background-color: #0f3776cc;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    
 
+}
+.splite-image>div{
+    overflow: hidden;
+    position: absolute;
+    background-color: #0a1e41e8;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    transform: translateY(-30rem);
 
+}
+.splite-image:hover>div{
+    transition: .5s ease;
+    transform: translateY(0rem);
+}
+.splite-image>div>div{
+    height: 40px;
+    padding-inline: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: white;
+
+}
+.splite-image>div a:first-child{
+    color: #0277ec;
+    font-size: 30px;
+}
+.splite-image>div a:nth-child(2){
+    color: #000000;
+    font-size: 30px;
+}
+.splite-image>div a:nth-child(3){
+    color: #00aaff;
+    font-size: 30px;
+}
+.splite-image>div a:nth-child(4){
+    color: #df0016;
+    font-size: 30px;
+}
+.splite-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cell-right{
+    text-align: center;
+    margin-top: 10px;
+}
+.cell-right div:first-child{
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--bg-color);
+    margin-bottom: 5px;
+}
 /*responsive */
 
 @media screen and (max-width:1189px){
@@ -1178,6 +1366,7 @@ color: #0a1e41;
 }
 
 @media screen and (max-width:1050px){
+    
     .img-bl,.nav-contact,.menu ul,.hide{
         display: none;
     }
@@ -1280,6 +1469,7 @@ margin-bottom: 30px;
 }
 
 @media screen and (max-width:640px){
+
     .profile-view-infos .container-widht-anim{
         width: 120px;
         height: 120px;
@@ -1334,7 +1524,10 @@ height: 15rem;
    
         height: 90vh;
     }
-   
+    .pricing-box:nth-child(2){
+        transform: translateY(0px);
+    }
+    
     
 }
 

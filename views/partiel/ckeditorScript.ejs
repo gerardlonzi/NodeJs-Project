@@ -1,4 +1,5 @@
 <script >
+    
     const {
         ClassicEditor,
         Essentials,
@@ -15,7 +16,8 @@
         Superscript,
         Alignment,
         Table,
-        ImageResize,Code,Heading
+        ImageResize,ImageUpload,Code,Heading
+        
     } = CKEDITOR;
     
     ClassicEditor
@@ -23,8 +25,11 @@
             plugins: [ Essentials, Bold, Italic, Font, Paragraph, Link, List, Underline, Strikethrough, Subscript, Superscript, Alignment, Table, ImageResize,Code,Heading ],
             toolbar: [
                 'undo', 'redo', '|', 'bold', 'italic', 'underline', 'strikethrough', '|', 'subscript', 'superscript', '|',
-                'link', 'insertTable', 'bulletedList', 'numberedList', '|', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'alignment:left', 'alignment:right', 'alignment:center', '|', 'imageResize','code','heading'
-            ]
+                'link', 'insertTable', 'bulletedList', 'numberedList', '|', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'alignment:left', 'alignment:right', 'alignment:center', '|', 'imageResize','imageUpload','|','code','heading',
+                
+            ],
+        
+        
         })
         .then( /* ... */ )
         .catch( /* ... */ );

@@ -1,10 +1,224 @@
-<%- include('partiel/head', {title: <%= user.slug %> }) %>
+<%- include('partiel/head', {title:  user.slug  }) %>
     </head>
 
     </head>
 
     <body>
+       
         <div class="profile-bl-user">
 
 
             <%- include('partiel/header') %>
+            <div class="container">
+                <p class="marge"></p>
+
+                <% if (typeof user !=='undefined' && user !==null) { %>
+                    <div class="profile-view-infos">
+                        <div>
+                            <div class="container_CoverImage">
+
+                                <img src="images/coverProfile/images4.webp" class="bgProfileCover" alt="">
+                            </div>
+                            <a href="<%= user.profilePicture || '' %>">
+                                <div class="container-widht-anim">
+                                    <div class=""></div>
+                                    <img class="i" src="<%= user.profilePicture || '' %>" alt="profile_picture">
+                                </div>
+                            </a>
+
+                        </div>
+                        <div>
+                            <div>
+                                <p>
+                                    <%= user.name || '' %>
+                                        <% if (user.role=='professeur' ) { %>
+                                            <% if (user.approved==='yes' ) { %>
+                                                <span class="vr">vérifié</span>
+                                            <% } %>
+
+                                         <% } %>
+                                </p>
+                                <div>
+                                    <p class="textLoader">Travaille chez Maneliza global</p>
+                                    <p class="textLoader">Cmaroon yaounde Kumba</p>
+                                </div>
+                                <div>
+                                    <span class="textLoader">Web development</span>
+                                </div>
+
+                            </div>
+                            <a href=""><i class="bi bi-send-fill"></i> Envoyé un message</a>
+                        </div>
+
+                    </div>
+                    <div class="profile-view-about">
+
+                        <h4>About me</h4>
+                        <div class="about-profile-page">
+                            <div>
+                                <p class="textLoader">Salut , je m'appelle <%= user.name %>
+                                </p>
+                                <p class="textLoader">Travaille chez Maneliza global au Cameroon yaounde Kumba</p>
+                            </div>
+                            <p class="textLoader">
+                                <%= user.aboutYou ? user.aboutYou : '' %>
+                            </p>
+                            <div class="shadow-about"></div>
+
+                        </div>
+                        <button class="read_more">Voir plus ...</button>
+                    </div>
+                    <div class="elem-course">
+                        <nav >
+                            <ul >
+                                <li class="active"> Cours </li>
+                                
+                            </ul>
+                        </nav>
+                        <div>
+                            <div class="elem-course-course element-appears">
+                                <div class="allcourse">
+                                    <% if (typeof courses !=='undefined' && courses.length> 0) { %>
+                                        <% courses.forEach(element=> { %>
+                                            <% if (element.approved==='yes') { %>
+                                                <div class="course">
+                                                    
+                                                                <div class="desc-prof">
+                                                                    <a href="/cours/<%= element.slug %>">
+                                                                        <div class="container-widht-anim">
+
+                                                                            <div class="n"></div>
+                                                                            <img class="img" style="width: 100%;"
+                                                                                src="<%= element.thumbail || '' %>"
+                                                                                alt="">
+                                                                        </div>
+                                                                    </a>
+                                                                    <div>
+                                                                        <div class="textLoader">
+                                                                            <p class="name">
+                                                                                <a
+                                                                                    href="/profile/cours/<%= element.slug %>">
+                                                                                    <%= element.name ? element.name
+                                                                                        : '' %>
+                                                                                </a>
+                                                                            </p>
+
+                                                                        </div>
+                                                                        <div class="textLoader">
+                                                                            <p class="description"><%-
+                                                                                    element.description ?
+                                                                                    element.description : '' %></p>
+                                                                            <span
+                                                                                style="font-weight: bolder;">...</span>
+                                                                        </div>
+                                                                        <hr>
+                                                                        <div class="profilepresent flex-box-text">
+                                                                            <div>
+                                                                                <div class="container-widht-anim">
+
+                                                                                    <div class="n"></div>
+                                                                                    <img class="ProfilePicture"
+                                                                                        src="<%= user.profilePicture || '' %>"
+                                                                                        alt="profile_picture">
+
+                                                                                </div>
+                                                                                <div class="textLoader">
+                                                                                    <p class="user">
+                                                                                        <%= element.user ?
+                                                                                            element.user.name
+                                                                                            : 'Inconnu' %>
+                                                                                    </p>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="textLoader addCart-price">
+
+                                                                                <p class="price">
+                                                                                    <%= element.prix ? element.prix
+                                                                                        : '' %> XOF
+                                                                                </p>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <form action="" class="form_submit">
+                                                                            <button type="submit"
+                                                                                title="Add to Card"
+                                                                                class="submit add-card">
+                                                                                <img class="loader-img"
+                                                                                    src="/images/spin.png"
+                                                                                    alt="spinner">
+                                                                                <div>
+                                                                                    <i class="bi bi-cart-fill"></i>
+                                                                                    <span>Ajouter au panier</span>
+                                                                                </div>
+                                                                            </button>
+                                                                        </form>
+
+
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                <% } %>
+                                            
+                                            <% }) %>
+                                            <% } %>
+                                            <% } else { %>
+                                             <p style="text-align: center;font-style:italic;color:rgb(182, 182, 182);font-size:19px">Aucun cours posté</p>
+                                                <% } %>
+                                
+                            </div>
+
+                        </div>
+                        <%- include('partiel/buttonLoader') %>
+                        <script>
+                            const container_Cover = document.querySelector(" .profile-view-infos>div:first-child")
+                            const container_CoverImage = document.querySelector(" .container_CoverImage")
+                            const elem_course_course = document.querySelector(".elem-course-course")
+                            const elem_course_update_profile = document.querySelector(".elem-course-update-profile")
+                            const elem_course_connection = document.querySelector(".elem-course-connection")
+                            const elem_course_nav = document.querySelectorAll(".elem-course nav li")
+                            const read_more = document.querySelector(".read_more")
+                            const Paragraph_about = document.querySelector(".about-profile-page>p:nth-child(2)")
+                            const shadow_about = document.querySelector(".shadow-about")
+                            const previewImage = document.querySelector("#previewImage")
+                           
+                           
+                            let isClick = false
+                            read_more.addEventListener("click", () => {
+                                isClick = !isClick
+
+                                if (isClick === true) {
+                                    read_more.textContent = "voir moins"
+                                    Paragraph_about.style.height = 'auto'
+                                    shadow_about.style.display = 'none'
+                                }
+                                else {
+                                    read_more.textContent = "voir plus..."
+                                    Paragraph_about.style.height = '110px'
+                                    shadow_about.style.display = 'block'
+
+
+                                }
+
+                            })
+                     
+
+                            const tabImage = ['images1', 'images2', 'images3', 'images4', 'images5', 'images6']
+                            let index = 0
+                            setInterval(() => {
+                                index++
+                                if (index < tabImage.length) {
+                                    container_CoverImage.innerHTML = ` <img src="images/coverProfile/${tabImage[index]}.webp" class="bgProfileCover" alt="">`
+                                }
+                                if (index >= tabImage.length) {
+                                    index = 0
+                                }
+
+                            }, 20000)
+
+
+
+                        </script>
+</body>
+</html>

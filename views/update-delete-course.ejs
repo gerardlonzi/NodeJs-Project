@@ -1,4 +1,4 @@
-<%- include("partiel/head",{title:<%= course.slug %>}) %>
+<%- include("partiel/head",{title: course.slug }) %>
 
         </head>
 
@@ -16,7 +16,7 @@
                 <% if (typeof course !=='undefined' && course !== null) { %>
                     
                         <div class="aboutCourse">
-                            <% if (status==="true") { %>
+                            <% if (status===true) { %>
                                 <button class="modify">Modifier le cours</button>
                                 <form action="/cours/<%= course.slug %>?_method=DELETE" method="post">
                                     <input type="submit" value="Supprimer le cours">
@@ -80,6 +80,23 @@
                                                             'Les cours que vous publierez a propos de ce cours s afficheront ici' %>
 
                                                     </div>
+                                                    <% if (status===false) { %>
+                                                        <form action="" class="form_submit">
+                                                            <button type="submit"
+                                                                title="Add to Card"
+                                                                class="submit add-card">
+                                                                <img class="loader-img"
+                                                                    src="/images/spin.png"
+                                                                    alt="spinner">
+                                                                <div>
+                                                                    <i class="bi bi-cart-fill"></i>
+                                                                    <span>Ajouter au panier</span>
+                                                                </div>
+                                                            </button>
+                                                        </form>
+                                                        <% } %>
+                            
+                                                    
                                                 </div>
                                             </div>
                                            
@@ -116,7 +133,7 @@
                                         placeholder="ex: apprendre node js" name="name" id="name">
                                 </div>
                                 <div>
-                                    <label for=courseTime">Dureé du cours</label>
+                                    <label for="courseTime">Dureé du cours</label>
                                     <input type="text" value="<%= typeof course.courseTime !== 'undefined' && course.courseTime  ? course.courseTime
              :"" %>" name="courseTime" id="courseTime">
                                 </div>
@@ -243,6 +260,9 @@
                                         update_course.style.display = 'none'
                                     })
                                 </script>
+                                            <%- include('partiel/buttonLoader') %>
+
+
         </body>
 
         </html>

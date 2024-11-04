@@ -10,11 +10,13 @@ const Course = require('../models/Course')
 profileRouter.put("/profile/update_profile/:id",upload.single("profilePicture"),updateProfileUsers)
 profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
     console.log("upload-request"+req.user);
+    
     const message = req.session.message || {}
     console.log(message);
     
     req.session.message = null
     let data
+
     if(req.user && req.user.role==="professeur"){
         try{
             const user = await User.findById(req.user.id)
@@ -39,20 +41,23 @@ profileRouter.post('/upload-course/publish',verifyToken,upload.single("thumbail"
 profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
    let IsAuthStatus_And_admin = false
    const slug = req.params.slug
-   
+   let user
    if(!req.user){
-    IsAuthStatus_And_admin ="false"
+    IsAuthStatus_And_admin =false
    }
     try{
         const course = await Course.findOne({slug:slug})
         const courses = await Course.find({slug:{$ne:slug}})
-        const user = await User.findById(req.user.id)
+        
+        if(req.user && req.user.id){
+            user=await User.findById(req.user.id)
+        }
         if(!user){
             message = req.session.message 
             req.session.message= null
         }
         else if(user && user._id.toString() === course.user._id.toString()){
-            IsAuthStatus_And_admin ="true"
+            IsAuthStatus_And_admin =true
 
         }
        
@@ -61,6 +66,7 @@ profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
         return res.render("../views/update-delete-course",{course:course|| {},data:user ||{},courses:courses||[],status:IsAuthStatus_And_admin})
     }
     catch(err){
+        
         req.session.message = "ce cours n'existe pas"
         return res.redirect(`/cours`)
     }
@@ -68,6 +74,7 @@ profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
    
    
 })
+
 profileRouter.put('/cours/:slug',verifyToken,upload.single('thumbail'),updateCourse)
 profileRouter.delete('/cours/:slug',verifyToken,DeleteCourse)
 

@@ -1,6 +1,7 @@
 <%- include('partiel/head',{title:"Home"}) %>
     <meta name="description" content="   ">
-
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
     </head>
 
     <body>
@@ -111,13 +112,9 @@
                     <div class="allcourse">
                         <% if (typeof courses !=='undefined' && courses.length> 0) { %>
                             <% courses.forEach(element=> { %>
-                                <div class="course">
-
-                                
-                                        <% if (element.approved==='yes' ) { %>
-                                            <p class="alert decision-verified"><i
-                                                class="bi bi-check-circle"></i></i> cours vérifié
-                                        </p>
+                                <% if (element.approved==='yes' ) { %>
+                                    <div class="course">
+                                            
                                             
                                         
 
@@ -175,7 +172,7 @@
                                                                     </div>
 
                                                                 </div>
-                                                            </a>
+                                                             </a>
                                                                 <div class="textLoader addCart-price">
 
 
@@ -204,23 +201,187 @@
 
                                                         </div>
                                                     </div>
+                                                </div>
                                              <% } %>
-                                </div>
-                                <% }) %>
-                                <% } %>
+                            <% }) %>
+                        <% } %>
                                 
                     </div>
                 </div>
-                </div>
+            </div>
     </div>
 </div>
-                </section>
+</section>
+<section class="equipe">
+    <div class="container">
+
+    
+    <div class="intro-title">
+        <h2>Equipe d'experts</h2>
+        <p>Ici, vous aurez une équipe d'experts issus de divers secteurs et vous apprendrez d'eux <br> grâce à leur expérience et à leurs conseils éthiques.</p>
+    </div>
+    <div>
+        <div class="splide" id="my-carousel">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <% if (users !=='undefined' && users!==null && users.length>0) { %>
+                        <% users.forEach(element => { %>
+                            <li class="splide__slide">
+                               <div class="splite-image">
+                                   <img src="<%= element.profilePicture || "" %>" alt="<%= element.name %>">
+                                   <div>
+                                    <div>
+                                        <a href=""><i class="bi bi-facebook"></i></a>
+                                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                                        <a href=""><i class="bi bi-linkedin"></i></a>
+                                        <a href=""><i class="bi bi-youtube"></i></a>
+                                    </div>
+                                   </div>
+                               </div>
+                               <div class="cell-right">
+                                   <div class="testimonial-name"><%= element.name %>
+                                   </div>
+                                   <div class="testimonial-job"><%= element.poste %>
+                                   </div>
+                               </div>
+                           </li>
+                        <% }) %>
+                       <% } %>
+                       <li class="splide__slide">
+                        <div class="splite-image">
+                            <img src="/images/coverProfile/images1.webp" >
+                            <div>
+    
+                            </div>
+                        </div>
+                        <div class="cell-right">
+                            <div class="testimonial-name">gerard
+                            </div>
+                            <div class="testimonial-job">designer
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="splite-image">
+                            <img src="/images/coverProfile/images2.webp" >
+                            <div>
+                                <i class="bi bi-facebook"></i>
+                            </div>
+                        </div>
+                        <div class="cell-right">
+                            <div class="testimonial-name">grerad
+                            </div>
+                            <div class="testimonial-job">developeur
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="splite-image">
+                            <img src="/images/coverProfile/images3.webp" >
+                            <div>
+    
+                            </div>
+                        </div>
+                        <div class="cell-right">
+                            <div class="testimonial-name">grerad
+                            </div>
+                            <div class="testimonial-job">developeur
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<section>
+    <div class="container">
+        <div class="intro-title">
+            <h2>Nos tarifs
+            </h2>
+            <p>Rejoignez-nous et devenez un acteur de la révolution
+            </p>
+        </div>
+        <div class="pricing-box-container">
+            <div class="pricing-box text-center">
+                <h5>Basic</h5>
+                <p class="price"><sup>Fcfa</sup> 20.000 /Mo</p>
+                <ul class="features-list">
+                    <li> Cours en accès illimité</li>
+                    <li>Rapport d'avancement disponible</li>
+                    <li>------</li>
+                    <li>------</li>
+                </ul>
+                <button class="btn-primary">Get Started</button>
+            </div>
+        
+            <div class="pricing-box pricing-box-bg-image text-center">
+                <h5>Standard</h5>
+                <p class="price"><sup>Fcfa</sup> 30.000 /Mo</p>
+                <ul class="features-list">
+                    <li>Cours en accès illimité</li>
+                    <li>Rapport d'avancement disponible</li>
+                    <li>Vidéos haute résolution</li>
+                    <li>Certificat après achèvement</li>
+                    <li>------</li>
+
+                </ul>
+                <button class="btn-primary">Get Started</button>
+            </div>
+        
+            <div class="pricing-box text-center">
+                <h5>Premium</h5>
+                <p class="price"><sup>Fcfa</sup> 40.000 /Mo</p>
+                <ul class="features-list">
+                    <li>Cours en accès illimité</li>
+                    <li>Rapport d'avancement disponible</li>
+                    <li>Vidéos haute résolution</li>
+                    <li>Certificat après achèvement</li>
+                    <li>Séances privées</li>
+                </ul>
+                <button class="btn-primary">Get Started</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="intro-title">
+        <h2>Notre blog
+        </h2>
+        <p>Lisez quelques mots et découvrez ce que font les personnes qualifiées ou quelle <br>technologie deviendrait révolutionnaire pour le monde
+
+        </p>
+    </div>
+</section>
             </main>
             
 
             <%- include('partiel/buttonLoader') %>
 
             <%- include('partiel/loader') %>
+            <script>
+                   document.addEventListener('DOMContentLoaded', function () {
+        var splide = new Splide('#my-carousel', {
+            type       : 'loop',  
+            gap        : '2rem',   
+            autoplay   : true,       
+            pauseOnHover: true,       
+            drag       : 'free',      
+            perPage    : 3,
+            breakpoints: {
+                850: {
+                    perPage: 2,    
+                },
+                600: {
+                    perPage: 1,    
+                },
+            },
+        });
+
+        splide.mount();
+    });
+            </script>
     </body>
 
     </html>

@@ -63,9 +63,9 @@
         <div class="flex-box-text menu">
             <div>
                 <ul class="auth">
-                    <li><a href="/">Acceuil</a></li>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="">About us</a></li>
                     <li><a href="">Cours</a></li>
-                    <li><a href="">Evénement</a></li>
                     <li><a href="">Professeurs</a></li>
                     <li><a href="">Prix</a></li>
                     <li><a href="">Blog</a></li>
@@ -77,7 +77,7 @@
                     <span></span>
                 </div>
             </div>
-            <% if (typeof data !=='undefined' && data !=="null" && data.role==="user" ) { %>
+            <% if (typeof data !=='undefined' && data !==null && data.role==="user" ) { %>
                 <div class="profil-log">
                     <div class="teach hide link-hover-sm">
                         <a href="/become-teacher">Enseigner</a>
@@ -101,7 +101,7 @@
                     <% } %>
                 </div>
 
-            <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="admin" ) { %>
+            <% } else if (typeof data !=='undefined' && data !==null && data.role==="admin" ) { %>
                     <div class="profil-log">
 
                         <div class="profile">
@@ -121,7 +121,7 @@
 
                     </div>
 
-            <% } else if (typeof data !=='undefined' && data !=="null" && data.role==="professeur" ){ %>
+            <% } else if (typeof data !=='undefined' && data !==null && data.role==="professeur" ){ %>
                         <div class="profil-log">
                             <% if (data.approved) { %>
 

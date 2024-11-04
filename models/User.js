@@ -66,7 +66,8 @@ const UserModels = new Shema(
         },
         approved:{type:String,default:'wait',enum:['no','yes','wait']},
         purchaseCourse :[{type:Shema.Types.ObjectId,ref:"Course"}],
-        aboutYou:{type:String}
+        aboutYou:{type:String},
+        poste:{type:String}
 
     },{timestamps:true}
 )

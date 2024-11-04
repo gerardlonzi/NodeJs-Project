@@ -94,9 +94,8 @@
                                         <% if (typeof course !=='undefined' && course.length> 0) { %>
                                             <% course.forEach(element=> { %>
                                                 <div class="course">
-
-
                                                     <% if (element.approved==='wait' ) { %>
+
                                                         <p class="alert wait-decision"><i
                                                                 class="bi bi-exclamation-circle"></i> en attente</p>
                                                         <% } else if (element.approved==='yes' ) { %>
@@ -170,30 +169,20 @@
                                                                                 </div>
 
                                                                             </div>
-                                                                            <form action="" class="form_submit">
-                                                                                <button type="submit"
-                                                                                    title="Add to Card"
-                                                                                    class="submit add-card">
-                                                                                    <img class="loader-img"
-                                                                                        src="/images/spin.png"
-                                                                                        alt="spinner">
-                                                                                    <div>
-                                                                                        <i class="bi bi-cart-fill"></i>
-                                                                                        <span>Ajouter au panier</span>
-                                                                                    </div>
-                                                                                </button>
-                                                                            </form>
+                                                                            
 
 
                                                                         </div>
                                                                     </div>
                                                 </div>
+                                    
                                                 <% }) %>
                                                 <% } else { %>
                                                  <p style="text-align: center;font-style:italic;color:rgb(182, 182, 182);font-size:19px">Tous vos cours apparaitrons ici </p>
                                                     <% } %>
-                                    </div>
+                                  
                                 </div>
+                            </div>
                                 <div class="elem-course-update-profile" style="display:none;">
 
                                     <form action="/profile/update_profile/<%= data.id %>?_method=PUT"

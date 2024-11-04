@@ -179,7 +179,7 @@ exports.UploadCourse = async(req, res) => {
         req.session.message = {
           success: "Cours publié avec succès et en cours de traitement"
         };    
-        return res.redirect("");
+        return res.redirect("/profile");
       } catch (err) {
         req.session.message = {
           error: "Une erreur est survenue lors du téléversement du cours. Veuillez réessayer."
@@ -225,7 +225,7 @@ const {name,
       const course = await Course.findOne({slug:slug})
       if(!course){
         req.session.message="ce cours n'existe pas"
-        return res.redirect('')
+        return res.redirect('/profile')
       }
 
       name !== course.name && (course.name = name)
@@ -301,7 +301,7 @@ exports.DeleteCourse = async(req,res)=>{
      const course = await Course.findOneAndDelete({slug})
      const id_cloudImage = course.thumbail.split("/").pop().split(".")[0]
       await cloudinary.uploader.destroy(`maneSchool/${id_cloudImage}`)
-      return res.redirect(``)
+      return res.redirect(`/profile`)
   }
   catch(err){
     req.session.message = 'une erreur ces produit veuillez ressayer'

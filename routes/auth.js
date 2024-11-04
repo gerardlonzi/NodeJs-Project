@@ -4,20 +4,23 @@ const router = express.Router()
 const User = require("../models/User")
 const Course = require("../models/Course")
 
+
 router.post("/register",register)
-router.post("/login",login,(req,res)=>{
-    
-})
+router.post("/login",login)
 router.get("/",verifyToken,EmailVerified, async(req, res) => {
-    
-        console.log(req.user);
         let data ;
         let courses
+        let users
+        users = await User.find({role:'admin'})
         if(req.user){
             try{
                 const user = await User.findById(req.user.id)
-                data = user
-                console.log(user);
+               
+                if(user){
+                    data = user
+                    console.log(user);
+
+                }
                 
                 
                 
@@ -27,7 +30,7 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
             }
         }
         courses= await Course.find().populate("user")
-        res.render("../views/home",{data:data,courses:courses || []})
+        res.render("../views/home",{data:data,courses:courses || [],users:users||[]})
 })
 router.get("/error", (req, res) => {
     const error_token = req.query.error || "une erreur s'est produite"
@@ -53,6 +56,7 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
         }
         catch(err){
             data = null
+            return
         }
     }
     else{
@@ -219,18 +223,24 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
 
 router.get("/:name",verifyToken,async(req,res)=>{
     const slug = req.params.name
+   let data
+   if(req.user && req.user.id !=="undefined" && req.user.id !==null){
+             data =await User.findById(req.user.id) || {}
+
+        }
     try{
         const user = await User.findOne({slug})
+        
         if(!user){
            return  res.redirect("/cours")
         }
-        else if(req.user.id && user.id===req.user.id){
+        else if(req.user &&  req.user.id && user.id===req.user.id){
             return res.redirect("/profile")
         }
        
         const courses= await Course.find({user:user.id}).populate("user")
        
-        return res.render("../views/courseTeacherProfile",{user,courses})
+        return res.render("../views/courseTeacherProfile",{user,courses,data})
     }
     catch(err){
         console.log(err);

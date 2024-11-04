@@ -43,8 +43,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(method_overide('_method'))
 
-app.use(router)
 app.use(profileRouter)
+app.use(router)
 app.use('/auth',routerAouth)
 app.use('/dashboard',routerDashboard)
 
