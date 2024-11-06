@@ -1,0 +1,16 @@
+<div id="loaderPage">
+    <div>  
+            <img  src="/images/logo.webp" alt="Logo" class="logo-loaderpage">
+
+      
+    </div>
+    <p>Chargement veuillez patienter...</p>
+</div>
+<script>
+    window.addEventListener("load", function() {
+    const loader = document.getElementById("loaderPage");
+    const content = document.getElementById("content-page");
+    // loader.style.display = "none";
+    content.style.display = "block";
+});
+</script>

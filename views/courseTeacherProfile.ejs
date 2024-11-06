@@ -5,10 +5,12 @@
 
     <body>
        
+        <%- include('partiel/header') %>
+        <main id="content-page">
+       
         <div class="profile-bl-user">
 
 
-            <%- include('partiel/header') %>
             <div class="container">
                 <p class="marge"></p>
 
@@ -170,6 +172,8 @@
                             </div>
 
                         </div>
+                        </div>
+                    </main>
                         <%- include('partiel/buttonLoader') %>
                         <script>
                             const container_Cover = document.querySelector(" .profile-view-infos>div:first-child")
@@ -220,5 +224,7 @@
 
 
                         </script>
+                                    <%- include('partiel/pageLoader') %>
+
 </body>
 </html>

@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" /></head>
 <body >
     <%- include('partiel/header') %>
-    <main>
+
+    <main id="content-page">
         <div class="bg-uplad">
             <div>
                 <p>Publier un cours  <i class="bi bi-pen"></i></p>
@@ -135,6 +136,7 @@
 
     </main>
     <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js"></script>
+    <%- include('partiel/pageLoader') %>
     <%- include("partiel/upload-image")%>
     <%- include('partiel/news') %>
     <%- include('partiel/buttonLoader') %>

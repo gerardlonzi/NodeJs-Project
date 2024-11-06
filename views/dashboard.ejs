@@ -5,6 +5,9 @@
 
 </head>
 <body>
+    <main id="content-page">
+
+   
     <aside class='aside-dashboard'>
         <p class="title">Dashboard Admin</p>
         <nav>
@@ -259,16 +262,14 @@
 
                         <% }) %>
                             <% } %>
-                                <!-- 
-    
-    role
-   -->
+                               
                 </tbody>
             </table>
         </section>
 
-        <%- include('partiel/disconnect_logout') %>
     </main>
+        <%- include('partiel/disconnect_logout') %>
+    
 
 
 
@@ -291,12 +292,12 @@
   const growthChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['<%=fromDate  %>', '<%= toDate %>'], // Les mois de référence
+      labels: ['<%=fromDate  %>', '<%= toDate %>'], 
       datasets: [
         {
-          label: 'Users',  // Ligne pour les utilisateurs vérifiés
-          data: ["<%= allUsers %>", "<%= allUserlastmont %>"], // Données pour chaque mois
-          borderColor: 'black', // Couleur de la ligne
+          label: 'Users',
+          data: ["<%= allUsers %>", "<%= allUserlastmont %>"], 
+          borderColor: 'black',
           fill: false,
           tension: 0.1
           
@@ -304,17 +305,16 @@
           
         },
         {
-          label: 'Utilisateurs non vérifiés',  // Ligne pour les utilisateurs non vérifiés
-          data: ["<%= usersNotVerified %>", "<%= UserNotVerifielastmont %>"], // Données pour chaque mois
+          label: 'Utilisateurs non vérifiés', 
+          data: ["<%= usersNotVerified %>", "<%= UserNotVerifielastmont %>"], 
           borderColor: 'red',
-          // Couleur différente pour cette ligne
           fill: false,
           tension: 0.1
         },
         {
-          label: 'Utilisateurs  vérifiés',  // Ligne pour les utilisateurs non vérifiés
-          data: ["<%= usersVerifie %>", "<%= UserVerifielastmont %>"], // Données pour chaque mois
-          borderColor: 'rgb(115, 96, 255)', // Couleur différente pour cette ligne
+          label: 'Utilisateurs  vérifiés',  
+          data: ["<%= usersVerifie %>", "<%= UserVerifielastmont %>"],
+          borderColor: 'rgb(115, 96, 255)', 
           fill: false,
           tension: 0.1
         }
@@ -323,12 +323,14 @@
     options: {
       scales: {
         y: {
-          beginAtZero: true  // Commence l'axe Y à zéro
+          beginAtZero: true  
         }
       }
     }
   });
 </script>
+<%- include('partiel/pageLoader') %>
+
         </body>
 
         </html>

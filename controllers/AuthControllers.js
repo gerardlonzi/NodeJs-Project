@@ -67,14 +67,11 @@ exports.register = (req, res) => {
           bcript.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
             newUser.password = hash
-            console.log("hash" + hash);
 
             newUser.save().then(user => {
               const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '5h' })
               res.cookie('token', token, { httpOnly: true, maxAge: 21600000 })
               res.redirect('/send-email-verified')
-              console.log("token" + token);
-              console.log("user id" + user.id);
               console.log(user);
             }).catch(err => console.log(err));
           })
@@ -109,7 +106,6 @@ exports.login = (req, res) => {
         const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '5h' })
         res.cookie('token', token, { httpOnly: true, maxAge: 21600000 })
         res.redirect('/')
-        console.log("token injecter avec succes");
       }
       else {
         req.session.message = { incorrect_password: "mot de passe incorrect", password: password || "", email: email || "" }
@@ -121,7 +117,6 @@ exports.login = (req, res) => {
 
 exports.verifyToken = (req, res, next) => {
   const token = req.cookies.token
-  console.log(token);
   if (!token) {
 
     return next()
@@ -129,7 +124,7 @@ exports.verifyToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, async (err, data) => {
     if (err) {
-      return res.redirect("/error?error=token invalide ou expirer veuiller vous reconnecter")
+      return res.redirect("/login")
     }
     req.user = data
     return next()
@@ -236,7 +231,7 @@ exports.SendEmail = async (req, res) => {
       return res.redirect('/send-email-verified')
 
     }).catch(err => {
-      console.log(err);
+      return res.redirect("/send-email-verified")
     })
   }
   catch (err) {
@@ -250,14 +245,12 @@ exports.SendEmail = async (req, res) => {
 
 exports.EmailIsVerified = async (req, res, next) => {
   const token = req.query.token
-  console.log("token" + token)
   try {
 
     const user = await User.findOne({
       emailVerifiedToken: token,
       emailVerifiedTokenExpire: { $gt: Date.now() }
     })
-    console.log("user" + user)
     if (!user) {
       return res.redirect('/send-email-verified')
     }
@@ -268,12 +261,15 @@ exports.EmailIsVerified = async (req, res, next) => {
     user.save().then(() => {
       res.redirect('/profile')
     })
-      .catch((err) => {
-        console.log(err);
-      })
+    .catch((err) => {
+        return res.redirect('/send-email-verified')
+    })
   }
   catch {
-    console.log('une erreur est survenue');
+    req.session.message={
+      error:"une erreur est survenue"
+    } 
+    return res.redirect('/send-email-verified')
   }
 }
 
@@ -305,17 +301,18 @@ exports.forgetpassword = async (req, res) => {
  </p>`
       }
       this.sendMailContain(options).then(result => {
-        console.log(result);
         req.session.message={
           success:"email envoyé avec succes"
         }
         return res.redirect('/forget-password')
       }).catch(err => {
-        console.log(err);
+        req.session.message={
+          error:"une erreur c'est produit"
+        }
+        return res.redirect('/forget-password')
       })
 
     }).catch(err => {
-      console.log(err);
       req.session.message={
         error:"une erreur est survenue reessayez"
       }
@@ -364,7 +361,6 @@ exports.resetPassword = async (req, res) => {
       resetPasswordtokenExpire: { $gt: Date.now() }
     })
     if (!user) {
-      console.log('user' + user);
       req.session.message={
         error:"une erreur est survenue ! veuillez reessayez"
       }
@@ -439,7 +435,6 @@ exports.deleteUser = async (req, res) => {
     }
    await  User.findByIdAndDelete(req.user.id)
       res.clearCookie('token')
-      console.log(result);
       session.abortTransaction()
       session.endSession()
       return res.redirect('/login')

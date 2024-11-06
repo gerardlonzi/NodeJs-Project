@@ -5,10 +5,12 @@
     </head>
 
     <body>
+        <%- include('partiel/header') %>
+        <main id="content-page">
+
         <div class="profile-bl-user">
 
 
-            <%- include('partiel/header') %>
                 <!-- <div>
 
     <%= message && message.message?message.message : '' %>
@@ -252,6 +254,8 @@
 
                 </div>
         </div>
+        </main>
+        <%- include('partiel/pageLoader') %>
 
         <%- include('partiel/buttonLoader') %>
 

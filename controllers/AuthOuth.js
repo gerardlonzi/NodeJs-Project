@@ -33,7 +33,6 @@ passport.use(new GoogleStrtegy({
         }
     }
     catch (err) {
-        console.log(err);
         return done(err, null)
 
     }

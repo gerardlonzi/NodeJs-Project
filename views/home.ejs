@@ -5,8 +5,9 @@
     </head>
 
     <body>
-        <%- include('partiel/header') %>
-            <main class="home-main">
+        
+        <main class="home-main" id="content-page">
+                <%- include('partiel/header') %>
                 <section class="barner">
                     <div class="container">
                         <div>
@@ -360,6 +361,7 @@
             <%- include('partiel/buttonLoader') %>
 
             <%- include('partiel/loader') %>
+            <%- include('partiel/pageLoader') %>
             <script>
                    document.addEventListener('DOMContentLoaded', function () {
         var splide = new Splide('#my-carousel', {

@@ -1,6 +1,7 @@
 <%- include('../partiel/head',{title:"Login"}) %>
 </head>
     <body>
+        <main id="content-page">
         <section class="login">
             <div class="img-bl">
                 <img src="/images/login.webp" alt="login-picture">
@@ -91,8 +92,11 @@
 
             </div>
         </section>
+        </main>
 <%- include('../partiel/news') %>
 <%- include('../partiel/buttonLoader') %>
+<%- include('../partiel/pageLoader') %>
+
 
 <script>
     const eyes_bl = document.querySelector(".eyes")

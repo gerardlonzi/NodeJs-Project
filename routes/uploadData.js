@@ -9,11 +9,7 @@ const Course = require('../models/Course')
 
 profileRouter.put("/profile/update_profile/:id",upload.single("profilePicture"),updateProfileUsers)
 profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
-    console.log("upload-request"+req.user);
-    
     const message = req.session.message || {}
-    console.log(message);
-    
     req.session.message = null
     let data
 
@@ -60,9 +56,6 @@ profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
             IsAuthStatus_And_admin =true
 
         }
-       
-        console.log("Status"+ IsAuthStatus_And_admin);
-        
         return res.render("../views/update-delete-course",{course:course|| {},data:user ||{},courses:courses||[],status:IsAuthStatus_And_admin})
     }
     catch(err){

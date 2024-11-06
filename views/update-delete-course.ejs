@@ -4,6 +4,7 @@
 
         <body>
             <%- include("partiel/header") %>
+            <main id="content-page">
                 <div>
 
                     <%=typeof message !=='undefined' && message && message.message?message.message : '' %>
@@ -11,7 +12,6 @@
                 </div>
 
 
-                <!--affiche  le cour-->
 
                 <% if (typeof course !=='undefined' && course !== null) { %>
                     
@@ -102,7 +102,6 @@
                                            
 
                         </div>
-                        <!--mettre a jour le cour-->
                         <div class="update-course" style="display: none;">
                             <form action="/cours/<%= course.slug %>?_method=PUT" id="form" enctype="multipart/form-data" method="post">
                                 <div>
@@ -117,15 +116,7 @@
                                     <button class="btn-image">importer une image</button>
                                     <input type="file" id="thumbail" name="thumbail" hidden accept="image/*">
                                 </div>
-                                <!-- <div>
-                                <p>Video de résumé du cours</p>
-                                <span>votre video doit étre au format mp4</span>
-                                <div class="video-bl-preview">
-                                 
-                                </div>
-                                <button class="btn-video">importer une video</button>
-                                <input   type="file" id="videoResumeCourse" name="videoResumeCourse"  hidden accept="video/*">
-                            </div> -->
+                                
                                 <div>
                                     <label for="name">Nom du cours</label>
                                     <input type="text"
@@ -205,9 +196,6 @@
 
                           
                         </div>
-                        <!--afficher les autre cours le cour-->
-
-                      
 
                             <% } %>
 
@@ -242,6 +230,7 @@
                                                             <% }) %>
                                                                 <% } %>
                                 </div>
+                            </main>
 
                                 <%- include("partiel/upload-image")%>
 
@@ -261,6 +250,8 @@
                                     })
                                 </script>
                                             <%- include('partiel/buttonLoader') %>
+                                            <%- include('partiel/pageLoader') %>
+
 
 
         </body>

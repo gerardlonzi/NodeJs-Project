@@ -18,8 +18,6 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
                
                 if(user){
                     data = user
-                    console.log(user);
-
                 }
                 
                 
@@ -37,7 +35,6 @@ router.get("/error", (req, res) => {
     res.render("../views/error",{error_token:error_token})
 })
 router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
-    console.log('requser'+ req.user);
     const message = req.session.message || ""
     req.session.message =  null
     let data;
@@ -51,7 +48,6 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
             data = user
             const courseElement = await Course.find({user:req.user.id}).populate('user')
             course = courseElement || []
-            console.log(user);
             return res.render("../views/profile",{data,message,course})
         }
         catch(err){
@@ -64,19 +60,12 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
     }
 })
 router.get("/login",verifyToken, (req, res) => {
-    console.log(req.user);
     const error_query = req.query.error 
-    console.log("-----------");
-    
     if(req.user){
-        console.log("==========");
-        
         return res.redirect("/")
     }
     
     else{
-        console.log("++++++++++");
-
         const message = req.session.message || {}
         req.session.message = null
 
@@ -104,7 +93,6 @@ router.get('/send-email-verified',verifyToken,async(req,res)=>{
             data = user
         }
         catch(err){
-            console.log(err);
             data = null
         }
         return res.render('../views/authViews/send-email-verified',{data: data || "",message:message||{}})
@@ -212,7 +200,6 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
             });
         }
         catch(err){
-            console.log(err);
             data = null
         }
     }
@@ -243,7 +230,6 @@ router.get("/:name",verifyToken,async(req,res)=>{
         return res.render("../views/courseTeacherProfile",{user,courses,data})
     }
     catch(err){
-        console.log(err);
         return res.redirect("/cours")
         
     }

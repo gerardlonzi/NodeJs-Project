@@ -1,18 +1,8 @@
 const multer = require("multer")
 const storage = multer.memoryStorage()
-// const {CloudinaryStorage}= require("multer-storage-cloudinary")
 const cloudinary = require("../config/cloudinary")
 const User = require('../models/User')
 const Course = require("../models/Course")
-
-
-// const storage = new CloudinaryStorage({
-//     cloudinary:cloudinary,
-//     params:{
-//     folder:"maneSchool",
-//     allowed_formats : ['jpg','jpeg','png','mp4','mp3','avif','webp']
-//     }
-// })
 
 
 exports.upload = multer({ storage: storage })
@@ -60,13 +50,12 @@ console.log("req.file"+req.file);
       folder: "maneSchool",
       allowed_formats: ['jpg', 'jpeg', 'png', 'avif', 'webp'],
       transformation: [
-        { width: 800, height: 600, crop: "limit" },  // Limiter la taille à 500x500 pixels
-        { quality: "auto:good" }  // Compression automatique pour maintenir une bonne qualité
+        { width: 800, height: 600, crop: "limit" },  
+        { quality: "auto:good" } 
       ]
 
     }, (error, result) => {
       if (error) {
-        console.log("Erreur lors de l'upload vers Cloudinary : ", error);
         req.session.message = "Une erreur est survenue lors du téléversement";
         return res.redirect("/profile");
       }
@@ -74,7 +63,6 @@ console.log("req.file"+req.file);
       user.profilePicture = result.secure_url
        
       user.save()
-        console.log("Téléversement réussi");
         req.session.message = "Profile mis à jour avec succès";
         return res.redirect("/profile");
      
@@ -84,9 +72,6 @@ console.log("req.file"+req.file);
     result.end(req.file.buffer);
   }
   catch (err) {
-
-    console.log("erreur au niveau de cacth"+JSON.stringify(err));
-
     req.session.message = "une erreur ces produit veuiller ressayé"
     return res.redirect("/profile")
   }
@@ -106,7 +91,6 @@ exports.UploadCourse = async(req, res) => {
     difficultyLevel,
     language } = req.body
   const id = req.user.id
-  console.log("req  user"+req.user);
 
   if (!name || !description || !prix  || !courseTime  || !categorie || !typologie || ! difficultyLevel || !language ) {
     req.session.message = {
@@ -127,10 +111,7 @@ exports.UploadCourse = async(req, res) => {
     }
     return res.redirect("/upload-course")
   }
-  console.log("req file"+req.file);
-  
   if(!req.file) {
-    console.log("request file est null");
     req.session.message ={error: "Erreur : l'image ou la video n'a pas été telecharger veuillez ressayer s'il vous plait"}
     return res.redirect("/upload-course")
 
@@ -158,7 +139,6 @@ exports.UploadCourse = async(req, res) => {
 
       if (err) {
         req.session.message ={error:"une erreur est survenue lors de la mise a jour de votre miniature ! veuillez ressayer"}
-        console.log(err);
         return res.redirect("/upload-course")
 
       }
@@ -184,7 +164,6 @@ exports.UploadCourse = async(req, res) => {
         req.session.message = {
           error: "Une erreur est survenue lors du téléversement du cours. Veuillez réessayer."
         };
-        console.log("Erreur lors de la sauvegarde du cours : ", err);
         return res.redirect("/upload-course");
       }
     })
@@ -194,7 +173,6 @@ exports.UploadCourse = async(req, res) => {
   catch (err) {
   
     req.session.message = {error:"une erreur est survenu ! veuillez ressayer"}
-    console.log("err" + err);
     return res.redirect("/upload-course");
   }
 }
@@ -256,7 +234,6 @@ const {name,
       
           }, (error, result) => {
             if (error) {
-              console.log("Erreur lors de l'upload vers Cloudinary : ", error);
               req.session.message = "Une erreur est survenue lors du téléversement";
               return res.redirect(`/cours/${slug}`);
             }
@@ -264,7 +241,6 @@ const {name,
             course.thumbail = result.secure_url
              
             course.save()
-              console.log("Téléversement réussi");
               req.session.message = "cours mis à jour avec succès";
               return res.redirect(`/cours/${slug}`);
            

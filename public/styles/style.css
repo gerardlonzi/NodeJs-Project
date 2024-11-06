@@ -27,6 +27,41 @@ body {
     
 
 }
+
+/* Styles pour le loaderpage */
+#loaderPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+    gap: 10px;
+  }
+#loaderPage div{
+border: solid 3px var(--green-hover);
+padding:5px 20px;
+box-shadow: 0px 0px 10px rgba(74, 128, 74, 0.43);
+animation: Trote 3s  linear infinite;
+ }
+.logo-loaderpage {
+    width: 100px; 
+  }
+  
+  
+  @keyframes Trote {
+    0% { transform: rotateX(0deg); 
+    }
+    
+
+    100% { transform: rotateX(-180deg);
+     }
+  }
 /*princing*/
 .text-center {
 	text-align: center;
@@ -52,8 +87,8 @@ body {
     height: 500px;
 }
 .pricing-box:hover{
-    transform: scale(1.1);
-    transition: .6s ease;
+    transform: translateY(-55px);
+    transition: .4s ease;
 }
 .pricing-box:nth-child(2){
     transform: translateY(-20px);
