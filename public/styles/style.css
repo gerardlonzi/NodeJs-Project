@@ -11,7 +11,6 @@
 
 body {
 	font-family: 'Open Sans', sans-serif;
-    
 }
 
 :root{
@@ -27,7 +26,26 @@ body {
     
 
 }
+.nav_fixed{
+box-shadow: 0px 0px 10px 0px rgb(246, 246, 246);
+position: fixed;
+width: 100%;
+top: 0;
+z-index: 60;
+animation:TranslsteHeader .8s cubic-bezier(0.165, 0.84, 0.44, 1) ;
 
+}
+@keyframes TranslsteHeader {
+    0%{
+        transform: translateY(-1000px);
+    }
+    100%{
+        transform: initial;
+    }
+}
+.nav-active{
+    color: var(--green-hover);
+}
 /* Styles pour le loaderpage */
 #loaderPage {
     position: fixed;
@@ -752,11 +770,11 @@ width: 150px;
   .custom-select-container select {
     width: 100%;
     padding: 15px;
-    padding-right: 20px; /* Espace pour l'icône */
+    padding-right: 20px; 
     border: 2px solid rgb(225, 225, 225);
     border-radius: 8px;
     background-color: white;
-    appearance: none; /* Enlever la flèche par défaut */
+    appearance: none; 
     -webkit-appearance: none;
     -moz-appearance: none;
     font-size: 18px;
@@ -774,7 +792,7 @@ width: 150px;
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    pointer-events: none; /* Pour éviter que l'icône ne bloque le clic sur le select */
+    pointer-events: none; 
     font-size: 20px;
     color: var(--bg-hover);
     
@@ -1396,14 +1414,52 @@ color: #0a1e41;
     .container{
         padding-inline: 40px;
     }
-    
+    .menu ul{
+        gap: 30px;
+    }
     
 }
 
 @media screen and (max-width:1050px){
-    
-    .img-bl,.nav-contact,.menu ul,.hide{
+    .bl-nav{
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+
+
+    }
+
+    .img-bl,.nav-contact,.hide{
         display: none;
+    }
+  header{
+    position: relative;
+}
+.menu ul{
+        position: absolute;
+        flex-direction: column;
+        z-index: 50;
+        background-color: var(--padding-bl-color);
+        width: 100%;
+        top: 130px;
+        left: 0;
+        align-items: start;
+        padding: 0px;
+        gap: 0px;
+        transition: 1s ease;
+        height: 0px;
+        overflow: hidden;
+    }
+    .menu ul.show {
+        height: 70vh;
+        padding: 10px 20px 60px 20px; 
+        gap: 30px; 
+    }
+    .menu ul li{
+        padding-bottom: 7px;
+        width: 100%;
+        border-bottom: 1px solid rgb(235, 235, 235);
     }
     .login{
         height: 100vh;
@@ -1423,12 +1479,6 @@ margin-bottom: 30px;
         display: flex;
         flex-direction: column;
         gap: 50px;
-    }
-    .bl-nav{
-        display:flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: white;
     }
     
     .bl-nav .logo img{
@@ -1504,7 +1554,15 @@ margin-bottom: 30px;
 }
 
 @media screen and (max-width:640px){
-
+    .uoload-course button{
+      padding: 10px 12px;
+    }
+    .profil-log{
+        gap: 2px;
+    }
+    .uoload-course button span{
+        display: none;
+    }
     .profile-view-infos .container-widht-anim{
         width: 120px;
         height: 120px;

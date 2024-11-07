@@ -72,6 +72,9 @@ router.get("/login",verifyToken, (req, res) => {
         res.render("../views/authViews/login",{message:message,error:error_query})
     }
 })
+router.get("/blog",verifyToken, (req, res) => {
+        res.render("../views/blog")
+})
 router.get("/register",verifyToken, (req, res) => {
     if(req.user){
         return res.redirect("/")

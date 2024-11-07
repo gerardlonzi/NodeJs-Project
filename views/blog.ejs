@@ -1,0 +1,69 @@
+<%- include('partiel/head', { title: "Home" }) %>
+<meta name="description" content="   ">
+<% if (process.env.NODE_ENV === 'production') { %>
+    <script type="module" src="/dist/main.js"></script>
+<% } else { %>
+    <script type="module" src="http://localhost:5000/@vite/client"></script>
+<% } %>
+</head>
+
+<body>
+    <%- include('partiel/header') %>
+    <main id="content-page">
+        <div class="element">
+            <button onclick="insertLink()">Ajouter un lien</button>
+            <button onclick="insertImage()">Ajouter une image</button>
+            <button onclick="insertTable()">Ajouter un tableau</button>
+        </div>
+    </main>
+
+    <script>
+        // Fonctions pour insérer des éléments
+        function insertLink() {
+            editor.chain().focus().toggleLink({ href: 'https://example.com' }).run();
+        }
+
+        function insertImage() {
+            editor.chain().focus().setImage({ src: 'https://url.de.mon/image.jpg' }).run();
+        }
+
+        function insertTable() {
+            editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+        }
+    </script>
+
+    <!-- Script principal de TipTap -->
+    <script type="module">
+        import { Editor } from 'https://esm.sh/@tiptap/core';
+        import StarterKit from 'https://esm.sh/@tiptap/starter-kit';
+        import Link from 'https://esm.sh/@tiptap/extension-link';
+        import Image from 'https://esm.sh/@tiptap/extension-image';
+        import Table from 'https://esm.sh/@tiptap/extension-table';
+        import TableRow from 'https://esm.sh/@tiptap/extension-table-row';
+        import TableCell from 'https://esm.sh/@tiptap/extension-table-cell';
+        import TableHeader from 'https://esm.sh/@tiptap/extension-table-header';
+
+        // Initialisation de l'éditeur
+        const editor = new Editor({
+            element: document.querySelector('.element'),
+            extensions: [
+                StarterKit,
+                Link.configure({
+                    openOnClick: false,
+                }),
+                Image,
+                Table,
+                TableRow,
+                TableCell,
+                TableHeader
+            ],
+            content: '<p>Hello World!</p>',
+        });
+
+        // Rendre l'éditeur accessible dans le contexte global pour les fonctions d'insertion
+        window.editor = editor;
+    </script>
+
+    <%- include('partiel/pageLoader') %>
+</body>
+</html>
