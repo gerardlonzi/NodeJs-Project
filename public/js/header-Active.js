@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let isclick = false
 const menu_hamburger = document.querySelector(".menu-hambuger")    
 const menu_ul = document.querySelector(".menu ul")  
-const bl_nav = document.querySelector(".bl-nav")  
+const menu = document.querySelector(".menu")  
 
 menu_hamburger?.addEventListener("click",()=>{
         isclick=!isclick
@@ -29,10 +29,10 @@ menu_hamburger?.addEventListener("click",()=>{
 })  
 window.addEventListener("scroll",()=>{
         if(window.scrollY >360){
-                bl_nav.classList.add("nav_fixed")
+                menu.classList.add("nav_fixed")
         }
         else{
-                bl_nav.classList.remove("nav_fixed")
+                menu.classList.remove("nav_fixed")
      
         }
         console.log(window.scrollY);
