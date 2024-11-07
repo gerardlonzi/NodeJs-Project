@@ -30,12 +30,14 @@ menu_hamburger?.addEventListener("click",()=>{
 window.addEventListener("scroll",()=>{
         if(window.scrollY >360){
                 menu.classList.add("nav_fixed")
+                menu_ul.style.top="66px"
         }
         else{
                 menu.classList.remove("nav_fixed")
+                menu_ul.style.top="130px"
+
      
         }
-        console.log(window.scrollY);
         
 })
 
