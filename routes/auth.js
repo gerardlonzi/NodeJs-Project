@@ -4,7 +4,23 @@ const router = express.Router()
 const User = require("../models/User")
 const Course = require("../models/Course")
 
-
+router.use(verifyToken,async(req,res,next)=>{
+    const token = req.cookies.token
+    try{
+        if(req.user){
+            const user= await User.findById(req.user.id)
+            if(!user && token){
+             res.clearCookie('token')
+             return res.redirect("/")
+            }
+         }
+    }
+    catch(err){
+        return res.redirect("/error")
+    }
+    next()
+    
+})
 router.post("/register",register)
 router.post("/login",login)
 router.get("/",verifyToken,EmailVerified, async(req, res) => {
