@@ -59,7 +59,7 @@
                                     </div>
 
                                 </div>
-                                <a href=""><i class="bi bi-send-fill"></i> Envoyé un message</a>
+                                <a href=""><i class="bi bi-send-fill"></i> </a>
                             </div>
 
                         </div>
@@ -134,11 +134,10 @@
 
                                                                             </div>
                                                                             <div class="textLoader">
-                                                                                <p class="description"><%-
-                                                                                        element.description ?
-                                                                                        element.description : '' %></p>
-                                                                                <span
-                                                                                    style="font-weight: bolder;">...</span>
+                                                                                <div class="description">
+                                                                                    <p><%- element.description %></p> 
+                                                                                </div>
+                                                                                    <span  style="font-weight: bolder;">...</span>
                                                                             </div>
                                                                             <hr>
                                                                             <div class="profilepresent flex-box-text">

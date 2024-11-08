@@ -70,6 +70,31 @@
                     <li><a href="">Ebook</a></li>
                     <li><a href="/blog">Blog</a></li>
                     <li><a href="">Contacts</a></li>
+                    <li>
+                        <% if (typeof data !=='undefined' && data !==null && data.role==="professeur" ){ %>
+                            <div class="profil-log">
+                                <% if (data.approved) { %>
+    
+                                    <div class="uoload-course ">
+                                        <a href="/upload-course">
+                                            <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
+                                                <i class="bi bi-plus-lg"></i> publier un cours 
+                                            </button>
+                                        </a>
+    
+                                    </div>
+                                    <% } %>
+                        <% } %>
+                    </li>
+                    <li>
+                        <% if (typeof data !=='undefined' && data !==null && data.role==="user" ) { %>
+                            <div class="profil-log">
+                                <div class="teach  link-hover-sm">
+                                    <a href="/become-teacher">Enseigner</a>
+                                </div>
+                            </div>
+                        <% } %>
+                    </li>
                 </ul>
                 <div class="menu-hambuger">
                     <span></span>
@@ -78,8 +103,8 @@
                 </div>
             </div>
             <% if (typeof data !=='undefined' && data !==null && data.role==="user" ) { %>
-                <div class="profil-log">
-                    <div class="teach  link-hover-sm">
+                <div class="profil-log ">
+                    <div class="teach pp link-hover-sm">
                         <a href="/become-teacher">Enseigner</a>
                     </div>
                     <% if (data.profilePicture) { %>
@@ -122,13 +147,13 @@
                     </div>
 
             <% } else if (typeof data !=='undefined' && data !==null && data.role==="professeur" ){ %>
-                        <div class="profil-log">
+                        <div class="profil-log ">
                             <% if (data.approved) { %>
 
-                                <div class="uoload-course ">
+                                <div class="uoload-course pp">
                                     <a href="/upload-course">
                                         <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
-                                            <i class="bi bi-plus-lg"></i> publier <span>un cours</span> 
+                                            <i class="bi bi-plus-lg"></i> publier un cours 
                                         </button>
                                     </a>
 

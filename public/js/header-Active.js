@@ -9,9 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.classList.add('nav-active');
             }
         });
-        if(pathname==="/profile"){
-                profile.style.display="none"
-        }
+        
     });
 
 let isclick = false
@@ -30,7 +28,16 @@ menu_hamburger?.addEventListener("click",()=>{
 window.addEventListener("scroll",()=>{
         if(window.scrollY >360){
                 menu.classList.add("nav_fixed")
-                menu_ul.style.top="45px"
+                if (window.innerWidth < 1050) {
+                        menu_ul.style.top = "4.2rem";
+                }
+                if (window.innerWidth < 640) {
+                        menu_ul.style.top = "4.1rem";
+                }
+                if (window.innerWidth < 430) {
+                        menu_ul.style.top = "3.4rem";
+                }
+
         }
         else{
                 menu.classList.remove("nav_fixed")

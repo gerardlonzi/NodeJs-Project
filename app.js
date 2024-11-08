@@ -10,7 +10,8 @@ const cookie_parser = require("cookie-parser")
 const method_overide = require('method-override')
 const routerDashboard = require('./routes/DashboardActionRoad')
 const profileRouter = require("./routes/uploadData")
-
+const cmemory_cache = require("memory-cache")
+const compression = require("compression")
 
 const app = express()
 app.use(cookie_parser())
@@ -29,6 +30,28 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
             return
       })
 
+function cacheMiddleware(duration) {
+            return (req, res, next) => {
+                const key = '__express__' + req.originalUrl || req.url;
+                const cachedBody = cache.get(key);
+        
+                if (cachedBody) {
+                    return res.send(cachedBody);
+                } else {
+                    res.sendResponse = res.send;
+                    res.send = (body) => {
+                        cache.put(key, body, duration * 1000); 
+                        res.sendResponse(body);
+                    };
+                    next();
+                }
+            };
+        }
+        
+app.get('/data', cacheMiddleware(10), (req, res) => {
+            res.send("Contenu mis en cache pendant 10 secondes !");
+});
+app.use(compression());
 app.use(express.static(path.join(__dirname, "public")))
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
