@@ -1617,6 +1617,8 @@ margin-bottom: 10px;
         height: 80vh;
         padding: 10px 20px 60px 20px; 
         gap: 30px; 
+        overflow: auto;
+
     }
     .menu ul li{
         padding-bottom: 7px;

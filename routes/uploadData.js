@@ -14,7 +14,7 @@ profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
     req.session.message = null
     let data
 
-    if(req.user && req.user.role==="professeur"){
+    if(req.user && (req.user.role==="professeur"||req.user.role==="admin")){
         try{
             const user = await User.findById(req.user.id)
             if(user.approved ==="yes"){
