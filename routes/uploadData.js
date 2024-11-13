@@ -1,9 +1,10 @@
 const express = require('express')
-const { upload, updateProfileUsers, UploadCourse, updateCourse, DeleteCourse } = require('../controllers/UploadData')
+const { upload, updateProfileUsers, UploadCourse, updateCourse, DeleteCourse,UploadBlog } = require('../controllers/UploadData')
 const { verifyToken } = require('../controllers/AuthControllers')
 const profileRouter = express.Router()
 const User = require("../models/User")
 const Course = require('../models/Course')
+const Blog = require("../models/Blog")
 
 
 
@@ -70,6 +71,40 @@ profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
 
 profileRouter.put('/cours/:slug',verifyToken,upload.single('thumbail'),updateCourse)
 profileRouter.delete('/cours/:slug',verifyToken,DeleteCourse)
+
+
+profileRouter.get("/blog",verifyToken, async(req, res) => {
+    const message = req.session.message || ""
+    req.session.message =  null
+    let data;
+    if(req.user && req.user.id){
+        const user = await User.findById(req.user.id)
+        if(user){
+            data = user
+        }
+    }
+    const Allblog = await Blog.find().populate("user")
+   
+    return res.render("../views/blog",{data,message,Allblog: Allblog || []})
+})
+profileRouter.get("/blog/create-blog",verifyToken, async(req, res) => {
+    const message = req.session.message || {}
+    req.session.message = null
+    let data ;
+    if(req.user && req.user.id){
+        try{
+            const user = await User.findById(req.user.id)
+            if(user && user.role==="admin"){
+                return res.render("../views/create-blog",{data:user,message})
+            }
+        }
+        catch(err){
+            return res.redirect("/blog")
+        }
+    }
+    return res.redirect("/blog")
+})
+profileRouter.post("/blog/create-blog",verifyToken,upload.single("thumbail"),UploadBlog)
 
 
 module.exports = profileRouter

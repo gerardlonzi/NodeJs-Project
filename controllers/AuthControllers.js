@@ -34,7 +34,7 @@ exports.register = (req, res) => {
       email: email || ""
     }
     errors.push({ msg: "le passsword est requis" })
-    return res.redirect('register')
+    return res.redirect('/register')
 
 
   }

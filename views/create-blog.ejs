@@ -1,0 +1,94 @@
+<%- include('partiel/head', { title: "upload blog" }) %>
+<meta name="description" content="   ">
+<% if (process.env.NODE_ENV === 'production') { %>
+    <script type="module" src="/dist/main.js"></script>
+<% } else { %>
+    <script type="module" src="http://localhost:5000/@vite/client"></script>
+<% } %>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
+
+</head>
+
+<body>
+    <%- include('partiel/header') %>
+    <main id="content-page">
+        <section class="barner-short">
+            <div class="container">
+                    <h1>Creer un blog
+                    </h1>
+            </div>
+            <img src="/images/slider-bottom-pattern.png" alt="pattern">
+        </section>
+        <section class="create-blog-sec">
+            <% if (typeof message !=='undefined' && message.success ) { %>
+            <div class="message">
+                    <div class="new-sucess disapied">
+                        <p >
+                        <i class="bi bi-check-circle"></i>
+                        <%= message.success %>
+                        </p>
+                        <i class="bi bi-x"></i>
+                    </div>
+                        <% } %>
+                        <% if (typeof message !=='undefined' && message.error ) { %>
+                            <div class="new-error disapied">
+                                <p>
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                <%= message.error %>
+                                </p>
+                                <i class="bi bi-x"></i>
+                            </div>
+                        </div>
+                        <% } %>
+            <div class="container">
+                <form action="/blog/create-blog" class="form_submit"  id="form_course"  enctype="multipart/form-data"  method="post">
+                    <div class="upload-image">
+                        <label for="thumbail">inserer une image</label>
+                        <div class="image-bl-preview">
+                           
+                        </div>
+                        <button class="btn-image"><i class="bi bi-image"></i></button>
+                        <input   type="file" id="thumbail" name="thumbail"  hidden accept="image/*">
+                    </div>
+                    <div>
+                    <div>
+                        <label for="title">Titre du blog</label>
+                        <input autocomplete="off" type="text" value="<%= typeof message !== 'undefined' && message.data  && message.data.title !=='undefined' ? message.data.title :"" %>" placeholder="ex: Comment se protéger des attaques " name="title" id="name">
+                    </div>
+                    
+                    <div>
+                        <label for="categorie">A quel catégorie appartient votre blog-article</label>
+                        <div class="custom-select-container">
+    
+                        <select name="categorie"  id="categorie">
+                            <option <%= typeof message !== 'undefined' && message.data  && message.data.categorie ==='programmation' ? 'selected' :"" %> value="programmation">Programmation</option>
+                            <option  <%= typeof message !== 'undefined' && message.data  && message.data.categorie ==='web développement' ? 'selected' :"" %> value="web développement">Web développement</option>
+                            <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='graphics design' ? 'selected' :"" %> value="graphics design">Graphics design</option>
+                            <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='outils offices' ? 'selected' :"" %> value="outils offices">Outils offices</option>
+                            <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='Science' ? 'selected' :"" %> value="Science">Science</option>
+                            <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='litterature' ? 'selected' :"" %> value="litterature">litterature</option>
+                        </select>
+                        <i class="bi bi-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="finasubmit">
+                    <label>texte du blog</label>
+                    <textarea id="editor"  name="description"  ><%- typeof message !== 'undefined' && message.data  && message.data.description  ? message.data.description :"" %></textarea>
+                    <div>
+                        <button type="submit" class="submit" >publier le blog<i class="bi bi-send-fill"></i> <img class="loader-img" src="/images/spin.png" alt="spinner"></button>
+                    </div>
+                </div>
+    
+                </form>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js" ></script>
+    <%- include('partiel/ckeditorScript') %>
+    <%- include('partiel/buttonLoader') %>
+    <%- include('partiel/pageLoader') %>
+    <%- include("partiel/upload-image")%>
+
+</body>
+</html>

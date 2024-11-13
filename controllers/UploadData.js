@@ -3,6 +3,8 @@ const storage = multer.memoryStorage()
 const cloudinary = require("../config/cloudinary")
 const User = require('../models/User')
 const Course = require("../models/Course")
+const Blog = require("../models/Blog")
+const sharp = require("sharp")
 
 
 exports.upload = multer({ storage: storage })
@@ -45,7 +47,7 @@ console.log("req.file"+req.file);
       await cloudinary.uploader.destroy(`maneSchool/${publicId}`)
     }
 
-
+    const imageConverter = await sharp(req.file.buffer).webp().toBuffer()
     const result = await cloudinary.uploader.upload_stream({
       folder: "maneSchool",
       allowed_formats: ['jpg', 'jpeg', 'png', 'avif', 'webp'],
@@ -69,7 +71,7 @@ console.log("req.file"+req.file);
     });
 
 
-    result.end(req.file.buffer);
+    result.end(imageConverter);
   }
   catch (err) {
     req.session.message = "une erreur ces produit veuiller ressayé"
@@ -126,7 +128,7 @@ exports.UploadCourse = async(req, res) => {
       return res.redirect("/login")
     }
   
-  
+    const imageConverter = await sharp(req.file.buffer).webp().toBuffer()
     const result = cloudinary.uploader.upload_stream({
       folder: "maneSchool",
       allowed_formats: ['jpg', 'jpeg', 'png', 'avif', 'webp','mp4','heic'],
@@ -168,7 +170,7 @@ exports.UploadCourse = async(req, res) => {
       }
     })
 
-    result.end(req.file.buffer)
+    result.end(imageConverter)
   }
   catch (err) {
   
@@ -223,7 +225,7 @@ const {name,
       if(req.file){
            const image_cloudId = course.thumbail.split('/').pop().split('.')[0]
            await cloudinary.uploader.destroy(`maneSchool/${image_cloudId}`)
-
+           const imageConverter = await sharp(req.file.buffer).webp().toBuffer()
            const result = await cloudinary.uploader.upload_stream({
             folder: "maneSchool",
             allowed_formats: ['jpg', 'jpeg', 'png', 'avif', 'webp'],
@@ -245,7 +247,7 @@ const {name,
               return res.redirect(`/cours/${slug}`);
            
           });
-          result.end(req.file.buffer)
+          result.end(imageConverter)
     }
 
   }
@@ -284,4 +286,92 @@ exports.DeleteCourse = async(req,res)=>{
     return res.redirect(`/cours/${slug}`)
 }
 
+}
+
+//blog
+
+exports.UploadBlog = async(req, res) => {
+  console.log("hello world")
+  const { title,
+    description,
+    categorie,
+    thumbail,
+     } = req.body
+  
+console.log(req.body);
+
+  if (!title || !description   || !categorie ) {
+    req.session.message = {
+      error: "veuillez renseigner tous les champs s'il vous plait",
+      data: {
+        title,
+        thumbail:thumbail || "",
+         description,
+         categorie
+      }
+
+    }
+    return res.redirect("/blog/create-blog")
+  }
+  if(!req.file) {
+    req.session.message ={error: "Erreur : l'image ou la video n'a pas été telecharger veuillez ressayer s'il vous plait"}
+    return res.redirect("/blog/create-blog")
+
+  }
+  let user
+  try {
+    if( req.user && req.user.id !=='undefined'){
+       user = await User.findById(req.user.id)
+       if (!user || user.role!=="admin") {
+        return res.redirect("/login")
+      }
+    
+    }
+    console.log("0------------------")
+  const imageConverter = await sharp(req.file.buffer).webp().toBuffer()
+  console.log("0_____________________")
+
+    const result = cloudinary.uploader.upload_stream({
+      folder: "maneSchool",
+      allowed_formats: ['jpg', 'jpeg', 'png', 'avif', 'webp','mp4','heic'],
+      transformation: [
+        { width: 800, height: 600, crop: "limit" },  
+        { quality: "auto:good" }  
+      ]
+    },async(err, url) => {
+      
+
+      if (err) {
+        req.session.message ={error:"une erreur est survenue lors de la mise a jour de votre miniature ! veuillez ressayer"}
+        return res.redirect("/blog/create-blog")
+
+      }
+     const blog =  new Blog({
+        title,
+        description,
+        categorie,
+        thumbail:url.secure_url,
+        user: user._id,
+        date: new Date()
+    })
+    console.log("0--%%%%%%%%%%%%%%%%%%%%%%")
+    
+    
+        blog.save();
+        req.session.message = {
+          success: "Cours publié avec succès et en cours de traitement"
+        }
+        console.log("0*************")
+  
+        return res.redirect("/blog");
+      
+    })
+
+    result.end(imageConverter)
+  }
+  catch (err) {
+  
+    req.session.message = {error:"une erreur est survenu ! veuillez ressayer"}
+    return res.redirect("/blog/create-blog");
+  }
 }

@@ -3,7 +3,7 @@ const slugify = require('slugify')
 
 const Schema = mongoose.Schema
 const BlogModel = new Schema({
-    name:{
+    title:{
         type:String,required:true
     },
     slug:{type:String,unique:true},
@@ -20,16 +20,16 @@ const BlogModel = new Schema({
             required : true
     },
     user:{type:Schema.Types.ObjectId,ref:"Users",required:true},
-    Date:{type:Date}
+    date:{type:Date,default:new Date()}
 
-})
+},{timestamps:true})
 
 BlogModel.pre('save',async function(next) {
-    if(this.isModified('name') || this.isNew){
-        let baseUrl = slugify(this.name,{lower:true,strict:true})
+    if(this.isModified('title') || this.isNew){
+        let baseUrl = slugify(this.title,{lower:true,strict:true})
         let unique_slug = baseUrl
         let count = 1 
-        while(await Course.exists({slug:unique_slug})){
+        while(await Blog.exists({slug:unique_slug})){
             unique_slug = `${baseUrl}-${count}`
             count++
         }
@@ -38,5 +38,5 @@ BlogModel.pre('save',async function(next) {
     next()
 })
 
-const Blog = mongoose.model("Course",BlogModel)
+const Blog = mongoose.model("Blog",BlogModel)
 module.exports = Blog

@@ -1,8 +1,8 @@
 const express = require("express")
-const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword, deleteUser, IsAdmin} = require("../controllers/AuthControllers")
-const router = express.Router()
 const User = require("../models/User")
 const Course = require("../models/Course")
+const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword, deleteUser, IsAdmin} = require("../controllers/AuthControllers")
+const router = express.Router()
 
 router.use(verifyToken,async(req,res,next)=>{
     const token = req.cookies.token
@@ -59,7 +59,7 @@ router.get('/profile',verifyToken,EmailVerified,async(req,res)=>{
         return res.redirect('/')
     }
     const user = await User.findById(req.user.id)
-     if(req.user && (req.user.role==='user' || req.user.role==='professeur')){
+     if(req.user && req.user.role){
         try{
             data = user
             const courseElement = await Course.find({user:req.user.id}).populate('user')
@@ -87,9 +87,6 @@ router.get("/login",verifyToken, (req, res) => {
 
         res.render("../views/authViews/login",{message:message,error:error_query})
     }
-})
-router.get("/blog",verifyToken, (req, res) => {
-        res.render("../views/blog")
 })
 router.get("/register",verifyToken, (req, res) => {
     if(req.user){
@@ -231,7 +228,7 @@ router.get("/:name",verifyToken,async(req,res)=>{
     const slug = req.params.name
    let data
    if(req.user && req.user.id !=="undefined" && req.user.id !==null){
-             data =await User.findById(req.user.id) || {}
+               data =await User.findById(req.user.id) || {}
 
         }
     try{

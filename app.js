@@ -12,7 +12,7 @@ const routerDashboard = require('./routes/DashboardActionRoad')
 const profileRouter = require("./routes/uploadData")
 const cmemory_cache = require("memory-cache")
 const compression = require("compression")
-
+const sharp = require("sharp")
 const app = express()
 app.use(cookie_parser())
 
@@ -51,6 +51,7 @@ function cacheMiddleware(duration) {
 app.get('/data', cacheMiddleware(10), (req, res) => {
             res.send("Contenu mis en cache pendant 10 secondes !");
 });
+
 app.use(compression());
 app.use(express.static(path.join(__dirname, "public")))
 app.set('view engine', 'ejs')
@@ -61,7 +62,6 @@ app.use(session({
       resave: true,
       saveUninitialized: false
 }))
-
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(method_overide('_method'))

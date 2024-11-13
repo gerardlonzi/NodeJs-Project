@@ -197,22 +197,7 @@ animation: Trote 3s  linear infinite;
 
 
 
-/*n dans profile represente imgloader que je peux remplacer en cas d'utilites*/
-.img-loader{
-    background-color: #dadada;
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-}
-/* .textLoader{
-    padding-block: 10px;
-    background-color: #efefef;
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-} */
+
 .container-widht-anim{
     overflow: hidden;
     position: relative;
@@ -222,7 +207,11 @@ header .container-widht-anim {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    background-color:  #eaeaeafe  ;
 
+}
+.bi-basket3{
+font-size: 23px;
 }
 .profile-view-infos .container-widht-anim{
     position: absolute;
@@ -232,6 +221,8 @@ header .container-widht-anim {
     top: 100px;
     left: 45px;
     border: solid 3px var(--green-hover);
+    background-color:  #0c2f6cfe  ;
+
 
 }
 
@@ -368,7 +359,7 @@ padding-inline: 160px;
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
     font-size: 15px;
     padding-block: 18px;
 }
@@ -384,6 +375,9 @@ padding-inline: 160px;
     padding: 20px;
     background-color: var(--link-hover);
     color: white;
+}
+.menu-login:hover{
+    background-color: var(--green-hover);
 }
 .add-card {
 display: flex;
@@ -429,10 +423,9 @@ border: 0;
 }
 .profil-log .profile a{
     gap: 10px;
-    font-size: 13px;
 
 }
-.uoload-course button{
+.uoload-course button,.upload-courseShow button{
     cursor: pointer;
    border:none;
  background-color: var(--green-hover);
@@ -440,6 +433,9 @@ border: 0;
  font-size: 17px;
  padding: 20px 10px;
  font-weight: 400;
+}
+.upload-courseShow button{
+    display: none;
 }
 .user-view{
 display:flex
@@ -464,6 +460,7 @@ display:flex
     width: 45%;
     overflow: hidden;
     border-right:5px solid #1fff8f;
+    background-color: #405578;
 }
 .img-bl img{
     width: 100%;
@@ -681,46 +678,48 @@ margin-bottom: 20px;
 /*upload course */
 
 
-.bg-uplad{
-    position:relative
 
-}
-.bg-uplad{
-    background:linear-gradient(rgba(0, 0, 0, 0.46),rgba(0, 0, 0, 0.46)),url(../images/postpage.webp);
-    background-attachment: fixed;
-    width: 100%;
-    height: 38vh;
-    
-}
-.bg-uplad div{
-    border: 2px solid white;
-    position:absolute;
-    top:50%;
-    left:20%;
-    transform: translateY(-50%);
-    padding: 20px;
-    
-}
-.bg-uplad p{
-    font-size: 40px;
-    color: white;
-}
 
 .upload-image .cloud-logo{
 width: 150px;
 }
-.upload-image button,.previewPicture button{
+.upload-image button, .previewPicture button{
     outline: none;
     background-color: #1ca965;
-    padding: 15px 60px;
     margin-top: 20px;
     color: white;
     border: none;
+}
+.upload-image button:hover{
+    background-color: var(--green-hover);
+    transition: .4s ease;
+
+}
+.upload-course .upload-image button,.previewPicture button{
+    padding: 15px 60px;
     border-radius: 10px;
     font-size: 18px;
 }
+.create-blog-sec .upload-image{
+    position: relative;
+}
+
+.create-blog-sec .upload-image button{
+    position: absolute;
+    top: 60px;
+    padding: 15px 15px;
+    font-size: 20px;
+    border-radius: 50%;
+    left: 10px;
+}
+.create-blog-sec .upload-image button:hover{
+ background-color: var(--green-hover);
+ transition: .4s ease;
+}
+.create-blog-sec .image-bl-preview{
+background-color: #f4f4f4;
+}
 .image-bl-preview{
-    border: dashed 3px rgb(229, 229, 229);
     width: 100%;
     height: 400px;
     display: flex;
@@ -728,6 +727,10 @@ width: 150px;
     align-items: center;
     border-radius: 10px;
     overflow: hidden;
+}
+.upload-course .image-bl-preview{
+    border: dashed 3px rgb(229, 229, 229);
+   
 }
 .img-uploader,#previewImage{
     width: 100%;
@@ -737,7 +740,7 @@ width: 150px;
 .upload-course{
     margin-top: 70px;
 }
-#form_course{
+.upload-course #form_course{
     display: grid;
     grid-template-columns: repeat(2,1fr);
     gap: 50px;
@@ -749,13 +752,19 @@ width: 150px;
     font-weight: bold;
     color: #0f2445;
 }
-
 #form_course input,.updatePofil input{
     width: 100%;
     outline: none;
     padding-block: 15px;
     font-size: 18px;
     padding-inline: 13px;
+   border: 0;
+}
+.create-blog-sec #form_course input{
+    border-bottom: 2px solid gainsboro;
+
+}
+.upload-course #form_course input,.updatePofil input{
     border-radius: 10px;
     border: rgb(225, 225, 225) 2px solid;
 
@@ -770,13 +779,19 @@ width: 150px;
     width: 100%;
     
   }
-  
-  .custom-select-container select {
+  .upload-course .custom-select-container select{
+    border: 2px solid rgb(225, 225, 225);
+    border-radius: 8px;
+
+
+  }
+  .create-blog-sec .custom-select-container select{
+    border-bottom: 2px solid gainsboro;
+  }
+ .custom-select-container select {
     width: 100%;
     padding: 15px;
     padding-right: 20px; 
-    border: 2px solid rgb(225, 225, 225);
-    border-radius: 8px;
     background-color: white;
     appearance: none; 
     -webkit-appearance: none;
@@ -785,9 +800,13 @@ width: 150px;
     cursor: pointer;
     color: var(--bg-color);
     outline: none;
+    border: none;
     
   }
-.ck-editor__editable{
+  .create-blog-sec .ck-editor__editable{
+    height: 350px;
+  }
+  .upload-course .ck-editor__editable{
     height: 250px;
   }
   /* Position de l'icône */
@@ -807,7 +826,7 @@ width: 150px;
     font-size: 16px;
   }
 
-  #form_course  .submit,.updatePofil #submit{
+  .upload-course #form_course  .submit,.updatePofil #submit{
     padding-block: 13px;
     padding-inline: 145px;
     font-size: 18px;
@@ -816,7 +835,16 @@ width: 150px;
     margin-top: 30px;
    
 }
-#form_course .submit,.updatePofil #submit{
+.create-blog-sec .submit{
+    width: 100%;
+    padding-block: 13px;
+    font-size: 18px;
+    outline: none;
+    border-radius: 7px;
+    margin-top: 30px;
+
+}
+.upload-course #form_course .submit,.updatePofil #submit,.create-blog-sec .submit{
     border:none;
     background-color: #208052;
     color: white;
@@ -1033,7 +1061,7 @@ display: block;
     box-shadow: 0px 0px 20px gainsboro;
     overflow: hidden;
 }
-.course a{
+.course a,.single-blog a{
     text-decoration: none;
     color:#163568;
     font-weight: bold;
@@ -1087,9 +1115,10 @@ background-color: rgba(255, 221, 159, 0.905);
 
 
 
-.course .name{
+.course .name,.single-blog .name{
     font-size: 20px;
 }
+
 .course .img{
 width: 100%;
 height: 250px;
@@ -1109,7 +1138,7 @@ font-size: 15px;
     overflow: hidden;
     font-size: 15px;
 }
-.allcourse .description,.allcourse .user{
+.allcourse .description,.allcourse .user,.single-blog .description{
     color: #878787;
 }
 .allcourse hr{
@@ -1214,9 +1243,11 @@ background-color: #1ca965;
     background:linear-gradient(#0d2754b6,#0d2754b6),url(/images/ovarlay-slide.jpg);
     background-attachment: fixed;
     position: relative;
+    background-color:#0c2f6cfe ;
     
     height: 100vh;
 }
+
 .barner>img{
     position: absolute;
     bottom: 0;
@@ -1263,6 +1294,27 @@ gap: 25px;
     background-color:#1fff8f;
     transition: all;
 }
+.barner-short{
+    background:linear-gradient(#0e203fb6,#0e203fb6),url(/images/ovarlay-slide.jpg);
+    background-attachment: fixed;
+    position: relative;
+    height: 35vh;
+}
+.barner-short>img{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    
+}
+.barner-short .container{
+    font-size: 20px;
+    color: white;
+    line-height: 60px;
+    text-align: center;
+    padding-top: 55px;
+
+}
+
 .choose{
     margin-top: 50px;
 }
@@ -1408,6 +1460,101 @@ color: #0a1e41;
     color: var(--bg-color);
     margin-bottom: 5px;
 }
+/*our blog*/
+.create-blog{
+    text-align: right;
+    
+  
+}
+.create-blog a{
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 17px;
+    background-color: var(--link-hover);
+    color: white;
+    margin-top: 15px;
+}
+.create-blog a:hover{
+    background-color: var(--green-hover);
+    transition: .4s ease;
+}
+
+.single-blog .description{
+    height: 60px;
+    overflow: hidden;
+    font-size: 15px;
+}
+.single-blog{
+    width: 100%;
+    overflow: hidden;
+}
+.single-blog>div:first-child{
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+.single-blog>div:first-child div{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: var(--green-hover);
+    padding: 10px;
+    color: white;
+    text-align: center;
+}
+.single-blog>div:first-child div p:first-child{
+    font-size: 20px;
+    font-weight: bold;
+
+}
+.single-blog>div:first-child div p:nth-child(2){
+    font-size: 14px;
+
+}
+.single-blog>div img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.AllBlog{
+    margin-top: 20px;
+}
+.AllBlog .container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+.single-blog .name{
+margin-bottom: 10px;
+}
+.single-blog{
+    box-shadow: 0px 0px 20px gainsboro;
+}
+.dateUser{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgb(217, 217, 217);
+}
+.descri-title{
+    padding: 15px;
+}
+.dateUser div,.dateUser div a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: auto;
+    color: var(--bg-hover);
+    font-weight: bold;
+}
+.line{
+    display: block;
+    height: 50px;
+    border: 1px solid rgb(217, 217, 217);
+
+}
 /*responsive */
 
 @media screen and (max-width:1189px){
@@ -1427,6 +1574,10 @@ color: #0a1e41;
 }
 
 @media screen and (max-width:1050px){
+    .upload-courseShow button{
+        display: block;
+    }
+    
     .bl-nav{
         display:flex;
         align-items: center;
@@ -1445,6 +1596,7 @@ color: #0a1e41;
   header{
     position: relative;
 }
+
 .menu ul{
         position: absolute;
         flex-direction: column;
@@ -1460,8 +1612,9 @@ color: #0a1e41;
         height: 0px;
         overflow: hidden;
     }
+    
     .menu ul.show {
-        height: 70vh;
+        height: 80vh;
         padding: 10px 20px 60px 20px; 
         gap: 30px; 
     }
@@ -1484,7 +1637,7 @@ margin-bottom: 30px;
     .container{
         padding-inline: 10px;
     }
-    #form_course{
+    .upload-course #form_course{
         display: flex;
         flex-direction: column;
         gap: 50px;
@@ -1556,14 +1709,32 @@ margin-bottom: 30px;
         grid-template-columns: repeat(2,1fr);
        
     }
-   
+    .barner-short{
+        height: 30vh;
+    }
+    .barner-short .container{
+        padding-top: 55px;
+        font-size: 18px;
     
+    }
+
     
+    .AllBlog .container{
+        grid-template-columns: repeat(2,1fr);
+    }
+
     
 }
 
 @media screen and (max-width:640px){
-   
+    .AllBlog .container{
+        grid-template-columns: repeat(1,1fr);
+        gap: 30px;
+    }
+
+    .dash{
+        display: none;
+    }
     .pp{
         display: none;
      }
@@ -1619,7 +1790,6 @@ height: 15rem;
         display: none;
     }
     .barner{
-   
         height: 90vh;
     }
     .pricing-box:nth-child(2){
@@ -1661,6 +1831,15 @@ height: 15rem;
         
     }
    
+    .barner-short{
+       
+        height: 20vh;
+    }
+    .barner-short .container{
+        padding-top: 30px;
+        font-size: 18px;
+    
+    }
     
 }
 

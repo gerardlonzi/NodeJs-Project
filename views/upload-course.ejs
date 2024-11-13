@@ -1,18 +1,21 @@
 <%- include('partiel/head',{title:"upload course"}) %>
 
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" /></head>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
+</head>
 <body >
     <%- include('partiel/header') %>
 
     <main id="content-page">
-        <div class="bg-uplad">
-            <div>
-                <p>Publier un cours  <i class="bi bi-pen"></i></p>
+        <section class="barner-short">
+            <div class="container">
+                    <h1>Publier un cours
+                    </h1>
             </div>
-        </div>
+            <img src="images/slider-bottom-pattern.png" alt="pattern">
+        </section>
         <section class="upload-course">
+            <% if (typeof message !=='undefined' && message.success ) { %>
             <div class="message">
-                <% if (typeof message !=='undefined' && message.success ) { %>
                     <div class="new-sucess disapied">
                         <p >
                         <i class="bi bi-check-circle"></i>
@@ -29,8 +32,8 @@
                                 </p>
                                 <i class="bi bi-x"></i>
                             </div>
-                                <% } %>
-            </div>
+                        </div>
+                        <% } %>
             <div class="container ">
                 <div class="infos-general">
                     <p>Informations géneral du cours </p>
@@ -89,7 +92,7 @@
 
                
                 <div>
-                    <label for="professeur">Titre du professeur</label>
+                    <label for="professeur">Nom de l'auteur</label>
                     <input  type="text" id="professeur" value="<%= data.name?data.name:'' %>" disabled name="professeur">
                 </div>
                 <div>
@@ -137,7 +140,7 @@
         
 
     </main>
-    <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js" defer></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js" ></script>
     <%- include('partiel/pageLoader') %>
     <%- include("partiel/upload-image")%>
     <%- include('partiel/news') %>

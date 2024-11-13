@@ -10,60 +10,90 @@
 <body>
     <%- include('partiel/header') %>
     <main id="content-page">
-        <div class="element">
-            <button onclick="insertLink()">Ajouter un lien</button>
-            <button onclick="insertImage()">Ajouter une image</button>
-            <button onclick="insertTable()">Ajouter un tableau</button>
-        </div>
+        <section class="barner-short">
+            <div class="container">
+                    <h1>OUR BLOG
+                    </h1>
+            </div>
+            <img src="images/slider-bottom-pattern.png" alt="pattern">
+        </section>
+        <% if (typeof data !=="undefined" && data !== null) { %>
+         <% if (typeof data.role !=="undefined" && data.role==="admin") { %>
+            <div class="create-blog">
+                <div class="container">
+                <a href="/blog/create-blog"><i class="bi bi-plus-lg"></i> Creer un blog</a>
+                </div>
+            </div>
+         <% } %>
+        <% } %>
+        
+        <section class="AllBlog">
+            <div class="container">
+                <% if (typeof Allblog !=='undefined' && Allblog.length > 0) { %>
+                 <% Allblog.forEach(element => { %>
+                    <% if (typeof element !=="undefined" &&  element !== null) { %>
+                    <div class="single-blog">
+                        <div>
+                            <a href="">
+                                <img src="<%= element.thumbail || "" %>" alt="<%=element.title %>" />
+                            </a>
+                            <div class="date-squares">
+                                <p><%= new Date(element.date).toLocaleDateString("fr-FR", {
+                                    
+                                   
+                                    day: 'numeric',
+                                    
+                                })%></p>
+                                <p>
+                                    <%= new Date(element.date).toLocaleDateString("fr-FR", {
+                                    
+                                        month: 'long',
+                                        
+                                    })%>
+                                </p>
+                               
+                            </div>
+                        </div>
+                        <div class="descri-title">
+                            <a href="">
+                                <h2 class="name"><%= element.title %></h2>
+                            </a>
+                            <div class="description">
+                                <%- element.description %>
+                            </div>
+                            <span style="font-weight: bolder;color: rgb(200, 200, 200);">...</span>
+                        </div>
+                        <div class="dateUser">
+                            <div>
+                              
+                                    <i class="bi bi-calendar2-fill"></i>
+                                <p>
+                                <%= new Date(element.date).toLocaleDateString("fr-FR", {
+                                    month: 'long',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                })%>
+                                </p>
+                            </div>
+                            <span class="line"></span>
+                            <div>
+                                <a href="/<%=element.user?element.user.slug:"" %>">
+                                    <i class="bi bi-person-fill"></i>
+                                   <p>
+                                    <%=element.user? element.user.name:"" %>
+                                    </p>
+                                </a>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                    <% } %>
+                 <% }) %>
+                <% } %>
+            </div>
+        </section>
     </main>
-
-    <script>
-        // Fonctions pour insérer des éléments
-        function insertLink() {
-            editor.chain().focus().toggleLink({ href: 'https://example.com' }).run();
-        }
-
-        function insertImage() {
-            editor.chain().focus().setImage({ src: 'https://url.de.mon/image.jpg' }).run();
-        }
-
-        function insertTable() {
-            editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
-        }
-    </script>
-
-    <!-- Script principal de TipTap -->
-    <script type="module">
-        import { Editor } from 'https://esm.sh/@tiptap/core';
-        import StarterKit from 'https://esm.sh/@tiptap/starter-kit';
-        import Link from 'https://esm.sh/@tiptap/extension-link';
-        import Image from 'https://esm.sh/@tiptap/extension-image';
-        import Table from 'https://esm.sh/@tiptap/extension-table';
-        import TableRow from 'https://esm.sh/@tiptap/extension-table-row';
-        import TableCell from 'https://esm.sh/@tiptap/extension-table-cell';
-        import TableHeader from 'https://esm.sh/@tiptap/extension-table-header';
-
-        // Initialisation de l'éditeur
-        const editor = new Editor({
-            element: document.querySelector('.element'),
-            extensions: [
-                StarterKit,
-                Link.configure({
-                    openOnClick: false,
-                }),
-                Image,
-                Table,
-                TableRow,
-                TableCell,
-                TableHeader
-            ],
-            content: '<p>Hello World!</p>',
-        });
-
-        // Rendre l'éditeur accessible dans le contexte global pour les fonctions d'insertion
-        window.editor = editor;
-    </script>
-
     <%- include('partiel/pageLoader') %>
 </body>
 </html>
