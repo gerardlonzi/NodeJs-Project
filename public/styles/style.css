@@ -1521,7 +1521,7 @@ color: #0a1e41;
 .AllBlog{
     margin-top: 20px;
 }
-.AllBlog .container{
+.AllBlog .container,.other-blog{
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 20px;
@@ -1554,6 +1554,157 @@ margin-bottom: 10px;
     height: 50px;
     border: 1px solid rgb(217, 217, 217);
 
+}
+/*blog detail*/
+.description-blog{
+    display: flex;
+    margin-top: 70px;
+    gap: 20px;
+}
+.describe-bl{
+    margin-top: 10px;
+    display: flex;
+    gap: 20px;
+}
+.recentNews{
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.recentNews,.tabCategorie{
+    border: 2px solid rgb(242, 242, 242);
+    border-radius: 4px;
+    padding: 15px;
+    text-decoration: none;
+    width: 300px;
+
+}
+.recentNews img{
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+}
+.recentNews a{
+    display: flex;
+}
+.sharing{
+    text-align: center;
+}
+.sharing p{
+    margin-bottom: 10px;
+    font-weight: bolder;
+    font-size: 13px;
+}
+.sharing div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.sharing i{
+    padding: 7px;
+    font-size: 17px;
+    border-radius: 50%;
+}
+.sharing a{
+    color: rgb(48, 48, 48);
+}
+.categ{
+    color: white;
+    padding: 5px;
+    display: inline-block;
+    font-size: 13px;
+    text-transform: uppercase;
+    background-color: #0a1e41;
+    margin-bottom: 10px;
+}
+.blog-title{
+    font-size: 27px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+.profile-author{
+display: flex;
+align-items: center;
+gap: 15px;
+color: rgb(85, 85, 85);
+margin-top: 30px;
+
+}
+.profile-author img {
+    width: 50px;
+    object-fit: cover;
+    border: #0a1e41 2px solid;
+    border-radius: 50%;
+}
+.profile-author p{
+    color: #0a1e41;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.thumbail-pr-blog{
+    width: 100%;
+    height: 30rem;
+    object-fit: cover;
+}
+.recent-sp-bl{
+    display: flex;
+    gap: 10px;
+    font-weight: bold;
+}
+.recent-sp-bl a{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #0a1e41;
+    gap: 10px;
+
+}
+.time-bl{
+    font-weight: normal;
+display: flex;
+gap: 5px;
+font-size: 14px;
+color: rgb(116, 116, 116);
+}
+.title-cat-recent{
+    font-weight: bold;
+    font-size: 18px;
+    border-bottom: 2px solid rgb(242, 242, 242);
+    padding-bottom: 10px;
+}
+.allcat{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+.allcat a{
+    text-decoration: none;
+    color: rgb(116, 116, 116);
+
+}
+.other-blog{
+    text-align: center;
+    margin-top: 40px;
+}
+.nav-btn-custom{
+    display: flex;
+    justify-content: end;
+    gap: 15px;
+}
+#custum-button{
+    background-color: var(--link-hover);
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    margin-top: 15px;
+}
+#custum-button:hover{
+    background-color: var(--green-hover);
+    transition: .4s ease;
 }
 /*responsive */
 
@@ -1706,7 +1857,7 @@ margin-bottom: 30px;
         width: 270px;
         height: 270px;
     }
-    .allAvantage{
+    .allAvantage,.other-blog{
        
         grid-template-columns: repeat(2,1fr);
        
@@ -1724,12 +1875,18 @@ margin-bottom: 30px;
     .AllBlog .container{
         grid-template-columns: repeat(2,1fr);
     }
-
+    .description-blog{
+flex-direction: column;
+    }
+    
+    .recentNews,.tabCategorie{
+width: 100%;
+    }
     
 }
 
 @media screen and (max-width:640px){
-    .AllBlog .container{
+    .AllBlog .container,.other-blog{
         grid-template-columns: repeat(1,1fr);
         gap: 30px;
     }
@@ -1800,6 +1957,28 @@ height: 15rem;
     .intro-title h2{
         font-size: 25px;
     }
+    .describe-bl{
+        flex-direction: column;
+    }
+    .sharing{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .sharing div{
+        flex-direction: row;
+    }
+    .sharing p {
+        margin-bottom: 0;
+    }
+    .thumbail-pr-blog{
+        width: 100%;
+        height: 100%;
+    }
+    .barner-short .container h1{
+        line-height: 45px;
+    }
+
     
 }
 
@@ -1835,7 +2014,7 @@ height: 15rem;
    
     .barner-short{
        
-        height: 20vh;
+        height: 30vh;
     }
     .barner-short .container{
         padding-top: 30px;

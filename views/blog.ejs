@@ -34,7 +34,7 @@
                     <% if (typeof element !=="undefined" &&  element !== null) { %>
                     <div class="single-blog">
                         <div>
-                            <a href="">
+                            <a href="/blog/<%= element.slug %>">
                                 <img src="<%= element.thumbail || "" %>" alt="<%=element.title %>" />
                             </a>
                             <div class="date-squares">
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="descri-title">
-                            <a href="">
+                            <a href="/blog/<%= element.slug %>">
                                 <h2 class="name"><%= element.title %></h2>
                             </a>
                             <div class="description">
@@ -65,7 +65,6 @@
                         </div>
                         <div class="dateUser">
                             <div>
-                              
                                     <i class="bi bi-calendar2-fill"></i>
                                 <p>
                                 <%= new Date(element.date).toLocaleDateString("fr-FR", {
@@ -77,9 +76,9 @@
                             </div>
                             <span class="line"></span>
                             <div>
-                                <a href="/<%=element.user?element.user.slug:"" %>">
-                                    <i class="bi bi-person-fill"></i>
-                                   <p>
+                                <a href="/<%=element.user.slug%>">
+                                    <img style="width: 40px; height: 40px;object-fit: cover; border-radius: 50%;" class="ProfilePicture" src="<%= element.user.profilePicture %>" alt="profilePicture">
+                                    <p>
                                     <%=element.user? element.user.name:"" %>
                                     </p>
                                 </a>

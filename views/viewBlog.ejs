@@ -1,0 +1,308 @@
+<%- include("partiel/head",{title: blog.slug }) %>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
+        </head>
+
+        <body>
+            <%- include("partiel/header") %>
+            <main id="content-page">
+                <section class="barner-short">
+                    <div class="container">
+                            <h1><%= blog.title && typeof  blog.title!=="undefined" ? blog.title : '' %>
+                            </h1>
+                    </div>
+                    <img src="/images/slider-bottom-pattern.png" alt="pattern">
+                </section>
+                
+
+
+
+                <% if (typeof blog !=='undefined' && blog !== null) { %>
+                    
+                        <div class="aboutCourse container">
+                            <% if (status===true) { %>
+                                <div class="nav-btn-custom">
+                                    <button class="modify" id="custum-button">Modifier le cours</button>
+                                    <form action="/blog/<%= blog.slug %>?_method=DELETE" method="post">
+
+                                        <input type="submit" id="custum-button" value="Supprimer le cours">
+                                    </form>
+                                </div>
+                            <% } %>
+                                            <div >
+                                                <div class="description-blog">
+                                                    <div>
+
+                                                   
+                                                    <img class="thumbail-pr-blog" src="<%= blog.thumbail || '' %>" alt="thunbail-blog">
+                                                    <div class="describe-bl">
+                                                        <div class="sharing">
+                                                            <p>Share</p>
+                                                            <div>
+                                                                <a href=""><i class="bi bi-facebook"></i></a>
+                                                                <a href=""><i class="bi bi-twitter-x"></i></a>
+                                                                <a href=""><i class="bi bi-linkedin"></i></a>
+                                                                <a href=""><i class="bi bi-youtube"></i></a>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div>
+                                                            <p class="categ">
+                                                                <%= blog.categorie && typeof  blog.categorie!=="undefined" ? blog.categorie : '' %>
+                                                            </p>
+                                                            <p class="blog-title">
+                                                                <%= blog.title ? blog.title : '' %>
+                                                            </p>
+                                                            <div class="desc-blog"><%- typeof  blog.description !== 'undefined' && blog.description  && blog.description  ? blog.description :"" %>
+                                                            </div>
+                                                            <div class="profile-author">
+                                                                <a href="/<%=blog.user.slug  %>">
+                                                                    <img src="<%= blog.user.profilePicture || '' %>" alt=""> </a>
+                                                                    <a style="text-decoration: none;" href="/<%=blog.user.slug  %>">
+
+                                                                    <p>
+                                                                        <%= blog.user && typeof  blog.user!=="undefined" && blog.user.name ? blog.user.name : 'Inconnu' %>
+                                                                    </p>
+                                                                    </a>
+                                                               
+                                                                
+                                                                <span>|</span>
+                                                                <div>
+                                          
+                                                                   
+                                                                <%= new Date(blog.date).toLocaleDateString("fr-FR", {
+                                                                    month: 'long',
+                                                                    day: 'numeric',
+                                                                    year: 'numeric',
+                                                                })%>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                  
+                                               <div>
+
+                                             
+                                                <% if (typeof Recentblogs !=='undefined' && Recentblogs.length > 0 ) { %>
+                                                    <div class="recentNews">
+                                                        <p class="title-cat-recent">Articles Récent</p>
+                                                            <% Recentblogs.forEach(element=> { %>
+                                                                        <div class="recent-sp-bl">
+
+                                                                        
+                                                                                <a href="/blog/<%= element.slug %>" class="link-recent-blog">
+                                                                                    
+                                                                                        <img src="<%= element.thumbail || '' %>" alt="thunbail-blog">
+                                                                                       
+                                                                                    
+                                                                                    </a>
+                                                                                    <a href="">
+                                                                                        <p >
+                                                                                            <%= element.title ? element.title : '' %>
+                                                                                        </p>
+                                                                                        <div class="time-bl">
+
+                                                                                            <p>
+                                                                                                <i class="bi bi-calendar2-fill"></i>
+                                            
+                                                                                              </p>
+                                                                                              <p>
+                                                                                                <%= new Date(element.date).toLocaleDateString("fr-FR", {
+                                                                                                    month: 'long',
+                                                                                                    day: 'numeric',
+                                                                                                    year: 'numeric',
+                                                                                                })%>
+                                                                                              </p>
+                                                                                        </div>
+                                                                                                  
+                                                                                    </a>
+                                                                                        
+                                                                                </div>   
+                                                                               
+                                                                                        
+                                                                                 
+                                                                                
+                                                                                <% }) %>
+                                                                            </div>
+                                                                            <% } %>
+                                                                            <div class="tabCategorie">
+                                                                                <p class="title-cat-recent">Catégorie</p>
+                                                                                <div class="allcat">
+                                                                                    <% if (typeof tabCategorie !=='undefined' && tabCategorie.length >0) { %>
+                                                                                        <% tabCategorie.forEach(element => { %> 
+                                                                                            <a href=""><i class="bi bi-chevron-right"></i> <%=element%> </a>
+                                                                                           
+                                                                                         
+                                                                                        <% }) %>
+                                                                                    <% } %>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        </div>  
+                                                
+                                                                        </div>
+                                                </div>
+                                                
+                                            </div>
+                                           
+
+                        </div>
+                        <div class="container create-blog-sec update-course"  style="display: none;">
+                            <form action="/blog/<%= blog.slug %>?_method=PUT"  method="post" class="form_submit"  id="form_course"  enctype="multipart/form-data"  >
+                                <div class="nav-btn-custom">
+                                    <input type="submit" id="custum-button" value="Enregister">
+                                    <input type="button" id="custum-button" class="cancel" value="Annuler"/>
+                                </div>
+                                <div class="upload-image">
+                                    <label for="thumbail">inserer une image</label>
+                                    <div class="image-bl-preview">
+                                        <img src="<%= blog.thumbail || 'image_preview' %>" alt="thumbail" >
+                                    </div>
+                                    <button class="btn-image"><i class="bi bi-image"></i></button>
+                                    <input   type="file" id="thumbail" name="thumbail"  hidden accept="image/*">
+                                </div>
+                                <div>
+                                <div>
+                                    <label for="title">Titre du blog</label>
+                                    <input autocomplete="off" type="text" value="<%= typeof blog.title !== 'undefined' && blog.title ? blog.title :"" %>" placeholder="ex: Comment se protéger des attaques " name="title" id="name">
+                                </div>
+                                
+                                <div>
+                                    <label for="categorie">A quel catégorie appartient votre blog-article</label>
+                                    <div class="custom-select-container">
+                
+                                        <select name="categorie" id="categorie">
+                                            <option <%=typeof blog.categorie !=='undefined' && blog.categorie &&
+                                            blog.categorie==='programmation' ? 'selected' :"" %>
+                                                value="programmation">Programmation</option>
+                                            <option <%=typeof blog.categorie !=='undefined' && blog.categorie &&
+                                            blog.categorie==='web développement' ? 'selected' :"" %> value="web
+                                                développement">Web développement</option>
+                                            <option <%=typeof blog.categorie !=='undefined' && blog.categorie &&
+                                            blog.categorie==='graphics design' ? 'selected' :"" %>
+                                                value="graphics design">Graphics design</option>
+                                            <option <%=typeof blog.categorie !=='undefined' && blog.categorie &&
+                                            blog.categorie==='outils offices' ? 'selected' :"" %> value="outils
+                                                offices">Outils offices</option>
+                                                <option <%=typeof blog.categorie !=='undefined' && blog.categorie &&
+                                            blog.categorie ==='Science' ? 'selected' :"" %> value="Science">Science</option>
+                            <option <%=typeof blog.categorie !=='undefined' && blog.categorie &&
+                                            blog.categorie ==='litterature' ? 'selected' :"" %> value="litterature">litterature</option>
+                                        </select>
+                                    <i class="bi bi-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="finasubmit">
+                                <label>texte du blog</label>
+                                <textarea id="editor"  name="description"  ><%- typeof  blog.description !== 'undefined' && blog.description  && blog.description  ? blog.description :"" %></textarea>
+                                <div>
+                                    <button type="submit" class="submit" >publier le blog<i class="bi bi-send-fill"></i> <img class="loader-img" src="/images/spin.png" alt="spinner"></button>
+                                </div>
+                            </div>
+                
+                            </form>
+                        
+                    </div>
+
+                        <% } %>
+                        
+                        <% if (typeof blogs !=='undefined' && blogs.length > 0 ) { %>
+                            <p class="blog-title" style="text-align: center;color: rgb(10, 21, 71);margin-top: 60px;">Vous pourriez aussi aimer ceci</p>
+                            <div class="container other-blog">
+                                    
+                                        <% blogs.forEach(element=> { %>
+                                            <div class="single-blog ">
+                                                <div>
+                                                    <a href="/blog/<%= element.slug %>">
+                                                        <img src="<%= element.thumbail || "" %>" alt="<%=element.title %>" />
+                                                    </a>
+                                                    <div class="date-squares">
+                                                        <p><%= new Date(element.date).toLocaleDateString("fr-FR", {
+                                                            
+                                                           
+                                                            day: 'numeric',
+                                                            
+                                                        })%></p>
+                                                        <p>
+                                                            <%= new Date(element.date).toLocaleDateString("fr-FR", {
+                                                            
+                                                                month: 'long',
+                                                                
+                                                            })%>
+                                                        </p>
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="descri-title">
+                                                    <a href="/blog/<%= element.slug %>">
+                                                        <h2 class="name"><%= element.title %></h2>
+                                                    </a>
+                                                    <div class="description">
+                                                        <%- element.description %>
+                                                    </div>
+                                                    <span style="font-weight: bolder;color: rgb(200, 200, 200);">...</span>
+                                                </div>
+                                                <div class="dateUser">
+                                                    <div>
+                                                      
+                                                            <i class="bi bi-calendar2-fill"></i>
+                                                        <p>
+                                                        <%= new Date(element.date).toLocaleDateString("fr-FR", {
+                                                            month: 'long',
+                                                            day: 'numeric',
+                                                            year: 'numeric',
+                                                        })%>
+                                                        </p>
+                                                    </div>
+                                                    <span class="line"></span>
+                                                    <div>
+                                                        <a href="/<%=element.user.slug%>">
+                 <img style="width: 40px; height: 40px;object-fit: cover; border-radius: 50%;" class="ProfilePicture" 
+                 
+    src="<%= element.user.profilePicture || ""%>" alt="profilePicture">                                                           <p>
+                                                            <%=element.user? element.user.name:"" %>
+                                                            </p>
+                                                        </a>
+                                                        
+                                                    </div>
+                                                </div>
+                        
+                                            </div>
+                                            <% }) %>
+                                            <% } %>
+                            </main>
+
+                                <%- include("partiel/upload-image")%>
+
+                                <script>
+                                    const modify = document.querySelector(".modify")
+                                    const cancel = document.querySelector(".cancel")
+                                    const aboutCourse = document.querySelector(".aboutCourse")
+                                    const update_course = document.querySelector(".update-course")
+                                    modify?.addEventListener("click", () => {
+                                        aboutCourse.style.display = 'none'
+                                        update_course.style.display = 'block'
+                                    })
+                                    cancel?.addEventListener("click", (e) => {
+                                        e.preventDefault()
+                                        aboutCourse.style.display = 'block'
+                                        update_course.style.display = 'none'
+                                    })
+                                </script>
+                                            <%- include('partiel/buttonLoader') %>
+                                            <%- include('partiel/pageLoader') %>
+
+                                            <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js" ></script>
+                                            <%- include('partiel/ckeditorScript') %>
+
+
+        </body>
+
+        </html>
+        						
+
+
+
+

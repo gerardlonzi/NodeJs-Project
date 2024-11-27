@@ -1,5 +1,5 @@
 const express = require('express')
-const { upload, updateProfileUsers, UploadCourse, updateCourse, DeleteCourse,UploadBlog } = require('../controllers/UploadData')
+const { upload, updateProfileUsers, UploadCourse, updateCourse, DeleteCourse,UploadBlog, updateBlog, DeleteBlog } = require('../controllers/UploadData')
 const { verifyToken } = require('../controllers/AuthControllers')
 const profileRouter = express.Router()
 const User = require("../models/User")
@@ -43,7 +43,7 @@ profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
     IsAuthStatus_And_admin =false
    }
     try{
-        const course = await Course.findOne({slug:slug})
+        const course = await Course.findOne({slug:slug}).populate("user")
         const courses = await Course.find({slug:{$ne:slug}})
         
         if(req.user && req.user.id){
@@ -106,5 +106,51 @@ profileRouter.get("/blog/create-blog",verifyToken, async(req, res) => {
 })
 profileRouter.post("/blog/create-blog",verifyToken,upload.single("thumbail"),UploadBlog)
 
+profileRouter.get('/blog/:slug',verifyToken,async(req,res)=>{
+    let IsAuthStatus_And_admin = false
+    const slug = req.params.slug
+    let user
+    let tabCategorie =[]
+    if(!req.user){
+     IsAuthStatus_And_admin =false
+    }
+     try{
+         const blog = await Blog.findOne({slug:slug}).populate("user")
+         const blogs = await Blog.find({slug:{$ne:slug},categorie:blog.categorie}).populate("user")
+         const blogAll = await Blog.find()
+         const Recentblogs = await Blog.find({slug:{$ne:slug}}).sort({ createdAt: -1 }).limit(5).exec();
+        blogAll?.forEach(blogfilter=>{
+            if(!tabCategorie.includes(blogfilter.categorie)){
+                tabCategorie.push(blogfilter.categorie)
+            }
+        })
+         
+         if(req.user && req.user.id){
+             user=await User.findById(req.user.id)
+         }
+         if(!user){
+             message = req.session.message 
+             req.session.message= null
+         }
+         else if(user && user._id.toString() === blog.user._id.toString()){
+             IsAuthStatus_And_admin =true
+ 
+         }
+        console.log("tabcat"+tabCategorie )
+         return res.render("../views/viewBlog",{blog:blog||{},data:user||{},blogs:blogs||[],status:IsAuthStatus_And_admin,Recentblogs:Recentblogs||{},tabCategorie:tabCategorie||[]})
+     }
+     catch(err){
+         
+         req.session.message = "ce cours n'existe pas"
+         return res.redirect(`/blog`)
+     }
+    
+    
+    
+ })
+ profileRouter.put('/blog/:slug',verifyToken,upload.single('thumbail'),updateBlog)
+profileRouter.delete('/blog/:slug',verifyToken,DeleteBlog)
+
+ 
 
 module.exports = profileRouter

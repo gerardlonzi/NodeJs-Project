@@ -327,9 +327,7 @@ console.log(req.body);
       }
     
     }
-    console.log("0------------------")
   const imageConverter = await sharp(req.file.buffer).webp().toBuffer()
-  console.log("0_____________________")
 
     const result = cloudinary.uploader.upload_stream({
       folder: "maneSchool",
@@ -354,14 +352,10 @@ console.log(req.body);
         user: user._id,
         date: new Date()
     })
-    console.log("0--%%%%%%%%%%%%%%%%%%%%%%")
-    
-    
         blog.save();
         req.session.message = {
           success: "Cours publié avec succès et en cours de traitement"
         }
-        console.log("0*************")
   
         return res.redirect("/blog");
       
@@ -375,3 +369,114 @@ console.log(req.body);
     return res.redirect("/blog/create-blog");
   }
 }
+
+exports.updateBlog = async(req,res)=>{
+  const {title,
+    description,
+    categorie} = req.body
+    const slug = req.params.slug
+  
+    if(!title || !description|| !categorie){
+      console.log("------------------------")
+      req.session.message = 'Veuillez renseigner tous les champs'
+      return res.redirect( `/blog/${slug}`)
+    }
+  
+    try{
+      const user = await User.findById(req.user.id)
+      if(!user ||  user.role!=='admin'){
+        req.session.message="veuillez vous connectez"
+        return res.redirect("/login")
+      }
+      else{
+        const blog = await Blog.findOne({slug:slug})
+        if(!blog){
+          console.log("************************")
+
+          req.session.message="ce cours n'existe pas"
+          return res.redirect(`/blog/${slug}`)
+        }
+  
+        title !== blog.title && (blog.title = title)
+          description !== blog.description && (blog.description = description)
+          categorie !== blog.categorie && (blog.categorie = categorie)
+          
+  
+        if(!req.file){
+          await blog.save()
+          console.log("+++++++++++++++++++++++")
+
+          return res.redirect(`/blog/${slug}`)
+         
+        }
+        if(req.file){
+             const image_cloudId = blog.thumbail.split('/').pop().split('.')[0]
+             await cloudinary.uploader.destroy(`maneSchool/${image_cloudId}`)
+             const imageConverter = await sharp(req.file.buffer).webp().toBuffer()
+             const result = await cloudinary.uploader.upload_stream({
+              folder: "maneSchool",
+              allowed_formats: ['jpg', 'jpeg', 'png', 'avif', 'webp'],
+              transformation: [
+                { width: 800, height: 600, crop: "limit" },  // Limiter la taille à 500x500 pixels
+                { quality: "auto:good" }  // Compression automatique pour maintenir une bonne qualité
+              ]
+        
+            }, (error, result) => {
+              if (error) {
+                req.session.message = "Une erreur est survenue lors du téléversement";
+                console.log("&&&&&&&&&&&&&&&&&&&&&&&&")
+
+                return res.redirect(`blog/${slug}`);
+              }
+        
+              blog.thumbail = result.secure_url
+               
+              blog.save()
+                req.session.message = "cours mis à jour avec succès";
+                console.log("%%%%%%%%%%%%%%")
+                return res.redirect(`/blog/${slug}`);
+
+            });
+            result.end(imageConverter)
+      }
+  
+    }
+  }
+  
+  catch(err){
+    req.session.message ="une erreur survenue veuillez ressayer"
+    console.log("^^^^^^^^^^^^^^^^^^^^^^^^")
+
+    return res.redirect(`/blog/${slug}`)
+  
+  }
+  }
+  
+  
+  
+  exports.DeleteBlog = async(req,res)=>{
+    const slug = req.params.slug
+  
+    if(!req.user){
+      req.session.message = 'veuillez vous connectez'
+      return res.redirect('/login')
+    }
+  
+    try{
+      const user = await User.findById(req.user.id)
+      if(!user ||  user.role!=='admin'){
+        req.session.message = 'veuillez vous connectez'
+        return res.redirect(`/blog/${slug}`)
+      }
+       const blog = await Blog.findOneAndDelete({slug})
+       const id_cloudImage = blog.thumbail.split("/").pop().split(".")[0]
+        await cloudinary.uploader.destroy(`maneSchool/${id_cloudImage}`)
+        return res.redirect(`/blog`)
+    }
+    catch(err){
+      req.session.message = 'une erreur ces produit veuillez ressayer'
+      return res.redirect(`/blog/${slug}`)
+  }
+  
+  }
+  
