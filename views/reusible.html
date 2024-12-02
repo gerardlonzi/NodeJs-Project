@@ -153,3 +153,28 @@ function googleTranslateElementInit() {
 new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
 </script>
+
+<div class="splide" id="my-carousel">
+    <div class="splide__track">
+        <ul class="splide__list">
+            <% if (users !=='undefined' && users!==null && users.length>0) { %>
+                <% users.forEach(element => { %>
+                    <li class="splide__slide">
+                       <div class="splite-image">
+                           <img src="<%= element.profilePicture || "" %>" alt="<%= element.name %>">
+                           <div>
+                            <div>
+                                <a href=""><i class="bi bi-facebook"></i></a>
+                                <a href=""><i class="bi bi-twitter-x"></i></a>
+                                <a href=""><i class="bi bi-linkedin"></i></a>
+                                <a href=""><i class="bi bi-youtube"></i></a>
+                            </div>
+                           </div>
+                       </div>
+                       <div class="cell-right">
+                           <div class="testimonial-name"><%= element.name %>
+                           </div>
+                           <div class="testimonial-job"><%= element.poste %>
+                           </div>
+                       </div>
+                   </li>

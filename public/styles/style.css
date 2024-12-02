@@ -141,10 +141,31 @@ animation: Trote 3s  linear infinite;
 	font-size: 16px;
 	font-weight: 100;
 }
-
+.box-carouss{
+    box-shadow: 0px 0px 10px rgb(226, 226, 226);
+}
 .features-list {
 	padding: 0;
 	list-style-type: none;
+}
+.stats{
+    background:linear-gradient(#0e203fb6,#0e203fb6),url(/images/ovarlay-slide.jpg);
+    background-attachment: fixed;
+    position: relative;
+    height: 35vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    color: white;
+    width: 100%;
+}
+.stats img{
+    margin-bottom: 5px;
+}
+.stats div>p:nth-child(2){
+font-size: 30px;
+font-weight: bolder;
 }
 
 .features-list li {
@@ -1060,6 +1081,7 @@ display: block;
     position: relative;
     box-shadow: 0px 0px 20px gainsboro;
     overflow: hidden;
+    background-color: white;
 }
 .course a,.single-blog a{
     text-decoration: none;
@@ -1151,6 +1173,12 @@ font-size: 15px;
     grid-template-columns: repeat(3,1fr);
     gap:20px
 
+
+}
+.variete-course{
+    background-color: rgb(248, 248, 248);
+    padding-block: 10px;
+    margin-top: 40px;
 }
 .allcourse .ProfilePicture{
     width: 40px ;
@@ -1312,6 +1340,9 @@ gap: 25px;
     line-height: 60px;
     text-align: center;
     padding-top: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
@@ -1543,7 +1574,9 @@ margin-bottom: 10px;
 }
 .dateUser div,.dateUser div a{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     margin: auto;
     color: var(--bg-hover);
@@ -1720,6 +1753,13 @@ color: rgb(116, 116, 116);
     }
     .menu ul{
         gap: 30px;
+    }
+    .barner h1{
+        font-size: 38px;
+    }
+    .barner .container img{
+        width: 400px;
+        height: 400px;
     }
     
 }
@@ -1984,7 +2024,13 @@ height: 15rem;
 
 
 @media screen and (max-width:430px){
-    
+    .stats{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 10px;
+        padding-block: 20px;
+        height: 50vh;
+    }
     .container{
         padding-inline: 14px;
     }

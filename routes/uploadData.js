@@ -35,6 +35,7 @@ profileRouter.get("/upload-course",verifyToken, async(req,res)=>{
     }
 })
 profileRouter.post('/upload-course/publish',verifyToken,upload.single("thumbail"),UploadCourse)
+
 profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
    let IsAuthStatus_And_admin = false
    const slug = req.params.slug

@@ -21,10 +21,10 @@
                         <div class="aboutCourse container">
                             <% if (status===true) { %>
                                 <div class="nav-btn-custom">
-                                    <button class="modify" id="custum-button">Modifier le cours</button>
+                                    <button class="modify" id="custum-button">Modifier l'article</button>
                                     <form action="/blog/<%= blog.slug %>?_method=DELETE" method="post">
 
-                                        <input type="submit" id="custum-button" value="Supprimer le cours">
+                                        <input type="submit" id="custum-button" value="Supprimer l'article">
                                     </form>
                                 </div>
                             <% } %>
@@ -95,9 +95,9 @@
                                                                                     
                                                                                         <img src="<%= element.thumbail || '' %>" alt="thunbail-blog">
                                                                                        
-                                                                                    
+                                                                                </a>    
                                                                                     </a>
-                                                                                    <a href="">
+                                                                                    <a href="/blog/<%= element.slug %>">
                                                                                         <p >
                                                                                             <%= element.title ? element.title : '' %>
                                                                                         </p>
@@ -155,7 +155,7 @@
                                     <input type="button" id="custum-button" class="cancel" value="Annuler"/>
                                 </div>
                                 <div class="upload-image">
-                                    <label for="thumbail">inserer une image</label>
+                                    <label for="thumbail">insérer une image</label>
                                     <div class="image-bl-preview">
                                         <img src="<%= blog.thumbail || 'image_preview' %>" alt="thumbail" >
                                     </div>
@@ -198,7 +198,7 @@
                                 <label>texte du blog</label>
                                 <textarea id="editor"  name="description"  ><%- typeof  blog.description !== 'undefined' && blog.description  && blog.description  ? blog.description :"" %></textarea>
                                 <div>
-                                    <button type="submit" class="submit" >publier le blog<i class="bi bi-send-fill"></i> <img class="loader-img" src="/images/spin.png" alt="spinner"></button>
+                                    <button type="submit" class="submit" >Méttre a jour l'article<i class="bi bi-send-fill"></i> <img class="loader-img" src="/images/spin.png" alt="spinner"></button>
                                 </div>
                             </div>
                 

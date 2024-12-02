@@ -16,7 +16,6 @@ let isclick = false
 const menu_hamburger = document.querySelector(".menu-hambuger")    
 const menu_ul = document.querySelector(".menu ul")  
 const menu = document.querySelector(".menu")  
-
 menu_hamburger?.addEventListener("click",()=>{
         isclick=!isclick
         if(isclick==true){

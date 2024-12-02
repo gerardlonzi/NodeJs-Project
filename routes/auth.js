@@ -1,6 +1,7 @@
 const express = require("express")
 const User = require("../models/User")
 const Course = require("../models/Course")
+const Blog = require("../models/Blog")
 const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword, deleteUser, IsAdmin} = require("../controllers/AuthControllers")
 const router = express.Router()
 
@@ -27,7 +28,8 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
         let data ;
         let courses
         let users
-        users = await User.find({role:'admin'})
+        let tabCategorie=[]
+        users = await User.find({role:'admin'}).limit(6).exec()
         if(req.user){
             try{
                 const user = await User.findById(req.user.id)
@@ -43,8 +45,47 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
                 data = null
             }
         }
-        courses= await Course.find().populate("user")
-        res.render("../views/home",{data:data,courses:courses || [],users:users||[]})
+        courses= await Course.find({approved:"yes"}).sort({ createdAt: -1 }).populate("user").limit(6).exec()
+       const  coursTab= await Course.find()
+
+
+        const Recentblogs = await Blog.find().sort({ createdAt: -1 }).populate("user").limit(3).exec();
+
+        coursTab?.forEach(coursefilter=>{
+
+           if(!tabCategorie.includes(coursefilter.categorie)){
+
+               tabCategorie.push(coursefilter.categorie)
+
+           }
+
+       })
+        res.render("../views/home",{data:data,courses:courses || [],users:users||[],Recentblogs:Recentblogs || [],tabCategorie:tabCategorie || []})
+})
+router.get("/cours/AllCourse?categorie",async(req,res)=>{
+        const categorie = req.query.categorie
+        
+        if(categorie){
+            try{
+                let filterCourse = await Course.find({categorie:categorie})
+                console.log(filterCourse);
+                
+                if(filterCourse && filterCourse.length> 0){
+                    return res.json(filterCourse || [])
+                    
+                }
+            }
+            catch(err){
+                res.redirect("/")
+                return
+            }
+        }
+        else{
+            res.redirect("/")
+            return  
+        }
+        
+
 })
 router.get("/error", (req, res) => {
     const error_token = req.query.error || "une erreur s'est produite"
@@ -223,6 +264,38 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
         res.redirect('/')
     }
 })
+router.get("/cours", async (req, res) => {
+    try{
+        let tabCategorie =[]
+        let courses = await Course.find({approved:"yes"}).populate('user') || [];
+        courses?.forEach(blogfilter=>{
+    
+            if(!tabCategorie.includes(blogfilter.categorie)){
+    
+                tabCategorie.push(blogfilter.categorie)
+    
+            }
+    
+        })
+        return res.render("../views/cours",{courses,tabCategorie:tabCategorie||[]});
+    }
+    catch(err){
+        return res.redirect("/")
+    }
+    
+
+});
+
+router.get("/professeur", async (req, res) => {
+        try{
+            let users
+            users = await User.find({role:'admin'})
+            return res.render("../views/professeur",{users:users||[]})
+        }
+        catch(err){
+            return res.redirect("/")
+        }
+});
 
 router.get("/:name",verifyToken,async(req,res)=>{
     const slug = req.params.name
@@ -250,4 +323,6 @@ router.get("/:name",verifyToken,async(req,res)=>{
         
     }
 })
+
+
 module.exports = router
