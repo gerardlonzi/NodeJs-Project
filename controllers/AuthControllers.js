@@ -191,7 +191,7 @@ exports.SendEmail = async (req, res) => {
     user.emailVerifiedToken = token
     user.emailVerifiedTokenExpire = Date.now() + 20000000
     await user.save()
-    const url = `http://${req.headers.host}/verified-email?token=${token}`
+    const url = `https://nodejs-project-f3e0.onrender.com/verified-email?token=${token}`
     const options = {
       email: user.email,
       subject: "Maneliza E-learning : Vérification de votre adresse email",
@@ -294,7 +294,7 @@ exports.forgetpassword = async (req, res) => {
       user.resetPasswordtoken = token
       user.resetPasswordtokenExpire = Date.now() + 20000000
       user.save()
-      const url = `http://${req.headers.host}/reset-password?token=${token}`
+      const url = `https://nodejs-project-f3e0.onrender.com/reset-password?token=${token}`
       const options = {
         email: email,
         subject: "Reinitialisation du mot de passe",
