@@ -1,0 +1,153 @@
+<%- include('partiel/head', { title: "contact" }) %>
+<meta name="description" content="   ">
+</head>
+
+<body>
+    <%- include('partiel/header') %>
+    <main id="content-page">
+        <section class="barner-short">
+            <div class="container">
+                    <h1>Nous contactez</h1>
+            </div>
+            <img src="images/slider-bottom-pattern.png" alt="pattern">
+        </section>
+        <section>
+            <div class="container">
+                <div class="intro-title">
+                    <h2>Laissez un message</h2>
+                    <p>Si vous avez des questions concernant nos cours, notre corps professoral ou nos projets, <br> laissez-nous un message ici, nous vous répondrons dans les plus brefs délais.</p>
+                </div>
+                <% if (typeof message !=='undefined' && message !==null && message.success ) { %>
+                    <div class="new-sucess disapied">
+                        <p >
+                        <i class="bi bi-check-circle"></i>
+                        <%= message.success %>
+                        </p>
+                        <i class="bi bi-x"></i>
+                    </div>
+                        <% } %>
+                        <% if (typeof message !=='undefined' && message.error ) { %>
+                            <div class="new-error disapied">
+                                <p>
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                <%= message.error %>
+                                </p>
+                                <i class="bi bi-x"></i>
+                            </div>
+                                <% } %>
+            <div class="form-contact">
+                <form action="/send-email" class="form_submit_contact form_submit" method="post">
+                    <% if ( typeof error !=='undefined' && error !== null) { %>
+                        <div class="new-error disapied">
+                            <p>
+                                <i class="bi bi-exclamation-triangle"></i>
+                            <%= error %>
+                            </p>
+                            <i class="bi bi-x"></i>
+                        </div>
+                    <% } %>
+                 <div class="field_contact_form">
+                    <div>
+                        <label for="firstName">Nom</label>
+                        <div>
+                            <input autocomplete="off"  type="text" id="firstName" name="firstName" value="<%=typeof message !=='undefined' &&typeof message.firstName !==" undefined" ?
+                                message.firstName : "" %>">
+
+                            <% if (typeof message !=='undefined' && typeof message.error_msg_field_firstName !=='undefined') { %>
+                                <span class="err-message">
+                                    <%= message.error_msg_field_firstName %>
+                                </span>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="prenom">Prénom</label>
+                        <div>
+                            <input autocomplete="off"  type="text" id="prenom" name="lastName"
+                                value="<%=typeof message !=='undefined' &&typeof message.lastName !==" undefined" ?
+                                message.lastName : "" %>">
+
+                            <% if (typeof message !=='undefined' && typeof message.error_msg_field_lastName !=='undefined') { %>
+                                <span class="err-message">
+                                    <%= message.error_msg_field_lastName %>
+                                </span>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email">Email</label>
+                        <div>
+                            <input autocomplete="off"  type="email" id="email" name="email"
+                                value="<%=typeof message !=='undefined' &&typeof message.email !==" undefined" ?
+                                message.email : "" %>">
+
+                            <% if (typeof message !=='undefined' && typeof message.error_msg_field_email !=='undefined') { %>
+                                <span class="err-message">
+                                    <%= message.error_msg_field_email %>
+                                </span>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="phone">Phone</label>
+                        <div>
+                            <input autocomplete="off"  type="number" id="phone" name="phone"
+                                value="<%=typeof message !=='undefined' &&typeof message.phone !==" undefined" ?
+                                message.phone : "" %>">
+
+                            <% if (typeof message !=='undefined' && typeof message.error_msg_field_phone !=='undefined') { %>
+                                <span class="err-message">
+                                    <%= message.error_msg_field_phone %>
+                                </span>
+                            <% } %>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="textarea_form_contact">
+                    <label for="Message">Message</label>
+                    <div>
+                        <textarea rows="12" autocomplete="off" name="message" id="Message" value="<%=typeof message !=='undefined' && typeof message.password !== 'undefined'? message.password : '' %>"></textarea>
+                    </div>
+                    
+                    <% if (typeof message !=='undefined' && typeof message.error_msg_field_Message !=='undefined') { %>
+                        <span class="err-message">
+                            <%= message.error_msg_field_Message %>
+                        </span>
+                    <% } %>
+                </div>
+                <div>
+                    <button type="submit" style="display: flex;align-items: center;gap: 10px;width: 100%;justify-content: center;" class="submit" >Envoyer<img class="loader-img" src="/images/spin.png" alt="spinner"></button>
+                </div>
+                    
+                </form>
+                <div class="follow_location">
+<div>
+    <i class="bi bi-geo-alt-fill"></i>
+    <p>Yaounde,Kumba Cameroun</p>
+</div>
+<div>
+    <i class="bi bi-telephone-fill"></i>
+    <p>+237 673 25 90 41</p>
+</div>
+<div>
+    <i class="bi bi-envelope-fill"></i>
+    <p>lonzigerard@gmail.com</p>
+</div>
+<div>
+    <i class="bi bi-ev-station-fill"></i>
+    <p>673 25 90 41</p>
+</div>
+                </div>
+            </div>
+        </div>
+        </section>
+    </main>
+
+    <%- include('partiel/buttonLoader') %>
+    <%- include('partiel/pageLoader') %>
+    <%- include('partiel/news') %>
+
+
+</body>
+</html>

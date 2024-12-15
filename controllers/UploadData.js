@@ -26,7 +26,7 @@ console.log("req.file"+req.file);
 
     
     if (!user) {
-      req.session.message = "veuillez vous reconnecté"
+      req.session.message ={error:"veuillez vous reconnecté"}
       return res.redirect("/login")
     }
     name && (user.name=name);
@@ -37,7 +37,7 @@ console.log("req.file"+req.file);
       
       user.save()
         console.log("Téléversement réussi");
-        req.session.message = "Profile mis à jour avec succès";
+        req.session.message ={success:"Profile mis à jour avec succès"}
         return res.redirect("/profile");
       
     }
@@ -58,14 +58,14 @@ console.log("req.file"+req.file);
 
     }, (error, result) => {
       if (error) {
-        req.session.message = "Une erreur est survenue lors du téléversement";
+        req.session.message = {error:"Une erreur est survenue lors du téléversement"}
         return res.redirect("/profile");
       }
 
       user.profilePicture = result.secure_url
        
       user.save()
-        req.session.message = "Profile mis à jour avec succès";
+        req.session.message ={success:"Profile mis à jour avec succès"}
         return res.redirect("/profile");
      
     });
@@ -74,7 +74,7 @@ console.log("req.file"+req.file);
     result.end(imageConverter);
   }
   catch (err) {
-    req.session.message = "une erreur ces produit veuiller ressayé"
+    req.session.message ={error:"une erreur ces produit veuiller ressayé"}
     return res.redirect("/profile")
   }
 
@@ -191,20 +191,23 @@ const {name,
   const slug = req.params.slug
 
   if(!name || !description|| !categorie|| !prix || !typologie|| !difficultyLevel||!language|| !courseTime){
+    
     req.session.message = 'aucun champs ne doit être vide'
     return res.redirect( `/cours/${slug}`)
   }
 
   try{
+
     const user = await User.findById(req.user.id)
-    if(!user || user.role!=='professeur'){
-      req.session.message="veuillez vous connectez"
+    if(!user && (user.role!=='professeur' || user.role!=='admin')){
+      req.session.message={error:"veuillez vous connectez"}
       return res.redirect("/login")
     }
     else{
+
       const course = await Course.findOne({slug:slug})
       if(!course){
-        req.session.message="ce cours n'existe pas"
+        req.session.message={error:"ce cours n'existe pas"}
         return res.redirect('/profile')
       }
 
@@ -223,6 +226,7 @@ const {name,
        
       }
       if(req.file){
+
            const image_cloudId = course.thumbail.split('/').pop().split('.')[0]
            await cloudinary.uploader.destroy(`maneSchool/${image_cloudId}`)
            const imageConverter = await sharp(req.file.buffer).webp().toBuffer()
@@ -236,14 +240,15 @@ const {name,
       
           }, (error, result) => {
             if (error) {
-              req.session.message = "Une erreur est survenue lors du téléversement";
+
+              req.session.message ={error:"Une erreur est survenue lors du téléversement"}
               return res.redirect(`/cours/${slug}`);
             }
       
             course.thumbail = result.secure_url
-             
+
             course.save()
-              req.session.message = "cours mis à jour avec succès";
+              req.session.message ={success:"cours mis à jour avec succès"}
               return res.redirect(`/cours/${slug}`);
            
           });
@@ -254,7 +259,7 @@ const {name,
 }
 
 catch(err){
-  req.session.message ="une erreur survenue veuillez ressayer"
+  req.session.message ={error:"une erreur survenue veuillez ressayer"}
   return res.redirect(`/cours/${slug}`)
 
 }
@@ -266,23 +271,27 @@ exports.DeleteCourse = async(req,res)=>{
   const slug = req.params.slug
 
   if(!req.user){
-    req.session.message = 'veuillez vous connectez'
+    req.session.message ={error:'veuillez vous connectez'}
     return res.redirect('/login')
   }
 
   try{
     const user = await User.findById(req.user.id)
     if(!user){
-      req.session.message = 'veuillez vous connectez'
+      req.session.message ={error:'veuillez vous connectez'}
       return res.redirect(`/cours/${slug}`)
     }
      const course = await Course.findOneAndDelete({slug})
      const id_cloudImage = course.thumbail.split("/").pop().split(".")[0]
       await cloudinary.uploader.destroy(`maneSchool/${id_cloudImage}`)
+      req.session.message = {
+        success: "Cours supprimer avec success"
+      }
+
       return res.redirect(`/profile`)
   }
   catch(err){
-    req.session.message = 'une erreur ces produit veuillez ressayer'
+    req.session.message ={error: 'une erreur ces produit veuillez ressayer'}
     return res.redirect(`/cours/${slug}`)
 }
 
@@ -377,7 +386,6 @@ exports.updateBlog = async(req,res)=>{
     const slug = req.params.slug
   
     if(!title || !description|| !categorie){
-      console.log("------------------------")
       req.session.message = 'Veuillez renseigner tous les champs'
       return res.redirect( `/blog/${slug}`)
     }
@@ -385,15 +393,13 @@ exports.updateBlog = async(req,res)=>{
     try{
       const user = await User.findById(req.user.id)
       if(!user ||  user.role!=='admin'){
-        req.session.message="veuillez vous connectez"
+        req.session.message={error:"veuillez vous connectez"}
         return res.redirect("/login")
       }
       else{
         const blog = await Blog.findOne({slug:slug})
         if(!blog){
-          console.log("************************")
-
-          req.session.message="ce cours n'existe pas"
+          req.session.message={error:"ce blog n'existe pas"}
           return res.redirect(`/blog/${slug}`)
         }
   
@@ -404,7 +410,6 @@ exports.updateBlog = async(req,res)=>{
   
         if(!req.file){
           await blog.save()
-          console.log("+++++++++++++++++++++++")
 
           return res.redirect(`/blog/${slug}`)
          
@@ -423,8 +428,7 @@ exports.updateBlog = async(req,res)=>{
         
             }, (error, result) => {
               if (error) {
-                req.session.message = "Une erreur est survenue lors du téléversement";
-                console.log("&&&&&&&&&&&&&&&&&&&&&&&&")
+                req.session.message ={error: "Une erreur est survenue lors du téléversement"}
 
                 return res.redirect(`blog/${slug}`);
               }
@@ -432,8 +436,7 @@ exports.updateBlog = async(req,res)=>{
               blog.thumbail = result.secure_url
                
               blog.save()
-                req.session.message = "cours mis à jour avec succès";
-                console.log("%%%%%%%%%%%%%%")
+                req.session.message ={success: "blog mis à jour avec succès"}
                 return res.redirect(`/blog/${slug}`);
 
             });
@@ -444,8 +447,7 @@ exports.updateBlog = async(req,res)=>{
   }
   
   catch(err){
-    req.session.message ="une erreur survenue veuillez ressayer"
-    console.log("^^^^^^^^^^^^^^^^^^^^^^^^")
+    req.session.message ={error: 'une erreur survenue veuillez ressayer'}
 
     return res.redirect(`/blog/${slug}`)
   
@@ -458,14 +460,14 @@ exports.updateBlog = async(req,res)=>{
     const slug = req.params.slug
   
     if(!req.user){
-      req.session.message = 'veuillez vous connectez'
+      req.session.message ={error: 'veuillez vous connectez'}
       return res.redirect('/login')
     }
   
     try{
       const user = await User.findById(req.user.id)
       if(!user ||  user.role!=='admin'){
-        req.session.message = 'veuillez vous connectez'
+        req.session.message ={error: 'veuillez vous connectez'}
         return res.redirect(`/blog/${slug}`)
       }
        const blog = await Blog.findOneAndDelete({slug})
@@ -474,7 +476,7 @@ exports.updateBlog = async(req,res)=>{
         return res.redirect(`/blog`)
     }
     catch(err){
-      req.session.message = 'une erreur ces produit veuillez ressayer'
+      req.session.message ={error: 'une erreur ces produit veuillez ressaye'}
       return res.redirect(`/blog/${slug}`)
   }
   

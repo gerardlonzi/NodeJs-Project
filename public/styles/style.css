@@ -367,7 +367,7 @@ header>div:nth-child(2)>div:first-child div a div span:not(.sm){
 
 }
 .container{
-    padding-inline: 140px;
+    padding-inline: 120px;
 }
 .menu{
 padding-inline: 160px;
@@ -648,6 +648,10 @@ color: var(--terce-color);
     margin-bottom: 30px;
     align-items: center;
     color: black;
+    position: fixed;
+    top: 20px;
+    right: 10px;
+    z-index: 200;
 }
 .new-sucess{
     background-color: rgb(176, 255, 186);
@@ -1746,6 +1750,80 @@ color: rgb(116, 116, 116);
     background-color: var(--green-hover);
     transition: .4s ease;
 }
+/*contact*/
+.form-contact{
+    display: flex;
+    gap: 30px;
+}
+.form_submit_contact{
+    box-shadow: 0px 0px 5px rgb(223, 222, 214);
+    padding: 20px;
+    width: 60%;
+}
+.form_submit_contact input,.form_submit_contact textarea{
+    width: 100%;
+    border: 1px solid rgb(223, 222, 214);
+    border-radius: 5px;
+    outline: none;
+    padding-inline: 10px;
+    font-size: 17px;
+}
+.form_submit_contact input{
+    padding-block: 17px;
+}
+.form_submit_contact textarea{
+    padding-block: 10px;
+}
+.form_submit_contact .submit{
+    padding:10px 50px;
+    background-color: var(--link-hover);
+    color: white;
+    font-size: 19px;
+    outline: none;
+    margin-top: 30px;
+    border: none;
+
+}
+.form_submit_contact .submit:hover{
+    background-color: var(--green-hover);
+    transition: .5s ease ;
+}
+.follow_location{
+    width: 35%;
+}
+.follow_location>div{
+    display: flex;
+    align-items: center;
+    gap:20px;
+    color: #0a1e41;
+    font-size: 19px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0px 0px 5px rgb(223, 222, 214);
+}
+.follow_location>div i{
+    color: #1ca965;
+    font-size: 30px ;
+    padding: 10px 15px;
+    border-radius: 50%;
+    background-color:#d8e6ff
+}
+.field_contact_form{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 30px;
+}
+.form_submit_contact label{
+    display: block;
+    color: #0a1e41;
+    font-weight: bolder;
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+.textarea_form_contact{
+    margin-top: 30px;
+}
 /*responsive */
 
 @media screen and (max-width:1189px){
@@ -1930,6 +2008,12 @@ flex-direction: column;
 width: 100%;
     }
     
+    .form-contact{
+        flex-direction: column;
+    }
+    .form_submit_contact,.follow_location{
+        width: 100%;
+    }
 }
 
 @media screen and (max-width:640px){
@@ -2025,7 +2109,10 @@ height: 15rem;
     .barner-short .container h1{
         line-height: 45px;
     }
-
+    .field_contact_form{
+        grid-template-columns: repeat(1,1fr);
+    }
+        
     
 }
 

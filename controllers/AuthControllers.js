@@ -7,6 +7,7 @@ const nodemailer = require("nodemailer")
 const cloudinary = require("../config/cloudinary")
 const Course = require("../models/Course")
 const { default: mongoose } = require("mongoose")
+const { log } = require("console")
 
 dotenv.config()
 
@@ -458,4 +459,131 @@ exports.IsAdmin = (req,res,next)=>{
     return res.redirect('/profile')
   }
   next()
+}
+
+
+exports.SendEmailContact = async (req, res) => {
+  const {firstName,lastName,email,phone,message} = req.body
+console.log("hello");
+if (!req.user || req.user.id === undefined) {
+  return res.redirect("/login");
+}
+  if (!firstName) {
+    req.session.message = {
+      error_msg_field_firstName: "le nom est requis",
+      lastName: lastName || "",
+      email:email || "",
+      phone: phone || "",
+      message: message || ""
+    }
+    return res.redirect('/contact')
+  }
+  if (!lastName) {
+    req.session.message = {
+      error_msg_field_lastName: "le prenom est requis",
+      firstName: firstName || "",
+      email:email || "",
+      phone: phone || "",
+      message: message || ""
+
+    }
+    return res.redirect('/contact')
+  }
+  
+  if (!email) {
+    req.session.message = {
+      error_msg_field_email:"l'email est requis" ,
+      email: email || "",
+      firstName: firstName || "",
+      lastName:lastName,
+      phone: phone || "",
+      message: message || ""
+
+    }
+    return res.redirect('/contact')
+
+
+  }
+  if (!phone) {
+    req.session.message = {
+      error_msg_field_phone:"le phone est requis" ,
+      email: email || "",
+      firstName: firstName || "",
+      lastName:lastName,
+      message: message || ""
+
+    }
+    return res.redirect('/contact')
+
+
+  }
+  if (!message) {
+    req.session.message = {
+      error_msg_field_message:"le message est requis" ,
+      email: email || "",
+      firstName: firstName || "",
+      lastName:lastName,
+      phone: phone || "",
+    }
+    return res.redirect('/register')
+  }
+  const date = new Date().getFullYear()
+  
+  try {
+    const user = await User.findById(req.user.id)
+    if (!user) {
+      return res.redirect("/login")
+    }
+
+    const options = {
+      email: user.email,
+      subject: `Maneliza E-learning : Message de ${firstName+" "+lastName} `,
+      message: `
+      <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); font-family: Arial, sans-serif;">
+      
+      <!-- Informations personnelles -->
+      <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 30px 0;">
+        <p style="color: #333; font-size: 16px; line-height: 1.6; font-weight: bold; text-align: center;">Voici le message envoyé:</p>
+        <ul style="list-style-type: none; padding: 0; text-align: center;">
+          <li style="padding: 10px; font-size: 16px; color: #555;"><strong>Nom :</strong> ${lastName}</li>
+          <li style="padding: 10px; font-size: 16px; color: #555;"><strong>Prénom :</strong> ${firstName}</li>
+          <li style="padding: 10px; font-size: 16px; color: #555;"><strong>Email :</strong> ${email}</li>
+          <li style="padding: 10px; font-size: 16px; color: #555;"><strong>Téléphone :</strong> ${phone}</li>
+        </ul>
+      </div>
+  
+      <!-- Message de l'utilisateur -->
+      <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+        <p style="color: #333; font-size: 16px; line-height: 1.6; font-weight: bold; text-align: center;">Votre message :</p>
+        <blockquote style="font-size: 16px; color: #555; background-color: #f0f0f0; border-left: 5px solid #208052; padding: 15px; margin: 20px 0;">
+          ${message}
+        </blockquote>
+      </div>
+      <!-- Pied de page -->
+      <div style="border-top: 1px solid #eaeaea; padding-top: 20px; text-align: center;">
+        <p style="color: #999; font-size: 12px;">
+          © ${date} Maneliza E-learning. Tous droits réservés. | <a href="https://votre-site.com" style="color: #208052; text-decoration: none;">votre-site.com</a>
+        </p>
+      </div>
+    </div>
+    `
+    }
+    this.sendMailContain(options).then(result => {
+      console.log(result);
+      req.session.message={
+        success:"email envoyé avec succes"
+      }
+      return res.redirect('/contact')
+
+    }).catch(err => {
+      return res.redirect("/contact")
+    })
+  }
+  catch (err) {
+    req.session.message={
+      error:"une erreur est survenue"
+    }
+    return res.redirect("/contact")
+  }
+
 }

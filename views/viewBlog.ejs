@@ -13,7 +13,24 @@
                     <img src="/images/slider-bottom-pattern.png" alt="pattern">
                 </section>
                 
-
+                <% if (typeof message !=='undefined' && message !==null && message.success ) { %>
+                    <div class="new-sucess disapied">
+                        <p >
+                        <i class="bi bi-check-circle"></i>
+                        <%= message.success %>
+                        </p>
+                        <i class="bi bi-x"></i>
+                    </div>
+                        <% } %>
+                        <% if (typeof message !=='undefined' && message.error ) { %>
+                            <div class="new-error disapied">
+                                <p>
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                <%= message.error %>
+                                </p>
+                                <i class="bi bi-x"></i>
+                            </div>
+                                <% } %>
 
 
                 <% if (typeof blog !=='undefined' && blog !== null) { %>

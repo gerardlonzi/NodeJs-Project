@@ -40,6 +40,8 @@ profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
    let IsAuthStatus_And_admin = false
    const slug = req.params.slug
    let user
+   const message = req.session.message
+   req.session.message=""
    if(!req.user){
     IsAuthStatus_And_admin =false
    }
@@ -50,19 +52,16 @@ profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
         if(req.user && req.user.id){
             user=await User.findById(req.user.id)
         }
-        if(!user){
-            message = req.session.message 
-            req.session.message= null
-        }
-        else if(user && user._id.toString() === course.user._id.toString()){
+        
+        if(user && user._id.toString() === course.user._id.toString()){
             IsAuthStatus_And_admin =true
 
         }
-        return res.render("../views/update-delete-course",{course:course|| {},data:user ||{},courses:courses||[],status:IsAuthStatus_And_admin})
+        return res.render("../views/update-delete-course",{course:course|| {},data:user ||{},courses:courses||[],status:IsAuthStatus_And_admin,message:message|| ""})
     }
     catch(err){
         
-        req.session.message = "ce cours n'existe pas"
+        req.session.message ={error:"ce cours n'existe pas"}
         return res.redirect(`/cours`)
     }
    
@@ -112,6 +111,10 @@ profileRouter.get('/blog/:slug',verifyToken,async(req,res)=>{
     const slug = req.params.slug
     let user
     let tabCategorie =[]
+    let message = req.session.message;
+    console.log("message"+message);
+    
+    req.session.message = "";
     if(!req.user){
      IsAuthStatus_And_admin =false
     }
@@ -129,20 +132,16 @@ profileRouter.get('/blog/:slug',verifyToken,async(req,res)=>{
          if(req.user && req.user.id){
              user=await User.findById(req.user.id)
          }
-         if(!user){
-             message = req.session.message 
-             req.session.message= null
-         }
-         else if(user && user._id.toString() === blog.user._id.toString()){
+         
+          if(user && user._id.toString() === blog.user._id.toString()){
              IsAuthStatus_And_admin =true
  
          }
-        console.log("tabcat"+tabCategorie )
-         return res.render("../views/viewBlog",{blog:blog||{},data:user||{},blogs:blogs||[],status:IsAuthStatus_And_admin,Recentblogs:Recentblogs||{},tabCategorie:tabCategorie||[]})
+         return res.render("../views/viewBlog",{blog:blog||{},data:user||{},blogs:blogs||[],status:IsAuthStatus_And_admin,Recentblogs:Recentblogs||{},tabCategorie:tabCategorie||[],message:message || ""})
      }
      catch(err){
          
-         req.session.message = "ce cours n'existe pas"
+         req.session.message ={blog:"ce blog n'existe pas"}
          return res.redirect(`/blog`)
      }
     

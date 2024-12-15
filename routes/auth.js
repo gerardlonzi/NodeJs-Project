@@ -2,7 +2,7 @@ const express = require("express")
 const User = require("../models/User")
 const Course = require("../models/Course")
 const Blog = require("../models/Blog")
-const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword, deleteUser, IsAdmin} = require("../controllers/AuthControllers")
+const { register, login, verifyToken, SendEmail, EmailVerified ,EmailIsVerified, forgetpassword, forget_Password_emailVerified, resetPassword, deleteUser, IsAdmin, SendEmailContact} = require("../controllers/AuthControllers")
 const router = express.Router()
 
 router.use(verifyToken,async(req,res,next)=>{
@@ -29,6 +29,8 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
         let courses
         let users
         let tabCategorie=[]
+        const message = req.session.message || ""
+    req.session.message =  null
         users = await User.find({role:'admin'}).limit(6).exec()
         if(req.user){
             try{
@@ -60,7 +62,7 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
            }
 
        })
-        res.render("../views/home",{data:data,courses:courses || [],users:users||[],Recentblogs:Recentblogs || [],tabCategorie:tabCategorie || []})
+        res.render("../views/home",{data:data,courses:courses || [],users:users||[],Recentblogs:Recentblogs || [],tabCategorie:tabCategorie || [],message})
 })
 router.get("/cours/AllCourse?categorie",async(req,res)=>{
         const categorie = req.query.categorie
@@ -265,6 +267,9 @@ router.get('/dashboard',verifyToken,IsAdmin,async(req,res)=>{
     }
 })
 router.get("/cours", async (req, res) => {
+    const message = req.session.message || ""
+    req.session.message =  null
+    let data
     try{
         let tabCategorie =[]
         let courses = await Course.find({approved:"yes"}).populate('user') || [];
@@ -277,12 +282,42 @@ router.get("/cours", async (req, res) => {
             }
     
         })
-        return res.render("../views/cours",{courses,tabCategorie:tabCategorie||[]});
+        if(req.user && req.user.id && req.user.id !== 'undefined' && req.user.id !==null){
+            const user = await User.findById(req.user.id)
+               
+            if(user){
+                data = user
+            }
+        }
+        
+        return res.render("../views/cours",{data:data || null ,courses,tabCategorie:tabCategorie||[],message});
     }
     catch(err){
         return res.redirect("/")
     }
     
+
+});
+router.get("/contact", async (req, res) => {
+     const message = req.session.message
+     req.session.message=""
+    let data 
+    if(req.user && req.user.id && req.user.id !== 'undefined' && req.user.id !==null ){
+    try{
+        
+            const user = await User.findById(req.user.id)
+               
+            if(user){
+                data = user
+           
+        }
+    }
+    catch(err){
+        return res.redirect("/")
+    }
+}
+return res.render("../views/contact",{data:data || null,message:message||""});
+
 
 });
 
@@ -296,6 +331,8 @@ router.get("/professeur", async (req, res) => {
             return res.redirect("/")
         }
 });
+
+router.post("/send-email",SendEmailContact)
 
 router.get("/:name",verifyToken,async(req,res)=>{
     const slug = req.params.name
