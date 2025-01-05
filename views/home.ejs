@@ -12,9 +12,9 @@
                 <section class="barner">
                     <div class="container">
                         <div>
-                            <h1>Commencez à apprendre et à acquérir de nouvelles compétences pour un avenir meilleur
+                            <h1>Apprenez et développez de nouvelles compétences pour un avenir meilleur.
                             </h1>
-                            <p>Développez vos compétences étape par étape avec notre plateforme de formation reconnue. Notre mission est de guider des personnes ambitieuses vers l’excellence et la croissance de leur carrière  et atteindre ce que vous recherchez.</p>
+                            <p>Développez vos compétences avec notre plateforme de formation reconnue. Nous guidons les personnes ambitieuses vers l'excellence et la croissance de leur carrière.</p>
                             <div>
                                 <a href="">Voir tous les cours</a>
                             </div>
@@ -30,7 +30,7 @@
                    
                     <div class="intro-title">
                         <h2>Pourquoi choisir MANELIZA training centre</h2>
-                        <p>Regardez-vous en vous-même, sachez que vous êtes ambitieux  et continuez d’avancer jusqu’à ce que <br> vous obteniez quelque chose en retour comme accomplissement.</p>
+                        <p>Croyez en votre ambition et avancez jusqu'à obtenir <br> l'accomplissement que vous méritez.</p>
                     </div>
                     <div class="allAvantage">
                         <div>
@@ -99,27 +99,26 @@
         <h2>Découvrez la variété des cours ici</h2>
         <p>Choisissez un cours approprié pour vous parmi les nombreux cours disponibles <br> sur cette plateforme.</p>
     </div>
+    
     <div>
+        <h3 style="text-decoration: underline;">Cours en présentiel</h3>
+
+        <div>
+        
+        </div>
+        <h3 style="text-decoration: underline;">Cours en ligne</h3>
         <div class="elem-course">
-            <div class="splide" id="my-carousel-nav">
-                <nav  class="splide__track">
-                    <ul class="splide__list">
-                        <li class="active splide__slide">All</li>
-                        <% if (tabCategorie!=='undefined' && tabCategorie.length > 0) { %>
-                         <% tabCategorie.forEach(element => { %>
-                          <li class="splide__slide"><%= element %></li>
-                         <% }) %>
-                        <% } %>
-                    </ul>
-                </nav>
-            </div>
+            
             <div>
                 <div class="elem-course-course element-appears">
                     <div class="allcourse">
                         <% if (typeof courses !=='undefined' && courses.length> 0) { %>
                             <% courses.forEach(element=> { %>
                                 <% if (element.approved==='yes' ) { %>
-                                    <div class="course">
+                                    <div class="course" style="position: relative;">
+                                        <div style="padding: 5px;background-color: rgb(0, 155, 0); position: absolute;top: 10px;right: 10px;z-index: 5;font-size: 13px;border-radius: 4px;font-weight: 600;color: white;">
+                                            recommandé
+                                        </div>
                                                     <div class="desc-prof">
                                                         <a href="/cours/<%= element.slug %>">
                                                             <div class="container-widht-anim">
@@ -140,16 +139,11 @@
                                                                     </a>
                                                                 </p>
                                                             </div>
-                                                            <div class="textLoader">
-                                                                <p class="description"><%-
-                                                                        element.description ?
-                                                                        element.description : '' %></p>
-                                                                <span
-                                                                    style="font-weight: bolder;">...</span>
-                                                            </div>
+                                                            
                                                             <hr>
-                                                            <div class="profilepresent flex-box-text">
-                                                                <a href="/<%= element.user.slug %>">
+                                                            
+                                                            <div class="profilepresent flex-box-text" style="padding-block: 10px;">
+                                                                <a class="profileUserTeacher" href="/<%= element.user.slug %>">
                                                                 <div>
                                                                     <div class="container-widht-anim">
 
@@ -176,28 +170,29 @@
 
 
                                                                     <p class="price">
-                                                                        <%= element.prix ? element.prix
-                                                                            : '' %> XOF
+                                                                        <%= element.prix ?
+                                                                        element.prix
+                                                                        : 'Inconnu' %> XOF
                                                                     </p>
 
                                                                 </div>
 
                                                             </div>
-                                                            <form action="" class="form_submit">
-                                                                <button type="submit"
-                                                                    title="Add to Card"
-                                                                    class="submit add-card">
-                                                                    <img class="loader-img"
-                                                                        src="/images/spin.png"
-                                                                        alt="spinner">
-                                                                    <div>
-                                                                        <i class="bi bi-cart-fill"></i>
-                                                                        <span>Ajouter au panier</span>
-                                                                    </div>
-                                                                </button>
-                                                            </form>
-
-
+                                                         
+                                                                <form action="/card/<%= element.slug %>" class="form_submit" method="POST">
+                                                                    <button type="submit"
+                                                                        title="Add to Card"
+                                                                        class="submit add-card">
+                                                                        <img class="loader-img"
+                                                                            src="/images/spin.png"
+                                                                            alt="spinner">
+                                                                        <div>
+                                                                            <i class="bi bi-cart-fill"></i>
+                                                                            <span>ça m'intéresse</span>
+                                                                        </div>
+                                                                    </button>
+                                                                </form>
+                                                           
                                                         </div>
                                                     </div>
                                                 </div>
@@ -208,6 +203,11 @@
                     </div>
                 </div>
             </div>
+    </div>
+    <div class="create-blog" style="margin-top: 40px;">
+        
+        <a href="/cours"><i class="bi bi-plus-lg"></i> Voir plus...</a>
+        
     </div>
 </div>
 </section>
@@ -401,36 +401,36 @@
                            
                         </div>
                     </div>
-                    <div class="descri-title">
-                        <a href="/blog/<%= element.slug %>">
-                            <h2 class="name"><%= element.title %></h2>
-                        </a>
-                        <div class="description">
-                            <%- element.description %>
-                        </div>
-                        <span style="font-weight: bolder;color: rgb(200, 200, 200);">...</span>
-                    </div>
-                    <div class="dateUser">
-                        <div>
-                                <i class="bi bi-calendar2-fill"></i>
-                            <p>
-                            <%= new Date(element.date).toLocaleDateString("fr-FR", {
-                                month: 'long',
-                                day: 'numeric',
-                                year: 'numeric',
-                            })%>
-                            </p>
-                        </div>
-                        <span class="line"></span>
-                        <div>
-                            <a href="/<%=element.user.slug%>">
-                                <img style="width: 40px; height: 40px;object-fit: cover; border-radius: 50%;" class="ProfilePicture" src="<%= element.user.profilePicture %>" alt="profilePicture">
-                                <p>
-                                <%=element.user? element.user.name:"" %>
-                                </p>
+                    <div class="desc-date">
+                        <div class="descri-title">
+                            <a href="/blog/<%= element.slug %>">
+                                <h2 class="name"><%= element.title %></h2>
                             </a>
                             
                         </div>
+                        <div class="dateUser">
+                            <div>
+                                    <i class="bi bi-calendar2-fill"></i>
+                                <p>
+                                <%= new Date(element.date).toLocaleDateString("fr-FR", {
+                                    month: 'long',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                })%>
+                                </p>
+                            </div>
+                            <span class="line"></span>
+                            <div>
+                                <a href="/<%=element.user.slug%>">
+                                    <img style="width: 40px; height: 40px;object-fit: cover; border-radius: 50%;" class="ProfilePicture" src="<%= element.user.profilePicture %>" alt="profilePicture">
+                                    <p>
+                                    <%=element.user? element.user.name:"" %>
+                                    </p>
+                                </a>
+                                
+                            </div>
+                        </div>
+    
                     </div>
 
                 </div>
@@ -439,6 +439,13 @@
             <% } %>
         </div>
     </section>
+    <div class="create-blog" style="margin-top: 40px;">
+    <div class="container">
+
+        <a href="/blog"><i class="bi bi-plus-lg"></i> Voir plus...</a>
+    </div>
+    
+</div>
 </section>
 <section class="avis">
     <div class="container">

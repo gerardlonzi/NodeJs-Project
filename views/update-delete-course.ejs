@@ -12,7 +12,7 @@
                     </div>
                     <img src="/images/slider-bottom-pattern.png" alt="pattern">
                 </section>
-                <div>
+                
                     <% if (typeof message !=='undefined' && message !==null && message.success ) { %>
                         <div class="new-sucess disapied">
                             <p >
@@ -32,98 +32,136 @@
                                 </div>
                                     <% } %>
 
+<section>
+    <div class="container">
 
+    
                 <% if (typeof course !=='undefined' && course !== null) { %>
                     
                         <div class="aboutCourse">
                             <% if (status===true) { %>
-                                <button class="modify">Modifier le cours</button>
-                                <form action="/cours/<%= course.slug %>?_method=DELETE" method="post">
-                                    <input type="submit" value="Supprimer le cours">
-                                </form>
-                            <% } %>
-                            
-                            
-                            <% if (course.approved==='wait' ) { %>
-                                <p ><i
-                                        class="bi bi-exclamation-circle"></i> en attente</p>
-                                <% } else if (course.approved==='yes' ) { %>
-                                    <p ><i
-                                            class="bi bi-check-circle"></i></i> cours vérifié
-                                    </p>
-                                    <% } else { %>
-                                        <p ><i
-                                                class="bi bi-x-circle"></i></i> cours non
-                                            vérifié !</p>
-                                        <% } %>
+                                <div class="nav-btn-custom">
+                                    <button class="modify" id="custum-button">Modifier l'article</button>
+                                    <form action="/cours/<%= course.slug %>?_method=DELETE" method="post">
+
+                                        <input type="submit" id="custum-button" value="Supprimer le cours">
+                                    </form>
                                     
+                                </div>
+                                
+                                
+                            <% } %>
+                            <div class="infosCourse">
+
+                           
                                       
-                                            <div>
-
-                                                <div>
-                                                    <p>Informations sur le cours</p>
-                                                    <img src="<%= course.thumbail || '' %>" alt="">
-                                                    <p>
-                                                        <%= course.name && typeof  course.name!=="undefined" ? course.name : '' %>
-                                                    </p>
-                                                    <p class="desc">
-                                                        <%- course.description && typeof  course.description!=="undefined" ? course.description : '' %>
-
-                                                    </p>
-
+                                            <div class="courseIntro">
+                                                <img src="<%= course.thumbail || '' %>" alt="">
+                                                <p class="courseTitle">
+                                                    <%= course.name && typeof  course.name!=="undefined" ? course.name : '' %>
+                                                </p>
+                                                <div class="courseTeacherInfos">
+                                                    <a href="/<%=course.user.slug %>"> <img src="<%= course.user.profilePicture || ""  %>" alt="">
+                                                        <p>
+                                                            <%= course.user && typeof  course.user!=="undefined" && course.user.name ? course.user.name : 'Inconnu' %>
+                                                        </p></a>
+                                                   
                                                 </div>
+                                                <p class="desc">
+                                                    <%- course.description && typeof  course.description!=="undefined" ? course.description : '' %>
+
+                                                </p>
+                                        </div>
+                                        <div class="courseDetail-intro">
+                                            <div class="courseDetail">
                                                 <div>
-                                                    <p>
-                                                        <%= course.categorie && typeof  course.categorie!=="undefined" ? course.categorie : '' %>
-                                                    </p>
+                                                    <span><i class="bi bi-person-fill"></i>
+                                                        Nom du professeur
+                                                    </span>
                                                     <p>
                                                         <%= course.user && typeof  course.user!=="undefined" && course.user.name ? course.user.name : 'Inconnu' %>
                                                     </p>
+                                                </div> 
+                                                <div>
+                                                    <span>
+                                                        <i class="bi bi-collection-fill"></i> Catégorie
+                                                    </span>
+                                                    <p>
+                                                            <%= course.categorie && typeof  course.categorie!=="undefined" ? course.categorie : '' %>
+                                                    </p>
+                                                </div> 
+                                                <div>
+                                                    <span>
+                                                        <i class="bi bi-fire"></i>
+                                                        Niveau de difficulté
+                                                    </span>
                                                     <p>
                                                         <%= course.difficultyLevel && typeof  course.difficultyLevel!=="undefined" ? course.difficultyLevel : '' %>
                                                     </p>
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <i class="bi bi-stack"></i> Typologie
+                                                    </span>
                                                     <p>
                                                         <%= course.typologie && typeof  course.typologie!=="undefined" ? course. typologie : '' %>
                                                     </p>
+                                                </div>  
+                                                <div>
+                                                    <span><i class="bi bi-tags-fill"></i> Prix</span>
                                                     <p>
-                                                        <%= course.prix  && typeof  course.prix!=="undefined"? course.prix : '' %>
+                                                        <%= course.prix  && typeof  course.prix!=="undefined"? course.prix : '-----' %> XOF
                                                     </p>
+                                                </div> 
+                                                <div>
+                                                    <span><i class="bi bi-volume-down-fill"></i>Language</span>
                                                     <p>
                                                         <%= course.language && typeof  course.language!=="undefined" ? course.language : '' %>
                                                     </p>
+                                                </div> 
+                                                <div>
+                                                    <span>
+                                                        <i class="bi bi-alarm-fill"></i>Dureé
+                                                    </span>
                                                     <p>
-                                                        <%= course.courseTime && typeof course.courseTime!=="undefined" ? course.courseTime : '' %>
+                                                        <%= course.courseTime && typeof course.courseTime!=="undefined" ? course.courseTime : '' %> h
                                                     </p>
-                                                    <div>
-                                                        <%=typeof course.lessons !==null && typeof course.lessons
-                                                            !=='undefined' && course.length> 0 ? course.courseTime :
-                                                            'Les cours que vous publierez a propos de ce cours s afficheront ici' %>
-
-                                                    </div>
-                                                    <% if (status===false) { %>
-                                                        <form action="" class="form_submit">
-                                                            <button type="submit"
-                                                                title="Add to Card"
-                                                                class="submit add-card">
-                                                                <img class="loader-img"
-                                                                    src="/images/spin.png"
-                                                                    alt="spinner">
-                                                                <div>
-                                                                    <i class="bi bi-cart-fill"></i>
-                                                                    <span>Ajouter au panier</span>
-                                                                </div>
-                                                            </button>
-                                                        </form>
-                                                        <% } %>
-                            
-                                                    
                                                 </div>
+                                                <% if (status===false) { %>
+                                                    <form action="" class="form_submit" >
+                                                        <button type="submit"
+                                                            title="Add to Card"
+                                                            class="submit add-card">
+                                                            <img class="loader-img"
+                                                                src="/images/spin.png"
+                                                                alt="spinner">
+                                                            <div>
+                                                                <i class="bi bi-cart-fill"></i>
+                                                                <span>Achété</span>
+                                                            </div>
+                                                        </button>
+                                                    </form>
+                                                    <% } %>  
+                                                    
+                                                    </div>
+                                                    <div class="content-video">
+                                                        <h4 style="margin-bottom: 10px;">Contenue video</h4>
+                                                        <% if (course && course.lessons && course.lessons.length > 0) { %>
+                                                            <span>Moi-même</span>
+                                                        <% } else { %>
+                                                            <span style="color: gray;font-style: italic;">Les contenues vidéos publié à propos de ce cours s'afficheront ici</span>
+                                                        <% } %>
+                                                        
+                                                    </div> 
+                                                </div>
+                                               
                                             </div>
-                                           
-
+                                            
+                                        </div>
                         </div>
                         <div class="update-course" style="display: none;">
-                            <form action="/cours/<%= course.slug %>?_method=PUT" id="form" enctype="multipart/form-data" method="post">
+                            
+                            <form action="/cours/<%= course.slug %>?_method=PUT" id="form form_course" enctype="multipart/form-data" method="post" >
                                 <div>
                                     <input type="submit" value="Enregister">
                                     <button class="cancel">Annuler</button>
@@ -218,38 +256,41 @@
                         </div>
 
                             <% } %>
+                            
+<div class="container">
 
-                                <div>
+
+                               
+                            <p class="" style="text-align: center;font-weight: bold;margin-top: 70px;font-size: 25px;">Ces cours pouront aussi vous intéréssez</p>
+
+                                <div class="sujection-course">
                                     <% if (typeof courses !=='undefined' ) { %>
                                         <% courses.forEach(element=> { %>
-                                            <% if (element.approved==='yes' ) { %>
-                                                    <p><i class="bi bi-check-circle"></i></i> vérifié </p>
-                                                    
-                                                        
+                                            <div class="courseSujected">
                                                             <a href="/cours/<%= element.slug %>">
-
-                                                                <div>
                                                                     <img src="<%= element.thumbail || '' %>" alt="">
                                                                     <p>
                                                                         <%= element.name ? element.name : '' %>
                                                                     </p>
-                                                                    <p>
-                                                                        <%= element.user ? element.user.name : 'Inconnu'
-                                                                            %>
-                                                                    </p>
-                                                                    <p>
-                                                                        <%= element.prix ? element.prix : '' %>
-                                                                    </p>
-                                                                    <p>
-                                                                        <%= element.courseTime ? element.courseTime : ''
-                                                                            %>
-                                                                    </p>
-                                                                </div>
                                                             </a>
-                                                            <% } %>
+                                                            <div class="btn-sujet">
+                                                               <button>
+                                                                <i class="bi bi-eye-fill"></i>  voir
+                                                               </button>
+                                                               <a href="">
+                                                                <i class="bi bi-cart-fill"></i>
+                                                                   <span>Commander</span>
+                                                               </a>
+                                                            </div>
+                                                        </div>
+                                                            
                                                             <% }) %>
                                                                 <% } %>
-                                </div>
+                                
+                           
+                            </div>
+                        </div>
+                        </section>
                             </main>
 
                                 <%- include("partiel/upload-image")%>

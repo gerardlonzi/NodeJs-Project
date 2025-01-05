@@ -1,151 +1,205 @@
 <%- include('partiel/head',{title:"upload course"}) %>
 
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
-</head>
-<body >
-    <%- include('partiel/header') %>
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
+    </head>
 
-    <main id="content-page">
-        <section class="barner-short">
-            <div class="container">
-                    <h1>Publier un cours
-                    </h1>
-            </div>
-            <img src="images/slider-bottom-pattern.png" alt="pattern">
-        </section>
-        <section class="upload-course">
-            <% if (typeof message !=='undefined' && message.success ) { %>
-            <div class="message">
-                    <div class="new-sucess disapied">
-                        <p >
-                        <i class="bi bi-check-circle"></i>
-                        <%= message.success %>
-                        </p>
-                        <i class="bi bi-x"></i>
+    <body>
+        <%- include('partiel/header') %>
+
+            <main id="content-page">
+                <section class="barner-short">
+                    <div class="container">
+                        <h1>Publier un cours
+                        </h1>
                     </div>
-                        <% } %>
-                        <% if (typeof message !=='undefined' && message.error ) { %>
-                            <div class="new-error disapied">
+                    <img src="images/slider-bottom-pattern.png" alt="pattern">
+                </section>
+                <section class="upload-course">
+                    <% if (typeof message !=='undefined' && message.success ) { %>
+                        <div class="message">
+                            <div class="new-sucess disapied">
                                 <p>
-                                    <i class="bi bi-exclamation-triangle"></i>
-                                <%= message.error %>
+                                    <i class="bi bi-check-circle"></i>
+                                    <%= message.success %>
                                 </p>
                                 <i class="bi bi-x"></i>
                             </div>
+                            <% } %>
+                                <% if (typeof message !=='undefined' && message.error ) { %>
+                                    <div class="new-error disapied">
+                                        <p>
+                                            <i class="bi bi-exclamation-triangle"></i>
+                                            <%= message.error %>
+                                        </p>
+                                        <i class="bi bi-x"></i>
+                                    </div>
                         </div>
                         <% } %>
-            <div class="container ">
-                <div class="infos-general">
-                    <p>Informations géneral du cours </p>
-                    <hr>
-                </div>
-            <form action="/upload-course/publish" class="form_submit"  id="form_course"  enctype="multipart/form-data"  method="post">
-                <div class="upload-image">
-                    <label for="thumbail">Miniature du cours</label>
-                    <div class="image-bl-preview">
-                        <img class="cloud-logo" src="/images/drag.jpg" alt="import_image">
-                    </div>
-                    <button class="btn-image"><i class="bi bi-cloud-arrow-up-fill"></i> importer une image</button>
-                    <input   type="file" id="thumbail" name="thumbail"  hidden accept="image/*">
-                </div>
-                <div>
+                            <div class="container ">
+                                <div class="infos-general">
+                                    <p>Informations géneral du cours </p>
+                                    <hr>
+                                </div>
+                                <form action="/upload-course/publish" class="form_submit" id="form_course"
+                                    enctype="multipart/form-data" method="post">
+                                    <div class="upload-image">
+                                        <label for="thumbail">Miniature du cours</label>
+                                        <div class="image-bl-preview">
+                                            <img class="cloud-logo" src="/images/drag.jpg" alt="import_image">
+                                        </div>
+                                        <button class="btn-image"><i class="bi bi-cloud-arrow-up-fill"></i> importer une
+                                            image</button>
+                                        <input type="file" id="thumbail" name="thumbail" hidden accept="image/*">
+                                    </div>
+                                    <div>
 
-              
-                <div>
-                    <label for="name">Nom du cours</label>
-                    <input autocomplete="off" type="text" value="<%= typeof message !== 'undefined' && message.data  && message.data.name !=='undefined' ? message.data.name :"" %>" placeholder="ex: apprendre node js" name="name" id="name">
-                </div>
-                <div>
-                    <label for=courseTime">Dureé du cours en heure</label>
-                    <input autocomplete="off" type="number" value="<%= typeof message !== 'undefined' && message.data  && message.data.courseTime !=='undefined' ? message.data.courseTime
- :"" %>"  name="courseTime" id="courseTime">
-                </div>
-                <div>
-                    <label for="categorie">A quel catégorie appartient votre cours</label>
-                    <div class="custom-select-container">
 
-                    <select name="categorie"  id="categorie">
-                        <option <%= typeof message !== 'undefined' && message.data  && message.data.categorie ==='programmation' ? 'selected' :"" %> value="programmation">Programmation</option>
-                        <option  <%= typeof message !== 'undefined' && message.data  && message.data.categorie ==='web développement' ? 'selected' :"" %> value="web développement">Web développement</option>
-                        <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='graphics design' ? 'selected' :"" %> value="graphics design">Graphics design</option>
-                        <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='outils offices' ? 'selected' :"" %> value="outils offices">Outils offices</option>
-                        <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='Science' ? 'selected' :"" %> value="Science">Science</option>
-                        <option <%= typeof message !== 'undefined' && message.data  &&  message.data.categorie ==='litterature' ? 'selected' :"" %> value="litterature">litterature</option>
-                    </select>
-                    <i class="bi bi-chevron-down"></i>
-                    </div>
-                </div>
-                <div>
-                    <label for="typologie">Typlogie du cours</label>
-                    <div class="custom-select-container">
+                                        <div>
+                                            <label for="name">Nom du cours</label>
+                                            <input autocomplete="off" type="text"
+                                                value="<%= typeof message !== 'undefined' && message.data  && message.data.name !=='undefined' ? message.data.name :"" %>"
+                                                placeholder="ex: apprendre node js" name="name" id="name">
+                                        </div>
+                                        <div>
+                                            <label for="courseTime">Dureé du cours en heure</label>
+                                            <input autocomplete="off" type="number" value="<%= typeof message !== 'undefined' && message.data  && message.data.courseTime !=='undefined' ? message.data.courseTime
+ :"" %>" name="courseTime" id="courseTime">
+                                        </div>
+                                        <div>
+                                            <label for="categorie">A quel catégorie appartient votre cours</label>
+                                            <div class="custom-select-container">
 
-                    <select name="typologie" id="typlogie">
-                        <option <%= typeof message !== 'undefined' && message.data  && message.data.typlogie ==='premium' ? 'selected' :"" %> value="premium">Premium</option>
-                        <option <%= typeof message !== 'undefined' &&message.data  &&  message.data.typlogie ==='gratuit' ? 'selected' :"" %> value="gratuit">Gratuit</option>
-                    </select>
-                    <i class="bi bi-chevron-down"></i>
-                    </div>
-                </div>
-            </div>
+                                                <select name="categorie" id="categorie">
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.categorie==='programmation' ? 'selected' :"" %>
+                                                        value="programmation">Programmation</option>
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.categorie==='web développement' ? 'selected' :"" %>
+                                                        value="web développement">Web développement</option>
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.categorie==='graphics design' ? 'selected' :"" %>
+                                                        value="graphics design">Graphics design</option>
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.categorie==='outils offices' ? 'selected' :"" %>
+                                                        value="outils offices">Outils offices</option>
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.categorie==='Science' ? 'selected' :"" %>
+                                                        value="Science">Science</option>
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.categorie==='litterature' ? 'selected' :"" %>
+                                                        value="litterature">litterature</option>
+                                                </select>
+                                                <i class="bi bi-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="typologie">Typlogie du cours</label>
+                                            <div class="custom-select-container">
 
-                <div>
+                                                <select name="typologie" id="typlogie">
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.typlogie==='premium' ? 'selected' :"" %>
+                                                        value="premium">Premium</option>
+                                                    <option <%=typeof message !=='undefined' &&message.data &&
+                                                        message.data.typlogie==='gratuit' ? 'selected' :"" %>
+                                                        value="gratuit">Gratuit</option>
+                                                </select>
+                                                <i class="bi bi-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                   
 
-               
-                <div>
-                    <label for="professeur">Nom de l'auteur</label>
-                    <input  type="text" id="professeur" value="<%= data.name?data.name:'' %>" disabled name="professeur">
-                </div>
-                <div>
-                    <label for="prix">Prix de la formation</label>
-                    <input autocomplete="off" value="<%= typeof message !== 'undefined' && message.data  && message.data.prix !=='undefined' ? message.data.prix :"" %>" type="number" placeholder="ex: 20000f" name="prix" id="prix">
-                </div>
-                
-            </div>
-            <div>
-                <div>
-                    <label for="difficulty">Niveau de difficulté</label>
-                    <div class="custom-select-container">
-                    <select name="difficultyLevel" id="difficulty">
-                        <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='débutant' ? 'selected' :"" %> value="débutant">Débutant</option>
-                        <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='intermédiare' ? 'selected' :"" %> value="intermédiare">Intermédiare</option>
-                        <option <%= typeof message !== 'undefined' && message.data  && message.data.difficultyLevel ==='avancé' ? 'selected' :"" %> value="avancé">Avancé</option>
-                    </select>
-                    <i class="bi bi-chevron-down"></i>
-                </div>
-                </div>
-                <div>
-                    <label for="language">Language du cours</label>
-                    <div class="custom-select-container">
+                                  
 
-                    
-                    <select name="language" id="language">
-                        <option <%= typeof message !== 'undefined' && message.data  && message.data.language ==='français' ? 'selected' :"" %> value="français">Français</option>
-                        <option <%= typeof message !== 'undefined' && message.data  && message.data.language ==='anglais' ? 'selected' :"" %> value="anglais">Anglais</option>
-                    </select>
-                    <i class="bi bi-chevron-down"></i>
-                </div>
-                </div>
-            </div>
-            <div class="finasubmit">
-                <label>Description du cours</label>
-                <textarea id="editor"  name="description"  ><%- typeof message !== 'undefined' && message.data  && message.data.description  ? message.data.description :"" %></textarea>
-                <div>
-                    <button type="submit" class="submit" >publier <i class="bi bi-send-fill"></i> <img class="loader-img" src="/images/spin.png" alt="spinner"></button>
-                </div>
-            </div>
 
-            </form>
-        </div>
-        </section>
-        
+                                        <div>
+                                            <label for="professeur">Nom de l'auteur</label>
+                                            <input type="text" id="professeur" value="<%= data.name?data.name:'' %>"
+                                                disabled name="professeur">
+                                        </div>
+                                        <div>
+                                            <label for="prix">Prix de la formation</label>
+                                            <input autocomplete="off"
+                                                value="<%= typeof message !== 'undefined' && message.data  && message.data.prix !=='undefined' ? message.data.prix :"" %>"
+                                                type="number" placeholder="ex: 20000f" name="prix" id="prix">
+                                        </div>
 
-    </main>
-    <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js" ></script>
-    <%- include('partiel/pageLoader') %>
-    <%- include("partiel/upload-image")%>
-    <%- include('partiel/news') %>
-    <%- include('partiel/buttonLoader') %>
-    <%- include('partiel/ckeditorScript') %>
-</body>
-</html>
 
+                                    
+                                        <div>
+                                            <label for="language">En ligne ou en présentiel</label>
+                                            <div class="custom-select-container">
+
+
+                                                <select name="coursePresentiel" id="coursePresentiel">
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.coursePresentiel==='yes' ? 'selected' :"" %>
+                                                        value="yes">Oui</option>
+                                                    <option <%=typeof message !=='undefined' && message.data &&
+                                                        message.data.coursePresentiel==='no' ? 'selected' :"" %>
+                                                        value="no">Non</option>
+                                                </select>
+                                                <i class="bi bi-chevron-down"></i>
+
+                                        </div>
+                                        <div>
+                                                <label for="difficulty">Niveau de difficulté</label>
+                                                <div class="custom-select-container">
+                                                    <select name="difficultyLevel" id="difficulty">
+                                                        <option <%=typeof message !=='undefined' && message.data &&
+                                                            message.data.difficultyLevel==='débutant' ? 'selected' :""
+                                                            %> value="débutant">Débutant</option>
+                                                        <option <%=typeof message !=='undefined' && message.data &&
+                                                            message.data.difficultyLevel==='intermédiare' ? 'selected'
+                                                            :"" %> value="intermédiare">Intermédiare</option>
+                                                        <option <%=typeof message !=='undefined' && message.data &&
+                                                            message.data.difficultyLevel==='avancé' ? 'selected' :"" %>
+                                                            value="avancé">Avancé</option>
+                                                    </select>
+                                                    <i class="bi bi-chevron-down"></i>
+                                                </div>
+                                        </div>
+                                        <div>
+                                                <label for="language">Language du cours</label>
+                                                <div class="custom-select-container">
+
+
+                                                    <select name="language" id="language">
+                                                        <option <%=typeof message !=='undefined' && message.data &&
+                                                            message.data.language==='français' ? 'selected' :"" %>
+                                                            value="français">Français</option>
+                                                        <option <%=typeof message !=='undefined' && message.data &&
+                                                            message.data.language==='anglais' ? 'selected' :"" %>
+                                                            value="anglais">Anglais</option>
+                                                    </select>
+                                                    <i class="bi bi-chevron-down"></i>
+                                                </div>
+                                        </div>
+                                   
+
+                                        <div class="finasubmit">
+                                            <label>Description du cours</label>
+                                            <textarea id="editor"
+                                                name="description"><%- typeof message !== 'undefined' && message.data  && message.data.description  ? message.data.description :"" %></textarea>
+                                            <div>
+                                                <button type="submit" class="submit">publier <i
+                                                        class="bi bi-send-fill"></i> <img class="loader-img"
+                                                        src="/images/spin.png" alt="spinner"></button>
+                                            </div>
+                                        </div>
+</div>
+                                </form>
+                            </div>
+                </section>
+
+
+            </main>
+            <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js"></script>
+            <%- include('partiel/pageLoader') %>
+                <%- include("partiel/upload-image")%>
+                    <%- include('partiel/news') %>
+                        <%- include('partiel/buttonLoader') %>
+                            <%- include('partiel/ckeditorScript') %>
+    </body>
+
+    </html>

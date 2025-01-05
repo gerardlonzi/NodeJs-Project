@@ -2,17 +2,24 @@
     const submit = document.querySelectorAll('.submit')
     const loader_img = document.querySelectorAll('.loader-img')
     const form_submit = document.querySelectorAll('.form_submit')
+    const courses = document.querySelectorAll('.course')
 
-    loader_img.forEach(el=>{
-        el.style.display="none"
-    }) 
-    form_submit.forEach((el,index)=>{
-        el.addEventListener('submit',()=>{
-            loader_img[index].style.display='block'
-            submit[index].disabled=true
+    loader_img.forEach(el => {
+        el.style.display = "none"
+    })
+    form_submit.forEach((el, index) => {
+        el.addEventListener('submit', () => {
+            loader_img[index].style.display = 'block'
+            submit[index].disabled = true
+
         })
     })
-    
-      
+
+
+
+
    
+
+    
+
 </script>

@@ -28,11 +28,13 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
         let data ;
         let courses
         let users
+        let isLogin = false
         let tabCategorie=[]
         const message = req.session.message || ""
     req.session.message =  null
         users = await User.find({role:'admin'}).limit(6).exec()
         if(req.user){
+            isLogin = true
             try{
                 const user = await User.findById(req.user.id)
                
@@ -51,7 +53,7 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
        const  coursTab= await Course.find()
 
 
-        const Recentblogs = await Blog.find().sort({ createdAt: -1 }).populate("user").limit(3).exec();
+        const Recentblogs = await Blog.find().sort({ createdAt: -1 }).populate("user").limit(6).exec();
 
         coursTab?.forEach(coursefilter=>{
 
@@ -62,7 +64,7 @@ router.get("/",verifyToken,EmailVerified, async(req, res) => {
            }
 
        })
-        res.render("../views/home",{data:data,courses:courses || [],users:users||[],Recentblogs:Recentblogs || [],tabCategorie:tabCategorie || [],message})
+        res.render("../views/home",{data:data,courses:courses || [],users:users||[],Recentblogs:Recentblogs || [],tabCategorie:tabCategorie || [],message,isLogin})
 })
 router.get("/cours/AllCourse?categorie",async(req,res)=>{
         const categorie = req.query.categorie

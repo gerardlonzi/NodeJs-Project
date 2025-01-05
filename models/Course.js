@@ -34,6 +34,7 @@ const CourseModel = new Schema({
     approved :{type:String , default:'wait',enum:['no','yes','wait']},
     review :[{type:Schema.Types.ObjectId , ref:"Reviews"}],
     courseTime: {type:String, required:true},
+    coursePresentiel: {type:String, required:true},
 
 })
 

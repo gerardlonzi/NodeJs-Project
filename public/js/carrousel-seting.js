@@ -32,9 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             850: {
                 perPage: 2,    
             },
-            600: {
-                perPage: 1,    
-            },
+            
         },
     });
     splide_nav.mount();

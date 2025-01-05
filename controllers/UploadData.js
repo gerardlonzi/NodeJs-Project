@@ -90,11 +90,11 @@ exports.UploadCourse = async(req, res) => {
     prix,
     thumbail,
     typologie,
-    difficultyLevel,
+    difficultyLevel,coursePresentiel,
     language } = req.body
   const id = req.user.id
 
-  if (!name || !description || !prix  || !courseTime  || !categorie || !typologie || ! difficultyLevel || !language ) {
+  if (!name || !description || !prix  || !courseTime  || !categorie || !typologie || ! difficultyLevel || !language || !coursePresentiel ) {
     req.session.message = {
       error: "veuillez renseigner tous les champs s'il vous plait",
       data: {
@@ -107,7 +107,8 @@ exports.UploadCourse = async(req, res) => {
          typologie,
          difficultyLevel,
          language,
-         courseTime
+         courseTime,
+         coursePresentiel
       }
 
     }
@@ -153,7 +154,7 @@ exports.UploadCourse = async(req, res) => {
         prix:prix.replace(/[a-zA-Z]/g, ''),
         typologie,
         difficultyLevel,
-        language,
+        language,coursePresentiel,
         courseTime:courseTime.replace(/[a-zA-Z]/g, '')
       })
       try {
@@ -187,10 +188,10 @@ const {name,
   typologie,
   difficultyLevel,
   language,
-  courseTime} = req.body
+  courseTime,coursePresentiel} = req.body
   const slug = req.params.slug
 
-  if(!name || !description|| !categorie|| !prix || !typologie|| !difficultyLevel||!language|| !courseTime){
+  if(!name || !description|| !categorie|| !prix || !typologie|| !difficultyLevel||!language|| !courseTime || !coursePresentiel){
     
     req.session.message = 'aucun champs ne doit être vide'
     return res.redirect( `/cours/${slug}`)
@@ -218,6 +219,7 @@ const {name,
         typologie !== course.typologie && (course.typologie = typologie)
         difficultyLevel !== course.difficultyLevel && (course.difficultyLevel = difficultyLevel)
         language !== course.language && (course.language = language)
+        coursePresentiel !== course.coursePresentiel && (course.coursePresentiel = coursePresentiel)
         courseTime !== course.courseTime && (course.courseTime = courseTime.replace(/[a-zA-Z]/g, ''))
 
       if(!req.file){

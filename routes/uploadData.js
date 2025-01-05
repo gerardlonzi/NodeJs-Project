@@ -47,7 +47,7 @@ profileRouter.get('/cours/:slug',verifyToken,async(req,res)=>{
    }
     try{
         const course = await Course.findOne({slug:slug}).populate("user")
-        const courses = await Course.find({slug:{$ne:slug}})
+        const courses = await Course.find({slug:{$ne:slug}}).limit(3)
         
         if(req.user && req.user.id){
             user=await User.findById(req.user.id)
@@ -151,6 +151,5 @@ profileRouter.get('/blog/:slug',verifyToken,async(req,res)=>{
  profileRouter.put('/blog/:slug',verifyToken,upload.single('thumbail'),updateBlog)
 profileRouter.delete('/blog/:slug',verifyToken,DeleteBlog)
 
- 
 
 module.exports = profileRouter
