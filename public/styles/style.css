@@ -32,7 +32,7 @@ position: fixed;
 padding:5px 15px;
 width: 100%;
 top: 0;
-z-index: 60;
+z-index: 100;
 animation:TranslsteHeader .8s cubic-bezier(0.165, 0.84, 0.44, 1) ;
 
 }
@@ -47,41 +47,72 @@ animation:TranslsteHeader .8s cubic-bezier(0.165, 0.84, 0.44, 1) ;
 .nav-active{
     color: var(--green-hover);
 }
-/* Styles pour le loaderpage */
+.contentPage p {
+    font-size: 2rem;
+    font-weight: bold;
+    overflow: hidden;
+    border-right: 2px solid #333;
+    white-space: nowrap;
+    width: 0;
+    animation: typing 4s steps(5) forwards, blink 0.5s step-end infinite;
+  }
+  
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 7ch; 
+    }
+  }
+  
+  @keyframes blink {
+    from {
+      border-right-color: #00730d;
+    }
+    to {
+      border-right-color: transparent;
+    }
+  }
+  
 #loaderPage {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
+    background: white;
     display: flex;
-    flex-direction: column;
+    gap: 10px;
     justify-content: center;
     align-items: center;
-    z-index: 1000; 
-    gap: 10px;
-  }
-#loaderPage div{
-border: solid 3px var(--green-hover);
-padding:5px 20px;
-box-shadow: 0px 0px 10px rgba(74, 128, 74, 0.43);
-animation: Trote 3s  linear infinite;
- }
-.logo-loaderpage {
-    width: 100px; 
+    z-index: 100000;
   }
   
+  .spinnerPage {
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-left-color: #006417;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
   
-  @keyframes Trote {
-    0% { transform: rotateX(0deg); 
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
     }
-    
-
-    100% { transform: rotateX(-180deg);
-     }
   }
-/*princing*/
+  
+  
+  body.loaded .contentPage {
+    display: block;
+  }
+  
+  body.loaded #loaderPage {
+    display: none;
+  }
+  /*princing*/
 .text-center {
 	text-align: center;
 }
@@ -230,6 +261,10 @@ header .container-widht-anim {
     border-radius: 50%;
     background-color:  #eaeaeafe  ;
 
+}
+.container-widht-anim img{
+    width:100%;
+    height:100%;
 }
 .bi-basket3{
 font-size: 23px;
@@ -465,6 +500,131 @@ display:flex
 .teach{
     font-size: 15px;
 }
+.in-person-training{
+
+}
+.cours-list h2{
+    font-family:"poppins",'sans-serif';
+    font-size:20px;
+    color: #163568;
+    margin-block:14px
+
+}
+.cours-list p{
+   color:rgb(99, 99, 99)
+}
+.cours-list {
+    display: grid;
+    grid-template-columns:repeat(3,1fr);
+    gap: 20px;
+}
+.cours-btns{
+    margin-top:15px;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+.cours-btns button{
+    padding: 10px 15px;
+    background-color:#208052;
+    color:white;
+    border:none;
+    cursor:pointer
+}
+.cours-btns a{
+    padding: 10px 15px;
+    border:1px solid #163568
+}
+.img-view{
+    width:350px;
+    height:300px
+}
+.img-view img{
+    width:100%;
+    height:100%;
+    object-fit:cover
+
+}
+.cours {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.cours:hover {
+    transform: scale(1.05);
+}
+
+.details {
+    position:fixed;
+    left:0;
+    bottom:0;
+    top:0;
+    right: 0;
+    z-index:60;
+    background-color: #fff;
+    padding-block: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.details .barner-short{
+    height:350px
+}
+.details .barner-short h2{
+padding-top:80px;
+font-family:"poppins"
+}
+.detail-content{
+    padding-inline:200px
+}
+
+.details.show {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+#close-details {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+    transition: background-color 0.3s ease;
+}
+
+#close-details:hover {
+    background-color: #ff1a1a;
+}
+
+#course-navigation {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#course-navigation button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#course-navigation button:hover {
+    background-color: #007BFF;
+    color: white;
+}
+
 .logo img{
     width: 130px;
     height: 70px;
@@ -1277,8 +1437,10 @@ background-color: #1ca965;
 /*home*/
 
 .barner{
-    background:linear-gradient(#0d2754b6,#0d2754b6),url(/images/ovarlay-slide.jpg);
+    background:linear-gradient(#0d2754ca,#0d2754c6),url(/images/IMG-20250209-WA0013.jpg);
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100%;
     position: relative;
     background-color:#0c2f6cfe ;
     
@@ -1296,32 +1458,35 @@ background-color: #1ca965;
     justify-content: center;
     align-items: center;
     gap: 20px;
-    padding-top: 70px;
-}
-.barner .container>img{
-    width: 500px;
-    height: 500px;
+    padding-top: 130px;
 }
 .barner .container>div{
     display: flex;
 flex-direction: column;
 gap: 25px;
+text-align: center;
+font-family: "Poppins", sans-serif;
+
 }
 .barner .container>div>h1{
-    font-size: 45px;
+    font-size: 59px;
     color: white;
-    line-height: 60px;
+    line-height: 70px;
+    font-weight: 700;
+    font-style: normal;
+    text-shadow:0px 0px 2px #000000;
 
 }
 .barner .container>div>p{
-    color: #bebebe;
-    font-size: 18px;
+    color: #ececec;
+    font-size: 20px;
     margin-bottom: 10px;
+
 
 }
 .barner .container>div a{
     padding: 14px 20px;
-    background-color: #208052;
+    background-color: #009b50;
     text-decoration: none;
     color: #0a1e41;
     font-weight: 600;
@@ -1370,11 +1535,14 @@ padding-inline: 12px;
     text-align: center;
     margin-bottom: 40px;
     margin-top: 80px;
+    font-family: "Poppins", sans-serif;
+
 }
 .intro-title h2{
 font-size: 35px;
 margin-block: 20px;
 color: #0a1e41;
+
 }
 .intro-title p{
     color:#777777;
@@ -1390,6 +1558,10 @@ color: #0a1e41;
     flex-direction: column;
     gap: 10px;
 }
+.allAvantage h3{
+    font-family: "Poppins", sans-serif;
+
+}
 .allAvantage>div>div:first-child{
     margin-bottom:25px ;
     width: 100px;
@@ -1401,6 +1573,7 @@ color: #0a1e41;
     justify-content: center;
     align-items: center;
     margin: auto;
+
     
 }
 .allAvantage>div:first-child>div:first-child{
@@ -2154,7 +2327,7 @@ margin-bottom: 30px;
 
     
     .AllBlog .container,.Avis-list{
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(1,1fr);
     }
     .description-blog{
 flex-direction: column;
@@ -2230,7 +2403,9 @@ height: 200px;
 }
 
 @media screen and (max-width:640px){
-   
+    .allcourse{
+        grid-template-columns: repeat(1,1fr);
+    }
     .stats div>p:nth-child(2){
         font-size: 19px;
     }
@@ -2243,7 +2418,6 @@ height: 200px;
             gap: 5px;
      }
     .dateUser{
-            flex-direction: column;
             padding-block: 10px;
             gap: 10px;
             font-size: 14px;
@@ -2400,7 +2574,7 @@ font-size: 17px;
         height: 50vh;
     }
     .container{
-        padding-inline: 6px;
+        padding-inline: 13px;
     }
     .onscrool-nav{
         position: absolute;

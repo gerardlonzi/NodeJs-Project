@@ -24,19 +24,11 @@ menu_hamburger?.addEventListener("click",()=>{
                 menu_ul.classList.remove("show");
         }
 })  
+
 window.addEventListener("scroll",()=>{
         if(window.scrollY >360){
                 menu.classList.add("nav_fixed")
-                if (window.innerWidth < 1050) {
-                        menu_ul.style.top = "4.2rem";
-                }
-                if (window.innerWidth < 640) {
-                        menu_ul.style.top = "4.1rem";
-                }
-                if (window.innerWidth < 430) {
-                        menu_ul.style.top = "3.4rem";
-                }
-
+                menu_ul.style.top="45px"
         }
         else{
                 menu.classList.remove("nav_fixed")

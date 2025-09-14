@@ -34,7 +34,7 @@
                         <i class="bi bi-telephone-fill"></i>
                     </p>
                     <div>
-                        <span>Téléphone</span>
+                        <span>Phone</span>
                         <span class="sm">+237 673259041</span>
                     </div>
                 </a>
@@ -44,7 +44,7 @@
                     </p>
                     <div>
                         <span>Email</span>
-                        <span class="sm">lonzigerard@gmail.com</span>
+                        <span class="sm">Manelizatrainingcentre@gmail.com</span>
 
                     </div>
                 </a>
@@ -53,8 +53,8 @@
                         <i class="bi bi-geo-alt-fill"></i>
                     </p>
                     <div>
-                        <span>Adresse</span>
-                        <span class="sm">Yaounde-Cameroun</span>
+                        <span>Location</span>
+                        <span class="sm">Kumba-Danicash street</span>
                     </div>
                 </a>
             </div>
@@ -63,72 +63,75 @@
         <div class="flex-box-text menu">
             <div>
                 <ul class="auth">
-                    <li><a href="/" >Accueil</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="">About</a></li>
-                    <li><a href="/cours">Cours</a></li>
-                    <li><a href="/Professeur">Professeurs</a></li>
-                    <li><a href="">Ebook</a></li>
+                    <li><a href="/cours">Programs & courses</a></li>
+                    <li><a href="/Professeur">Our teachers</a></li>
+                    <li><a href="">Apply Now & Enroll</a></li>
                     <li><a href="/blog">Blog</a></li>
-                    <li><a href="/contact">Contacts</a></li>
+                    <li><a href="/contact">Contacts us</a></li>
                     <% if (typeof data !=='undefined' && data !==null && data.role==="professeur" ){ %>
-                    <li>
+                        <li>
                             <div class="profil-log">
                                 <% if (data.approved) { %>
-    
+
                                     <div class="uoload-course ">
                                         <a href="/upload-course">
-                                            <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
+                                            <button <%=data.approved !=='no' && data.approved !=='wait' ?""
+                                                :"disabled"%> >
                                                 <i class="bi bi-plus-lg"></i> publier un cours
                                             </button>
                                         </a>
-    
+
                                     </div>
                                     <% } %>
+                        </li>
+                        <% } %>
+                            <% if (typeof data !=='undefined' && data !==null && data.role==="user" ) { %>
+                                <li>
+                                    <div class="profil-log">
+                                        <div class="teach  link-hover-sm">
+                                            <a href="/become-teacher">Enseigner</a>
+                                        </div>
+                                    </div>
                                 </li>
                                 <% } %>
-                    <% if (typeof data !=='undefined' && data !==null && data.role==="user" ) { %>
-                    <li>
-                            <div class="profil-log">
-                                <div class="teach  link-hover-sm">
-                                    <a href="/become-teacher">Enseigner</a>
-                                </div>
-                            </div>
-                        </li>
-                        <% } %>
-                    <% if (typeof data !=='undefined' && data !==null && data.role==="admin" ) { %>
-                    <li>
-                            <div class="profil-log">
-        
-                                <div class="profile">
-                                 <a  href="/dashboard">Dashboard</a>   
-       
-                                   
-                            </div>
-                                
-        
-                            
-        
-                    </li>
-                    <% } %>
-                    <% if (typeof data !=='undefined' && data !==null && data.role==="admin" ) { %>
-                        <li>
-                                
-            
-                                    <div class="upload-courseShow"  >
-                <a href="/upload-course">
-                    <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
-                        <i class="bi bi-plus-lg"></i> publier un cours
-                    </button>
-                </a>
-            
-                                       
-                                    </div>
-                                    
-            
-                             
-            
-                        </li>
-                        <% } %>
+                                    <% if (typeof data !=='undefined' && data !==null && data.role==="admin" ) { %>
+                                        <li>
+                                            <div class="profil-log">
+
+                                                <div class="profile">
+                                                    <a href="/dashboard">Dashboard</a>
+
+
+                                                </div>
+
+
+
+
+                                        </li>
+                                        <% } %>
+                                            <% if (typeof data !=='undefined' && data !==null && data.role==="admin" ) {
+                                                %>
+                                                <li>
+
+
+                                                    <div class="upload-courseShow">
+                                                        <a href="/upload-course">
+                                                            <button <%=data.approved !=='no' && data.approved !=='wait'
+                                                                ?"" :"disabled"%> >
+                                                                <i class="bi bi-plus-lg"></i> publier un cours
+                                                            </button>
+                                                        </a>
+
+
+                                                    </div>
+
+
+
+
+                                                </li>
+                                                <% } %>
 
                 </ul>
                 <div class="menu-hambuger">
@@ -137,110 +140,31 @@
                     <span></span>
                 </div>
             </div>
-            <% if (typeof data !=='undefined' && data !==null && data.role==="user" ) { %>
-                <div class="profil-log ">
-                    <div class="teach pp link-hover-sm">
-                        <a href="/become-teacher">Enseigner</a>
-                    </div>
-                    <% if (data.profilePicture) { %>
-                        <div class="profile">
-                            <a href="/profile" class="link-hover-sm">
-                                        <div class="container-widht-anim">
-                                        <img src="<%= data.profilePicture %>"
-                                            alt="profile picture" >
-                                
+            <% if (typeof data !=='undefined' && data !==null  ) { %>
+                <% if (data.profilePicture) { %>
+                    <div class="profile">
+                        <a href="/profile" class="link-hover-sm">
+                            <div class="container-widht-anim">
+                                <img src="<%= data.profilePicture %>" alt="profile picture">
+
                             </div>
-                            <span class="hide">
-                                <%= data.name || '' %>
-                            </span>
-                            </a>
+                            
+                        </a>
 
                     </div>
                     <% } %>
-                </div>
-
-            <% } else if (typeof data !=='undefined' && data !==null && data.role==="admin" ) { %>
-                
-                    
-                        
-
-                    
-
-         
-                <div class="profil-log">
-
-                        <div class="profile">
-<div style="margin-inline: 15px;" class="uoload-course pp">
-    <a href="/upload-course">
-        <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
-            <i class="bi bi-plus-lg"></i> publier 
-        </button>
-    </a>
-
-</div>
-                            <a href="/profile" class="link-hover-sm">
-                                <div class="container-widht-anim">
-                                    <img src="<%= data.profilePicture %>" alt="profile picture">
-                                
-                                   </div>
-                                
-                            </a>
-                        </div>
-                        
-
-                    </div>
-                    <div class="profil-log dash">
-
-                        <div class="profile">
-                         <a  href="/dashboard">Dashboard</a>   
-</div>
-                           
-                    </div>
-
-            <% } else if (typeof data !=='undefined' && data !==null && data.role==="professeur" ){ %>
-                        <div class="profil-log ">
-                            <% if (data.approved) { %>
-
-                                <div class="uoload-course pp">
-                                    <a href="/upload-course">
-                                        <button <%=data.approved !=='no' && data.approved !=='wait' ?"" :"disabled"%> >
-                                            <i class="bi bi-plus-lg"></i> publier un cours
-                                        </button>
-                                    </a>
-
-                                </div>
-                                <% } %>
-                                <% if (data.profilePicture) { %>
-                                    <div class="profile">
-
-                                            <a href="/profile" class="link-hover-sm">
-                                                        <div class="container-widht-anim">
-                                                          
-                                                <img
-                                                            src="<%= data.profilePicture %>" alt="profile picture">
-
-                                                       
-                                                    </div>
-                                                        <span class="hide">
-                                                            <%= data.name || '' %>
-                                                        </span>
-                                                    </a>
-
-                                                </div>
-                                            <% } %>
-                                        </div>
-
+               
             <% } else { %>
 
-                                        <a href="/login">
-                                            <div class="menu-login">
-                                                SE CONNECTER
-                                            </div>
-                                        </a>
+                            <a href="/login">
+                                <div class="menu-login">
+                                    LOGIN / SIGN UP
+                                </div>
+                            </a>
 
 
-                               
-                        
+
+
             <% } %>
         </div>
     </div>

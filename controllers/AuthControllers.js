@@ -7,7 +7,6 @@ const nodemailer = require("nodemailer")
 const cloudinary = require("../config/cloudinary")
 const Course = require("../models/Course")
 const { default: mongoose } = require("mongoose")
-const { log } = require("console")
 
 dotenv.config()
 
