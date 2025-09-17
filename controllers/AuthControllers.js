@@ -124,6 +124,11 @@ exports.verifyToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, async (err, data) => {
     if (err) {
+      res.clearCookie('token', {
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production' 
+      });
       return res.redirect("/login")
     }
     req.user = data

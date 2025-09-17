@@ -60,7 +60,13 @@ app.use(express.urlencoded({ extended: true }))
 app.use(session({
       secret: process.env.EXPRESS_SECRET,
       resave: true,
-      saveUninitialized: false
+      saveUninitialized: false,
+      cookie: {
+            httpOnly: true,                  
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 24 * 60 * 60 * 1000,      
+            sameSite: 'Strict',            
+          }
 }))
 app.use(passport.initialize())
 app.use(passport.session())

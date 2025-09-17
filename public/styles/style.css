@@ -533,7 +533,7 @@ align-items:center
     border:1px solid #163568
 }
 .img-view{
-    width:350px;
+    width:100%;
     height:300px;
     background-color: rgb(212, 212, 212);
 }
