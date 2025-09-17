@@ -500,9 +500,6 @@ display:flex
 .teach{
     font-size: 15px;
 }
-.in-person-training{
-
-}
 .cours-list h2{
     font-family:"poppins",'sans-serif';
     font-size:20px;
@@ -1134,10 +1131,22 @@ border-radius: 10px;
  }
  .profile-view-infos>div:nth-of-type(2) a{
     padding:13px 15px;
-    border-radius: 50%;
+    border-radius: 50px;
     text-decoration: none;
     background-color: #1ca965;
     color: white;
+ }
+ .profile-view-infos>div:nth-of-type(2) a:first-child{
+    padding:13px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    background-color: #ffffff;
+    color: rgb(0, 2, 46);
+    border: 1px solid #208052 ;
+ }
+ .push-profile{
+    display: flex;
+    flex-wrap: wrap;
  }
  .profile-view-infos>div:nth-of-type(2) a:hover{
     

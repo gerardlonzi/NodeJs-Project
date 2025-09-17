@@ -578,8 +578,9 @@
 <section>
     <div class="container">
         <div class="intro-title">
-            <h2>Laissez un message</h2>
-            <p>Si vous avez des questions concernant nos cours, notre corps professoral ou nos projets, <br> laissez-nous un message ici, nous vous répondrons dans les plus brefs délais.</p>
+            <h2>Leave a Message</h2>
+            <p>If you have any questions about our courses, faculty, or projects,
+                leave us a message here, <br> and we will get back to you as soon as possible.</p>
         </div>
         <% if (typeof message !=='undefined' && message !==null && message.success ) { %>
             <div class="new-sucess disapied">
@@ -612,7 +613,7 @@
             <% } %>
          <div class="field_contact_form">
             <div>
-                <label for="firstName">Nom</label>
+                <label for="firstName">First Name</label>
                 <div>
                     <input autocomplete="off"  type="text" id="firstName" name="firstName" value="<%=typeof message !=='undefined' &&typeof message.firstName !==" undefined" ?
                         message.firstName : "" %>">
@@ -625,7 +626,7 @@
                 </div>
             </div>
             <div>
-                <label for="prenom">Prénom</label>
+                <label for="prenom">Last Name</label>
                 <div>
                     <input autocomplete="off"  type="text" id="prenom" name="lastName"
                         value="<%=typeof message !=='undefined' &&typeof message.lastName !==" undefined" ?

@@ -23,18 +23,20 @@ router.use(verifyToken,async(req,res,next)=>{
     
 })
 router.post("/register",register)
+router.get("/apply",(req,res)=>{
+    return res.render("../views/apply")}
+)
+
+
 router.post("/login",login)
 router.get("/",verifyToken,EmailVerified, async(req, res) => {
         let data ;
-        let courses
         let users
         let isLogin = false
-        let tabCategorie=[]
         const message = req.session.message || ""
     req.session.message =  null
     console.log('Tentative de récupération des utilisateurs...');
 users = await User.find({ role: 'admin' }).limit(6).exec();
-console.log('Utilisateurs récupérés:', users);
         if(req.user){
             isLogin = true
             try{
@@ -51,22 +53,11 @@ console.log('Utilisateurs récupérés:', users);
                 data = null
             }
         }
-        courses= await Course.find({approved:"yes"}).sort({ createdAt: -1 }).populate("user").limit(6).exec()
-       const  coursTab= await Course.find()
-
 
         const Recentblogs = await Blog.find().sort({ createdAt: -1 }).populate("user").limit(6).exec();
 
-        coursTab?.forEach(coursefilter=>{
-
-           if(!tabCategorie.includes(coursefilter.categorie)){
-
-               tabCategorie.push(coursefilter.categorie)
-
-           }
-
-       })
-        res.render("../views/home",{data:data,courses:courses || [],users:users||[],Recentblogs:Recentblogs || [],tabCategorie:tabCategorie || [],message,isLogin})
+        
+        res.render("../views/home",{data:data,users:users||[],Recentblogs:Recentblogs || [],message,isLogin})
 })
 router.get("/cours/AllCourse?categorie",async(req,res)=>{
         const categorie = req.query.categorie

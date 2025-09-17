@@ -18,7 +18,7 @@ exports.register = (req, res) => {
     errors.push({ msg: "l'email est requis" })
     req.session.message = {
       error_msg_field_email: errors[0].msg,
-      error_msg_field_password: typeof password !== 'undefined' ? "" : "le passsword est requis",
+      error_msg_field_password: typeof password !== 'undefined' ? "" : "the passsword is required",
       email: email || "",
       password: password || ""
 
@@ -29,32 +29,32 @@ exports.register = (req, res) => {
   }
   if (!password) {
     req.session.message = {
-      error_msg_field_password: "le passsword est requis",
+      error_msg_field_password: "the passsword is required",
       password: password,
       email: email || ""
     }
-    errors.push({ msg: "le passsword est requis" })
+    errors.push({ msg: "the passsword is required" })
     return res.redirect('/register')
 
 
   }
 
   if (password.length < 8) {
-    req.session.message = { password_length: "le mot de paase doit comporter au moins 8 caractéres", password: password, email: email || "" }
-    errors.push({ msg: "le mot de passe doit comporter au moins 8 caractéres" })
+    req.session.message = { password_length: "the password should be >= 8 characters", password: password, email: email || "" }
+    errors.push({ msg: "the password should be >= 8 characters" })
 
     return res.redirect('/register')
 
   }
   if (errors.length > 0) {
-    req.session.message = { eror_spec: "une erreur s'est produite" }
+    req.session.message = { eror_spec: "something went wrong" }
     return res.redirect('/register')
 
   }
   else {
     User.findOne({ email }).then(user => {
       if (user) {
-        req.session.message = { email_exist: " Désoler cette adresse email existe deja", email: email || "", password: password || "" }
+        req.session.message = { email_exist: "Sorry, this email address already exists", email: email || "", password: password || "" }
         res.redirect("/register")
         return
       }
@@ -87,18 +87,18 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
   const { email, password } = req.body
   if (!email) {
-    req.session.message = { error_msg_field_email:"l'email est requis", email: email || "", password: password || "" }
+    req.session.message = { error_msg_field_email:"email is required", email: email || "", password: password || "" }
     return res.redirect('/login')
 
 
   }
   if (!password) {
-    req.session.message = { error_msg_field_password: "le passsword est requis", password: password, email: email || "" }
+    req.session.message = { error_msg_field_password: "the passsword is required", password: password, email: email || "" }
     return res.redirect('/login')
   }
   User.findOne({ email }).then(user => {
     if (!user) {
-      req.session.message = { email_notExist: "cet utilisateur n'existe pas veuiller créer un compte", password: password || "", email: email || "" }
+      req.session.message = { email_notExist: "This user does not exist. Please create an account.", password: password || "", email: email || "" }
       return res.redirect('/login')
     }
     bcript.compare(password, user.password, (err, isvalid) => {
@@ -108,7 +108,7 @@ exports.login = (req, res) => {
         res.redirect('/')
       }
       else {
-        req.session.message = { incorrect_password: "mot de passe incorrect", password: password || "", email: email || "" }
+        req.session.message = { incorrect_password: "password incorrect", password: password || "", email: email || "" }
         res.redirect('/login')
       }
     })
@@ -162,7 +162,7 @@ exports.EmailVerified = async (req, res, next) => {
     const verifiedEmailVerified = await User.findById(req.user.id)
     if (verifiedEmailVerified.emailVerified !== true) {
       req.session.message={
-        error:"vous devez verifié votre email address"
+        error:"Please verified your email address"
       }
 
       return res.redirect('/send-email-verified')
@@ -171,7 +171,7 @@ exports.EmailVerified = async (req, res, next) => {
   }
   catch (err) {
     req.session.message={
-      error:"une erreur est survenue"
+      error:"An error occurred, please try again later"
     }
     return res.redirect("/error")
 
@@ -193,29 +193,34 @@ exports.SendEmail = async (req, res) => {
     const url = `https://nodejs-project-f3e0.onrender.com/verified-email?token=${token}`
     const options = {
       email: user.email,
-      subject: "Maneliza E-learning : Vérification de votre adresse email",
-      message: `
-    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-    
-    <div style="text-align: center; padding-bottom: 20px;">
-      <img src="https://res.cloudinary.com/dl61aaiee/image/upload/v1727815982/maneliza-removebg-preview_xlig0u.png" alt="Logo" style="width: 120px; margin-bottom: 20px;">
-      <h2 style="color: #0f2445; font-size: 24px;">Vérifiez votre adresse e-mail</h2>
-    </div>
-    <p style="color: #555; font-size: 16px; line-height: 1.5;">
-      Merci de vous être inscrit(e) sur notre plateforme. Afin de compléter votre inscription, veuillez confirmer votre adresse e-mail en cliquant sur le bouton ci-dessous.
+      subject: "Maneliza E-learning: Verify Your Email Address",
+message: `
+<div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+  
+  <div style="text-align: center; padding-bottom: 20px;">
+    <img src="https://res.cloudinary.com/dl61aaiee/image/upload/v1727815982/maneliza-removebg-preview_xlig0u.png" alt="Logo" style="width: 120px; margin-bottom: 20px;">
+    <h2 style="color: #0f2445; font-size: 24px;">Verify Your Email Address</h2>
+  </div>
+  <p style="color: #555; font-size: 16px; line-height: 1.5;">
+    Thank you for signing up on our platform. To complete your registration, please confirm your email address by clicking the button below.
+  </p>
+  <div style="text-align: center; margin: 30px 0;">
+    <a href=${url} 
+       style="background-color: #208052; color: white; padding: 12px 24px; font-size: 16px; font-weight: bold; text-decoration: none; border-radius: 5px; display: inline-block;">
+       Verify my email
+    </a>
+  </div>
+  <p style="color: #999; font-size: 14px; line-height: 1.5;">
+    If you did not create an account, please ignore this email. This link will expire in 4 hours.
+  </p>
+  <div style="border-top: 1px solid #eaeaea; padding-top: 20px; text-align: center;">
+    <p style="color: #999; font-size: 12px;">
+      © ${date} YourSite. All rights reserved. | <a href="https://your-site.com" style="color: #208052; text-decoration: none;">your-site.com</a>
     </p>
-    <div style="text-align: center; margin: 30px 0;">
-      <a href=${url} 
-         style="background-color: #208052; color: white; padding: 12px 24px; font-size: 16px; font-weight: bold; text-decoration: none; border-radius: 5px; display: inline-block;">
-         Vérifier mon e-mail
-      </a>
-    </div>
-    <p style="color: #999; font-size: 14px; line-height: 1.5;">
-      Si vous n'avez pas créé de compte, veuillez ignorer cet email. Ce lien expirera dans 4 heures.
-    </p>
-    <div style="border-top: 1px solid #eaeaea; padding-top: 20px; text-align: center;">
-      <p style="color: #999; font-size: 12px;">
-        © ${date} VotreSite. Tous droits réservés. | <a href="https://votre-site.com" style="color: #208052; text-decoration: none;">votre-site.com</a>
+  </div>
+</div>
+
+
       </p>
     </div>
   </div>
@@ -226,7 +231,7 @@ exports.SendEmail = async (req, res) => {
     this.sendMailContain(options).then(result => {
       console.log(result);
       req.session.message={
-        success:"email envoyé avec succes"
+        success:"email sent successfully avec succes"
       }
       return res.redirect('/send-email-verified')
 
@@ -236,7 +241,7 @@ exports.SendEmail = async (req, res) => {
   }
   catch (err) {
     req.session.message={
-      error:"une erreur est survenue"
+      error:"An error occurred, please try again later"
     }
     return res.redirect("/send-email-verified")
   }
@@ -267,7 +272,7 @@ exports.EmailIsVerified = async (req, res, next) => {
   }
   catch {
     req.session.message={
-      error:"une erreur est survenue"
+      error:"something went wrong ! Try again"
     } 
     return res.redirect('/send-email-verified')
   }
@@ -277,7 +282,7 @@ exports.forgetpassword = async (req, res) => {
   const email = req.body.email
   if (!email || !email.includes('@gmail')) {
     req.session.message={
-      error:"veuillez entrez un addresse email valide"
+      error:"Please enter a valid email address."
     }
     return res.redirect('/forget-password')
   }
@@ -285,7 +290,7 @@ exports.forgetpassword = async (req, res) => {
     await User.findOne({ email }).then(user => {
       if (!user) {
         req.session.message={
-          error:"cette addresse email n'existe pas"
+          error:"User not found with this email address"
         }
         return res.redirect("/forget-password")
       }
@@ -296,25 +301,25 @@ exports.forgetpassword = async (req, res) => {
       const url = `https://nodejs-project-f3e0.onrender.com/reset-password?token=${token}`
       const options = {
         email: email,
-        subject: "Reinitialisation du mot de passe",
-        message: `<p>cliquer sur ce lien pour reunitialiser votre mot de passe  <a href=${url}>clique ici</a>
+        subject: "reset password",
+        message: `<p>click here to reset your password  <a href=${url}>click here</a>
  </p>`
       }
       this.sendMailContain(options).then(result => {
         req.session.message={
-          success:"email envoyé avec succes"
+          success:"email sent successfully"
         }
         return res.redirect('/forget-password')
       }).catch(err => {
         req.session.message={
-          error:"une erreur c'est produit"
+          error:"something went wrong "
         }
         return res.redirect('/forget-password')
       })
 
     }).catch(err => {
       req.session.message={
-        error:"une erreur est survenue reessayez"
+        error:"something went wrong ! Try again"
       }
       return res.redirect('/forget-password')
     })
@@ -323,7 +328,7 @@ exports.forgetpassword = async (req, res) => {
   }
   catch (err) {
     req.session.message={
-      error:"une erreur est survenue reesayez"
+      error:"something went wrong ! Try again"
     }
     return res.redirect('/forget-password')
   }
@@ -338,7 +343,7 @@ exports.forget_Password_emailVerified = async (req, res, next) => {
     })
     if (!user) {
       req.session.message={
-        error:"le lien de confirmation ou token a expiré  "
+        error:"something went wrong ! Try again"
       }
       return res.redirect('/forget-password')
     }
@@ -347,7 +352,7 @@ exports.forget_Password_emailVerified = async (req, res, next) => {
   }
   catch (err) {
     req.session.message={
-      error:"une erreur est survenue ! veuillez reessayez"
+      error:"something went wrong ! Try again"
     }
     return res.redirect('/forget-password')
   }
@@ -362,7 +367,7 @@ exports.resetPassword = async (req, res) => {
     })
     if (!user) {
       req.session.message={
-        error:"une erreur est survenue ! veuillez reessayez"
+        error:"something went wrong ! Try again"
       }
       return res.redirect('/forget-password')
     }
@@ -377,7 +382,7 @@ exports.resetPassword = async (req, res) => {
       })
         .catch(() => {
           req.session.message={
-            error:"une erreur est survenue ! veuillez reessayez"
+            error:"something went wrong ! Try again"
           }
           return res.redirect('/reset-password')
         })
@@ -388,7 +393,7 @@ exports.resetPassword = async (req, res) => {
   }
   catch (err) {
     req.session.message={
-      error:"veuillez actualisez la page et reessayez"
+      error:"please try to reload the page"
     }
     return res.redirect('/reset-password')
   }
@@ -420,7 +425,7 @@ exports.deleteUser = async (req, res) => {
           await cloudinary.uploader.destroy(`maneSchool/${el.thumbail.split('/').pop().split('.')[0]}`)
         }
         catch(err){
-          req.session.message = "une erreur s'est produite"
+          req.session.message = "something went wrong"
           session.abortTransaction()
         session.endSession()
           return res.redirect('/profile')
@@ -469,7 +474,7 @@ if (!req.user || req.user.id === undefined) {
 }
   if (!firstName) {
     req.session.message = {
-      error_msg_field_firstName: "le nom est requis",
+      error_msg_field_firstName: "the name is required",
       lastName: lastName || "",
       email:email || "",
       phone: phone || "",
@@ -479,7 +484,7 @@ if (!req.user || req.user.id === undefined) {
   }
   if (!lastName) {
     req.session.message = {
-      error_msg_field_lastName: "le prenom est requis",
+      error_msg_field_lastName: "the last name is required",
       firstName: firstName || "",
       email:email || "",
       phone: phone || "",
@@ -491,7 +496,7 @@ if (!req.user || req.user.id === undefined) {
   
   if (!email) {
     req.session.message = {
-      error_msg_field_email:"l'email est requis" ,
+      error_msg_field_email:"email is required" ,
       email: email || "",
       firstName: firstName || "",
       lastName:lastName,
@@ -505,7 +510,7 @@ if (!req.user || req.user.id === undefined) {
   }
   if (!phone) {
     req.session.message = {
-      error_msg_field_phone:"le phone est requis" ,
+      error_msg_field_phone:"the phone is required" ,
       email: email || "",
       firstName: firstName || "",
       lastName:lastName,
@@ -518,7 +523,7 @@ if (!req.user || req.user.id === undefined) {
   }
   if (!message) {
     req.session.message = {
-      error_msg_field_message:"le message est requis" ,
+      error_msg_field_message:"the message is required" ,
       email: email || "",
       firstName: firstName || "",
       lastName:lastName,
@@ -570,7 +575,7 @@ if (!req.user || req.user.id === undefined) {
     this.sendMailContain(options).then(result => {
       console.log(result);
       req.session.message={
-        success:"email envoyé avec succes"
+        success:"email sent successfully"
       }
       return res.redirect('/contact')
 
@@ -580,7 +585,7 @@ if (!req.user || req.user.id === undefined) {
   }
   catch (err) {
     req.session.message={
-      error:"une erreur est survenue"
+      error:"something went wrong"
     }
     return res.redirect("/contact")
   }

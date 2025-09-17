@@ -54,7 +54,7 @@
                                 <div>
                                     <p>
                                         <%= data.name || '' %>
-                                            <% if (data.role=='professeur' ) { %>
+                                            <% if (data.role=='professeur' || data.role=='admin' ) { %>
                                                 <% if (data.approved==='wait' ) { %>
                                                     <span class="At">En attente</span>
                                                     <% } else if(data.approved==='yes' ){ %>
@@ -74,7 +74,16 @@
                                     </div>
 
                                 </div>
-                                <a href=""><i class="bi bi-send-fill"></i> </a>
+                                <div class="push-profile">
+                                    <% if (data.role=='professeur' || data.role=='admin' ) { %>
+                                        <% if (data.approved==='yes' ) { %>
+                                            <a href="/blog/create-blog">Publish blog</a>
+                                            <a href="/upload-course">Publish course</a>
+                                                    <% } %>
+    
+                                        <% } %>
+                                </div>
+                                
                                 
                                 
                             </div>

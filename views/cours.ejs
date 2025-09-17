@@ -10,119 +10,183 @@
     <main id="content-page">
         <section class="barner-short">
             <div class="container">
-                    <h1>Nos cours
+                    <h1>Our courses
                     </h1>
             </div>
             <img src="images/slider-bottom-pattern.png" alt="pattern">
         </section>
         <div>
             <div class="elem-course">
-                <div class="splide" id="my-carousel-nav">
-                    <nav  class="splide__track">
-                        <ul class="splide__list">
-                            <li class="active splide__slide">All</li>
-                            <% if (tabCategorie!=='undefined' && tabCategorie.length > 0) { %>
-                             <% tabCategorie.forEach(element => { %>
-                              <li class="splide__slide"><%= element %></li>
-                             <% }) %>
-                            <% } %>
-                        </ul>
-                    </nav>
-                </div>
+                
                 <div>
                     <div class="container">
                     <div class="elem-course-course element-appears">
-                        <div class="allcourse">
-                            <% if (typeof courses !=='undefined' && courses.length> 0) { %>
-                                <% courses.forEach(element=> { %>
-                                    <% if (element.approved==='yes' ) { %>
-                                        <div class="course">
-                                                        <div class="desc-prof">
-                                                            <a href="/cours/<%= element.slug %>">
-                                                                <div class="container-widht-anim">
-    
-                                                                    
-                                                                    <img class="img" style="width: 100%;"
-                                                                        src="<%= element.thumbail || '' %>"
-                                                                        alt="">
-                                                                </div>
-                                                            </a>
-                                                            <div>
-                                                                <div class="textLoader">
-                                                                    <p class="name">
-                                                                        <a
-                                                                            href="/profile/cours/<%= element.slug %>">
-                                                                            <%= element.name ? element.name
-                                                                                : '' %>
-                                                                        </a>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="textLoader">
-                                                                    <p class="description"><%-
-                                                                            element.description ?
-                                                                            element.description : '' %></p>
-                                                                    <span
-                                                                        style="font-weight: bolder;">...</span>
-                                                                </div>
-                                                                <hr>
-                                                                <div class="profilepresent flex-box-text">
-                                                                    <a href="/<%= element.user.slug %>">
-                                                                    <div>
-                                                                        <div class="container-widht-anim">
-    
-                                                                          
-                                                                            <img class="ProfilePicture"
-                                                                                src="<%= element.user.profilePicture || '' %>"
-                                                                                alt="profile_picture">
-    
-                                                                        </div>
-                                                                        <div class="textLoader">
-                                                                       
-                                                                                <p class="user">
-                                                                                    <%= element.user ?
-                                                                                        element.user.name
-                                                                                        : 'Inconnu' %>
-                                                                                </p>
-                                                                           
-                                                                            
-                                                                        </div>
-    
-                                                                    </div>
-                                                                 </a>
-                                                                    <div class="textLoader addCart-price">
-    
-    
-                                                                        <p class="price">
-                                                                            <%= element.prix ? element.prix
-                                                                                : '' %> XOF
-                                                                        </p>
-    
-                                                                    </div>
-    
-                                                                </div>
-                                                                <form action="" class="form_submit">
-                                                                    <button type="submit"
-                                                                        title="Add to Card"
-                                                                        class="submit add-card">
-                                                                        <img class="loader-img"
-                                                                            src="/images/spin.png"
-                                                                            alt="spinner">
-                                                                        <div>
-                                                                            <i class="bi bi-cart-fill"></i>
-                                                                            <span>Ajouter au panier</span>
-                                                                        </div>
-                                                                    </button>
-                                                                </form>
-    
-    
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                 <% } %>
-                                <% }) %>
-                            <% } %>
+                        <div class="in-person-training">
+                            <p>In-person training</p>
+                            <div class="cours-list">
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/image-place-holder.avif" alt="Computerised" />
+                                    </div>
+                                    <h2>Computerised Accounting and Management</h2>
+                                    <p>Unlock the power of modern accounting! Learn how to manage financial data...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(1)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/webdev.avif" alt="webdev" />
+                                    </div>
+                                    <h2>Webmaster / Web Developer</h2>
+                                    <p>Transform your web development skills into a career! Learn to design and build responsive websites...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(2)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/image-place-holder (5).avif" alt="webdev" />
+                                    </div>
+                                    <h2>Computer Maintenance</h2>
+                                    <p>Master the art of computer maintenance! From troubleshooting hardware issues to optimizing software...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(3)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/hairdressing.avif" alt="webdev" />
+                                    </div>
+                                    <h2>Professional Hairdresser</h2>
+                                    <p>Unleash your creativity in the beauty industry! This course will teach you advanced hairdressing techniques...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(4)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/beauty-care.avif" alt="webdev" />
+                                    </div>
+                                    <h2>Beauty Care / Cosmetology</h2>
+                                    <p>Become an expert in skincare and beauty treatments! Learn the essentials of cosmetology, including... care.</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(5)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/secretariat.avif" alt="webdev" />
+                                    </div>
+                                    <h2>Office Automation Secretaryship</h2>
+                                    <p>Enhance your administrative skills! Learn the latest office automation tools and techniques that will...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(6)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/accounting-secretariat.avif" alt="webdev" />
+                                    </div>
+                                    <h2>Accounting Secretaryship</h2>
+                                    <p>Step into the world of accounting with a professional edge! This course will teach you how...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(7)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/image-place-holder (3).avif" alt="webdev" />
+                                    </div>
+                                    <h2>English Language for IELTS</h2>
+                                    <p>Prepare for your IELTS exam with confidence! Improve your reading, writing, speaking, and listening ...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(8)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/image-place-holder (4).avif" alt="webdev" />
+                                    </div>
+                                    <h2>Fashion Designing and Sewing</h2>
+                                    <p>Bring your fashion ideas to life! Learn the fundamentals of fashion design and sewing techniques...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(9)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/restaurant.avif" alt="webdev" />
+                                    </div>
+                                    <h2>Hotel Management - Kitchen - Bar - Restaurant</h2>
+                                    <p>Start a career in the hospitality industry! Learn the ins and outs of hotel and restaurant management...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(10)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                <div class="cours" >
+                                    <div class="img-view">
+                                        <img src="/images/image-place-holder (2).avif" alt="webdev" />
+                                    </div>
+                                    <h2>Digital Marketing</h2>
+                                    <p>Become a master of digital marketing! From social media management to SEO, content creation, and data...</p>
+                                    <div class="cours-btns">
+                                        <button onclick="showCourseDetails(11)">Learn more</button>
+                                        <a>Apply now</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                    
+                            <div id="course-details" class="details">
+                                <section class="barner-short">
+                                    <div class="container">
+                                        <h2 id="course-title">details du cours</h2>
+                                    </div>
+                                    <img src="/images/slider-bottom-pattern.png" alt="pattern">
+                                </section>
+                                <!-- <button id="close-details" onclick="closeCourseDetails()">Fermer</button> -->
+                                 <div class='detail-content'>
+                    
+                                    <div>
+                                        <p>Description</p>
+                                        <p id="course-description"></p>
+                                    </div>
+                                    <div>
+                                        <p>Duration</p>
+                                        <p id="course-duration"></p>
+                                    </div>
+                                    <div>
+                                        <p>Certification</p>
+                                        <p id="course-certification"></p>
+                                    </div>
+                                    <div>
+                                        <p>Requirements</p>
+                                        <p id="course-requirements"></p>
+                                    </div>
+                                    <a href="" >Apply now</a>
                                     
+                                    <div id="course-navigation">
+                                        <button id="prev" onclick="changeCourse('prev')"><< Previous course</button>
+                                        <button id="back" onclick="backToList()">Go Back</button>
+                                        <button id="next" onclick="changeCourse('next')">Next course >></button>
+                                    </div>
+                                 </div>
+                                
+                            </div>
                         </div>
+                        
+                    </div>
                     </div>
                 </div>
             </div>
